@@ -1,0 +1,21 @@
+{
+  "name": "yeongeo-nori",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "영어놀이 — 7세용 파닉스 기반 영어 학습 게임 (단계 0~1: 알파벳 + 단모음 CVC)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "tsx test/data.test.ts && tsx test/shisen.test.ts && tsx test/cards.test.ts && tsx test/speech.test.ts",
+    "lan": "vite --host 0.0.0.0",
+    "lan:preview": "vite preview --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  }
+}

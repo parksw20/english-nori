@@ -1,0 +1,1437 @@
+/*
+ * 영어놀이 스타일 — 7세 기준.
+ *
+ * 1. 글씨와 터치 타깃을 크게. 아이 손가락은 어른보다 정확하지 않다 → 버튼 최소 높이 72px.
+ * 2. 다크모드를 지원한다(기기 설정 / 밝게 / 어둡게). 색은 전부 토큰으로만 쓴다 —
+ *    규칙마다 색을 적으면 다크에서 반드시 어딘가 빠뜨린다.
+ * 3. 클래스 이름에 블록 접두어를 붙인다(en-*). 짧은 이름(.btn·.card)을 여기저기 재사용하면
+ *    나중에 화면을 하나 고칠 때 다른 화면이 같이 바뀐다.
+ */
+
+:root {
+  --en-bg: #fff6e5;
+  --en-card: #ffffff;
+  --en-ink: #2c2318;
+  --en-ink-soft: #6b5c48;
+  --en-line: #e8d9bf;
+  --en-brand: #ff8a3d;
+  --en-brand-dark: #e86f1f;
+  --en-good: #38b000;
+  --en-good-soft: #e7f7dd;
+  /* 오답 색은 빨강을 쓰지 않는다 — "틀렸다"가 아니라 "다시 들어보자"라는 뜻이어야 한다 */
+  --en-again: #4d96ff;
+  --en-again-soft: #e6f0ff;
+  --en-lock: #cbbca4;
+  --en-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+  --en-radius: 20px;
+  /* 아래는 다크모드에서 갈아 끼우는 보조 색들 — 하드코딩해 두면 어두운 화면에서 눈이 아프다 */
+  --en-pic-bg: #fff1dc;
+  --en-sel-glow: #ffe2c8;
+  --en-hole: #f0e6d4;
+  --en-lv-color-line: #ffd9a8;
+  --en-lv-shiny-line: #7bd4ff;
+  --en-lv-shiny-glow: #e3f5ff;
+  --en-lv-gold-line: #f0c000;
+  --en-lv-gold-a: #fffaf0;
+  --en-lv-gold-b: #ffeeb8;
+  --en-sky-top: #eaf4ff;
+  --en-scrim: rgba(44, 35, 24, 0.35);
+  /*
+   * 주황 버튼 위의 글씨. 흰색으로 두면 밝은 주황(#ff8a3d) 위에서 대비가 2.35밖에 안 된다 —
+   * 큰 글씨 기준(3:1)에도 못 미친다. 어두운 갈색이면 6:1이 넘고 아이용 화면에도 잘 어울린다.
+   */
+  --en-on-brand: #3d1a00;
+  /*
+   * **글씨로 쓰는 강조색**은 테두리·장식용(--en-brand-dark)과 따로 둔다.
+   * 장식용 주황을 글씨에 쓰면 흰 배경에서 대비가 3:1 아래로 떨어진다(목표 %·모자란 글자 안내가 그랬다).
+   */
+  --en-accent-text: #b4530a;
+  /*
+   * 글자 카드 = **황금카드**(한자놀이와 같은 양식): 금테 + 금색 글씨 + 안쪽 금빛 번짐.
+   * 얼굴/광택/그늘을 따로 두는 것은 금속 느낌을 내려면 한 색으로는 안 되기 때문이다.
+   */
+  /* 위는 금빛, 아래로 갈수록 회색 — 금속 카드가 빛을 위에서 받는 모양 */
+  --en-card-hi: #ffe6a3;
+  --en-card-face: #f4e6c4;
+  --en-card-lo: #c9c9d1;
+  --en-gold-line: #d4a017;
+  --en-gold-ink: #7d5200;
+  /* ×N은 카드 아래쪽(회색) 위에 앉는다 — 그 배경 기준으로 4.5:1을 넘겨야 한다 */
+  --en-gold-dim: #6b4600;
+  --en-gold-glow: rgba(212, 160, 23, 0.18);
+  --en-danger: #c62828;
+}
+
+/*
+ * 다크모드 — 세 가지 상태를 모두 다룬다.
+ *   1) 기기 설정을 따라갈 때(`data-theme` 없음): prefers-color-scheme로 고른다
+ *   2) 아이가 「어둡게」를 골랐을 때: [data-theme="dark"]가 이긴다
+ *   3) 아이가 「밝게」를 골랐을 때: 기기가 어두워도 밝게 둔다 → :not([data-theme='light']) 가드
+ * 색은 토큰만 바꾼다 — 규칙마다 다크 전용 색을 적으면 반드시 어딘가 빠뜨린다.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --en-bg: #131a2b;
+    --en-card: #1e263c;
+    --en-ink: #e9eefc;
+    --en-ink-soft: #9aa8c7;
+    --en-line: #2e3a57;
+    --en-brand: #ff9f45;
+    --en-brand-dark: #ffb96e;
+    --en-good: #5fd35f;
+    --en-good-soft: #1f3a26;
+    --en-again: #6fa8ff;
+    --en-again-soft: #1d2a45;
+    --en-lock: #3a4560;
+    --en-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+    --en-pic-bg: #2a3350;
+    --en-sel-glow: #43507a;
+    --en-hole: #273150;
+    --en-lv-color-line: #6b5a3a;
+    --en-lv-shiny-line: #4a8fc0;
+    --en-lv-shiny-glow: #1b2b3d;
+    --en-lv-gold-line: #f0c000;
+    --en-lv-gold-a: #2b2716;
+    --en-lv-gold-b: #3d3416;
+    --en-sky-top: #1a2740;
+    --en-scrim: rgba(0, 0, 0, 0.55);
+    --en-on-brand: #201400;
+    --en-accent-text: #ffb96e;
+    --en-card-hi: #8a7226;
+    --en-card-face: #4a4536;
+    --en-card-lo: #2c2f36;
+    --en-gold-line: #f0c000;
+    --en-gold-ink: #ffd75e;
+    --en-gold-dim: #cfa63a;
+    --en-gold-glow: rgba(240, 192, 0, 0.14);
+    --en-danger: #ff8a8a;
+  }
+}
+
+:root[data-theme='dark'] {
+  --en-bg: #131a2b;
+  --en-card: #1e263c;
+  --en-ink: #e9eefc;
+  --en-ink-soft: #9aa8c7;
+  --en-line: #2e3a57;
+  --en-brand: #ff9f45;
+  --en-brand-dark: #ffb96e;
+  --en-good: #5fd35f;
+  --en-good-soft: #1f3a26;
+  --en-again: #6fa8ff;
+  --en-again-soft: #1d2a45;
+  --en-lock: #3a4560;
+  --en-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  --en-pic-bg: #2a3350;
+  --en-sel-glow: #43507a;
+  --en-hole: #273150;
+  --en-lv-color-line: #6b5a3a;
+  --en-lv-shiny-line: #4a8fc0;
+  --en-lv-shiny-glow: #1b2b3d;
+  --en-lv-gold-line: #f0c000;
+  --en-lv-gold-a: #2b2716;
+  --en-lv-gold-b: #3d3416;
+  --en-sky-top: #1a2740;
+  --en-scrim: rgba(0, 0, 0, 0.55);
+  --en-on-brand: #201400;
+  --en-accent-text: #ffb96e;
+  --en-card-hi: #8a7226;
+  --en-card-face: #4a4536;
+  --en-card-lo: #2c2f36;
+  --en-gold-line: #f0c000;
+  --en-gold-ink: #ffd75e;
+  --en-gold-dim: #cfa63a;
+  --en-gold-glow: rgba(240, 192, 0, 0.14);
+  --en-danger: #ff8a8a;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*
+ * **버튼·입력칸은 color와 font를 상속하지 않는다** — 브라우저 기본값(검정 + 시스템 글꼴)이 들어간다.
+ * 라이트 모드에서는 검정이 정상처럼 보여서 눈에 안 띄는데, 다크모드로 바꾸는 순간
+ * 어두운 카드 위의 검은 글씨가 되어 안 보인다(실제로 마을 버튼·도감 카드가 그렇게 됐다).
+ * 그래서 상속을 기본값으로 되돌린다. 브랜드색 버튼처럼 일부러 다른 색이 필요한 것은 각자 지정한다.
+ */
+button,
+select,
+input,
+textarea {
+  color: inherit;
+  font-family: inherit;
+}
+
+/* 스크롤바·기본 폼 컨트롤(select의 목록 등)도 테마를 따라가게 한다 */
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--en-bg);
+  color: var(--en-ink);
+  font-family: 'Segoe UI', 'Malgun Gothic', system-ui, -apple-system, sans-serif;
+  /* 아이가 글자를 꾹 눌러 선택하는 일을 막는다 (드래그 게임과 싸운다) */
+  user-select: none;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px 14px 32px;
+}
+
+/* ── 머리말 ─────────────────────────────────────────────────────── */
+.en-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+}
+
+.en-top h1 {
+  font-size: 22px;
+  margin: 0;
+  flex: 1;
+}
+
+.en-top .en-top-sub {
+  font-size: 15px;
+  color: var(--en-ink-soft);
+}
+
+.en-back {
+  color: var(--en-ink);
+  border: 2px solid var(--en-line);
+  background: var(--en-card);
+  border-radius: 14px;
+  min-height: 48px;
+  min-width: 56px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ── 큰 버튼 ─────────────────────────────────────────────────────── */
+.en-big {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 84px;
+  margin: 10px 0;
+  padding: 14px 18px;
+  border: none;
+  border-radius: var(--en-radius);
+  background: var(--en-brand);
+  color: var(--en-on-brand);
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: var(--en-shadow);
+  cursor: pointer;
+}
+
+.en-big:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.en-big[disabled] {
+  background: var(--en-lock);
+  cursor: default;
+}
+
+.en-big .en-big-emoji {
+  font-size: 40px;
+}
+
+.en-big-sub {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* ── 지도(마을 목록) ────────────────────────────────────────────── */
+.en-map-village {
+  color: var(--en-ink);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  margin: 12px 0;
+  border: 3px solid var(--en-line);
+  border-radius: var(--en-radius);
+  background: var(--en-card);
+  font-size: 20px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.en-map-village[disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.en-map-icon {
+  font-size: 44px;
+}
+
+.en-map-name {
+  flex: 1;
+  font-weight: 700;
+}
+
+.en-map-meta {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--en-ink-soft);
+}
+
+.en-map-cert {
+  font-size: 30px;
+}
+
+/* ── 문제 화면 ──────────────────────────────────────────────────── */
+.en-q {
+  text-align: center;
+}
+
+.en-q-bar {
+  height: 12px;
+  border-radius: 6px;
+  background: var(--en-line);
+  overflow: hidden;
+  margin: 6px 0 18px;
+}
+
+.en-q-bar span {
+  display: block;
+  height: 100%;
+  background: var(--en-good);
+  transition: width 0.25s ease;
+}
+
+.en-q-ask {
+  font-size: 19px;
+  color: var(--en-ink-soft);
+  margin: 0 0 10px;
+}
+
+/* 그림·글자를 보여주는 큰 판 */
+.en-q-show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+  margin: 0 0 16px;
+  border-radius: 26px;
+  background: var(--en-card);
+  border: 3px solid var(--en-line);
+  font-size: 110px;
+  line-height: 1;
+}
+
+/* 소리만 내는 문제의 큰 스피커 */
+.en-q-speaker {
+  font-size: 96px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.en-q-word {
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.en-q-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.en-q-choice {
+  min-height: 96px;
+  border: 3px solid var(--en-line);
+  border-radius: var(--en-radius);
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: 34px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 보기가 그림일 때는 더 크게 */
+.en-q-choice.en-q-choice-emoji {
+  font-size: 56px;
+}
+
+.en-q-choice.en-is-right {
+  border-color: var(--en-good);
+  background: var(--en-good-soft);
+}
+
+.en-q-choice.en-is-again {
+  border-color: var(--en-again);
+  background: var(--en-again-soft);
+}
+
+.en-q-choice[disabled] {
+  cursor: default;
+}
+
+/* 정답/다시 알림 — 벌점 대신 소리를 다시 들려준다는 뜻의 말 */
+.en-q-say {
+  min-height: 44px;
+  margin: 14px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.en-q-say.en-good {
+  color: var(--en-good);
+}
+
+.en-q-say.en-again {
+  color: var(--en-again);
+}
+
+/* ── 낱말 만들기(타일) ──────────────────────────────────────────── */
+.en-build-slots,
+.en-build-tiles {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+
+.en-build-slot {
+  width: 76px;
+  height: 92px;
+  border: 4px dashed var(--en-line);
+  border-radius: 16px;
+  background: var(--en-card);
+  font-size: 46px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.en-build-slot.en-is-filled {
+  border-style: solid;
+  border-color: var(--en-brand);
+}
+
+.en-build-tile {
+  width: 76px;
+  height: 92px;
+  border: none;
+  border-radius: 16px;
+  background: var(--en-brand);
+  color: var(--en-on-brand);
+  font-size: 46px;
+  font-weight: 700;
+  box-shadow: var(--en-shadow);
+  cursor: pointer;
+}
+
+.en-build-tile[disabled] {
+  opacity: 0.25;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* ── 짝맞추기 ───────────────────────────────────────────────────── */
+.en-match-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 520px) {
+  .en-match-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.en-match-card {
+  aspect-ratio: 3 / 4;
+  border: 3px solid var(--en-line);
+  border-radius: 16px;
+  background: var(--en-brand);
+  color: var(--en-on-brand);
+  font-size: 34px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-all;
+}
+
+.en-match-card.en-is-open {
+  background: var(--en-card);
+  color: var(--en-ink);
+}
+
+.en-match-card.en-is-done {
+  background: var(--en-good-soft);
+  border-color: var(--en-good);
+  color: var(--en-ink);
+  cursor: default;
+}
+
+/* ── 도감 ───────────────────────────────────────────────────────── */
+.en-dex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 10px;
+}
+
+.en-dex-card {
+  color: var(--en-ink);
+  border: 3px solid var(--en-line);
+  border-radius: 16px;
+  background: var(--en-card);
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.en-dex-emoji {
+  font-size: 42px;
+  display: block;
+}
+
+.en-dex-en {
+  font-size: 19px;
+  font-weight: 700;
+  display: block;
+}
+
+.en-dex-ko {
+  font-size: 14px;
+  color: var(--en-ink-soft);
+}
+
+/* 도감 카드 단계 — 흑백 → 색 → 또렷 → 반짝 → 금 */
+.en-dex-card.en-lv-gray .en-dex-emoji {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.en-dex-card.en-lv-color {
+  border-color: var(--en-lv-color-line);
+}
+
+.en-dex-card.en-lv-clear {
+  border-color: var(--en-brand);
+}
+
+.en-dex-card.en-lv-shiny {
+  border-color: var(--en-lv-shiny-line);
+  box-shadow: 0 0 0 4px var(--en-lv-shiny-glow) inset;
+}
+
+.en-dex-card.en-lv-gold {
+  border-color: var(--en-lv-gold-line);
+  background: linear-gradient(160deg, var(--en-lv-gold-a), var(--en-lv-gold-b));
+}
+
+/* 복습이 밀려 색이 빠진 카드 */
+.en-dex-card.en-is-faded {
+  border-style: dashed;
+}
+
+.en-dex-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+  font-size: 15px;
+  color: var(--en-ink-soft);
+}
+
+/* ── 결과·수료증 ────────────────────────────────────────────────── */
+.en-result {
+  text-align: center;
+  background: var(--en-card);
+  border: 3px solid var(--en-line);
+  border-radius: 26px;
+  padding: 22px 16px;
+}
+
+.en-result-emoji {
+  font-size: 84px;
+}
+
+.en-result-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 6px 0;
+}
+
+.en-result-score {
+  font-size: 20px;
+  color: var(--en-ink-soft);
+}
+
+.en-sticker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 34px;
+  margin: 10px 0;
+}
+
+/* ── 말하기 ─────────────────────────────────────────────────────── */
+.en-say-mic {
+  width: 100%;
+  min-height: 120px;
+  border: none;
+  border-radius: 26px;
+  background: var(--en-brand);
+  color: var(--en-on-brand);
+  font-size: 30px;
+  font-weight: 700;
+  box-shadow: var(--en-shadow);
+  cursor: pointer;
+}
+
+.en-say-mic.en-is-recording {
+  background: var(--en-again);
+}
+
+.en-say-hint {
+  font-size: 17px;
+  color: var(--en-ink-soft);
+  text-align: center;
+  margin: 10px 0;
+}
+
+.en-say-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+/* ── 부모용 화면 (아이 화면과 다르게 작고 조용하게) ─────────────── */
+.en-parent {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--en-ink);
+}
+
+.en-parent h2 {
+  font-size: 19px;
+  margin: 18px 0 6px;
+}
+
+.en-parent table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.en-parent th,
+.en-parent td {
+  border-bottom: 1px solid var(--en-line);
+  padding: 6px 4px;
+  text-align: left;
+}
+
+.en-parent-note {
+  background: var(--en-card);
+  border: 2px solid var(--en-line);
+  border-radius: 14px;
+  padding: 12px;
+  color: var(--en-ink-soft);
+}
+
+/* 가로로 넘치기 쉬운 것은 자기 안에서 스크롤시킨다 */
+.en-scroll-x {
+  overflow-x: auto;
+}
+
+/* ── 사천성 ─────────────────────────────────────────────────────── */
+.en-shisen-wrap {
+  position: relative;
+  margin: 8px 0 4px;
+}
+
+.en-shisen-grid {
+  display: grid;
+  gap: 6px;
+}
+
+/* 타일은 정사각형에 가깝게. 폰(4열)에서는 80px가 넘어 손가락으로 누를 만하다 */
+.en-shisen-tile,
+.en-shisen-hole {
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.en-shisen-tile {
+  border: 3px solid var(--en-line);
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  /* 낱말이 길어도 타일을 밀어내지 않게 */
+  overflow: hidden;
+  word-break: break-all;
+  line-height: 1.1;
+}
+
+/* 그림 타일은 색을 달리해 낱말 타일과 한눈에 구별된다 */
+.en-shisen-pic {
+  background: var(--en-pic-bg);
+  font-size: 34px;
+}
+
+.en-shisen-tile.en-is-sel {
+  border-color: var(--en-brand);
+  box-shadow: 0 0 0 4px var(--en-sel-glow);
+  transform: scale(0.96);
+}
+
+/* 없앤 자리는 빈 칸으로 남긴다 — 길이 어디로 열렸는지 보여야 한다 */
+.en-shisen-hole {
+  border: 3px dashed var(--en-hole);
+  background: transparent;
+}
+
+/* 이은 길 — 타일 위에 겹쳐 그리고 입력은 통과시킨다 */
+.en-shisen-lines {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.en-shisen-line {
+  fill: none;
+  stroke: var(--en-good);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+.en-shisen-shuffle {
+  display: block;
+  width: 100%;
+  min-height: 64px;
+  margin-top: 10px;
+  border: 3px solid var(--en-line);
+  border-radius: var(--en-radius);
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── 안내창 ─────────────────────────────────────────────────────── */
+.en-notice {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--en-scrim);
+  z-index: 50;
+  /* 뒤에서 판이 섞이는 것이 보이도록 반투명하게 둔다 */
+  animation: en-notice-in 0.15s ease-out;
+}
+
+@keyframes en-notice-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.en-notice-box {
+  background: var(--en-card);
+  border: 4px solid var(--en-brand);
+  border-radius: 26px;
+  padding: 22px 26px;
+  text-align: center;
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.en-notice-emoji {
+  font-size: 64px;
+  line-height: 1.1;
+}
+
+.en-notice-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.en-notice-detail {
+  font-size: 17px;
+  color: var(--en-ink-soft);
+  margin-top: 6px;
+}
+
+/* 사천성 판 크기 고르기 */
+.en-shisen-sizes {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.en-shisen-size {
+  flex: 1;
+  min-height: 56px;
+  border: 3px solid var(--en-line);
+  border-radius: 14px;
+  background: var(--en-card);
+  color: var(--en-ink-soft);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.en-shisen-size.en-is-sel {
+  border-color: var(--en-brand);
+  background: var(--en-pic-bg);
+  color: var(--en-ink);
+}
+
+/*
+ * 타일 글씨는 열 수에 따라 줄인다 — 8열이면 폰에서 타일이 38px까지 작아지는데
+ * 22px 글씨로는 낱말이 넘친다. --en-cols는 게임이 열 수를 넣어 준다.
+ */
+.en-shisen-grid {
+  --en-cols: 6;
+}
+
+.en-shisen-tile {
+  font-size: clamp(11px, calc(46px / var(--en-cols) * 3), 22px);
+}
+
+.en-shisen-pic {
+  font-size: clamp(18px, calc(70px / var(--en-cols) * 3), 34px);
+}
+
+/* ── 낱말 요격 ──────────────────────────────────────────────────── */
+.en-icpt-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.en-icpt-lives {
+  letter-spacing: 2px;
+}
+
+.en-icpt-score {
+  color: var(--en-accent-text);
+}
+
+/* 낱말이 떨어지는 하늘. 높이를 고정해야 낙하 거리(clientHeight)가 정해진다 */
+.en-icpt-sky {
+  position: relative;
+  height: 220px;
+  border: 3px solid var(--en-line);
+  border-radius: 26px;
+  background: linear-gradient(180deg, var(--en-sky-top), var(--en-card));
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.en-icpt-faller {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  padding: 6px 14px;
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--en-ink);
+}
+
+/* 맞혔을 때·놓쳤을 때의 짧은 표시 — 애니메이션은 짧게(다음 낱말이 곧 온다) */
+.en-icpt-hit {
+  color: var(--en-good);
+  transform: translateX(-50%) scale(1.25);
+  transition: transform 0.2s ease-out;
+}
+
+.en-icpt-boom {
+  color: var(--en-again);
+  opacity: 0.5;
+}
+
+/* ── 성취 타일·목표 막대 ────────────────────────────────────────── */
+.en-goal {
+  margin: 14px 0 10px;
+}
+
+.en-goal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.en-goal-pct {
+  color: var(--en-accent-text);
+}
+
+.en-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 10px 0 16px;
+}
+
+@media (max-width: 520px) {
+  .en-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.en-stat {
+  background: var(--en-card);
+  border: 3px solid var(--en-line);
+  border-radius: 16px;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.en-stat-big {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.en-stat-label {
+  display: block;
+  font-size: 14px;
+  color: var(--en-ink-soft);
+  margin-top: 2px;
+}
+
+/* ── 단어장 ─────────────────────────────────────────────────────── */
+.en-wb-head {
+  font-size: 19px;
+  margin: 20px 0 8px;
+}
+
+.en-wb-empty {
+  color: var(--en-ink-soft);
+  font-size: 16px;
+}
+
+.en-wb-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.en-wb-card {
+  min-width: 56px;
+  min-height: 68px;
+  border: 3px solid var(--en-line);
+  border-radius: 14px;
+  background: var(--en-card);
+  color: var(--en-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.en-wb-letter {
+  font-size: 30px;
+}
+
+.en-wb-n {
+  font-size: 14px;
+  color: var(--en-ink-soft);
+}
+
+.en-wb-swap {
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.en-wb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 3px solid var(--en-line);
+  border-radius: var(--en-radius);
+  background: var(--en-card);
+  padding: 10px 12px;
+  margin: 8px 0;
+}
+
+.en-wb-emoji {
+  font-size: 40px;
+}
+
+.en-wb-body {
+  flex: 1;
+}
+
+.en-wb-ko {
+  font-size: 15px;
+  color: var(--en-ink-soft);
+}
+
+.en-wb-slots {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.en-wb-slot {
+  width: 40px;
+  height: 48px;
+  border: 3px dashed var(--en-line);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.en-wb-slot.en-is-filled {
+  border-style: solid;
+  border-color: var(--en-brand);
+}
+
+.en-wb-make {
+  min-height: 56px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 14px;
+  background: var(--en-brand);
+  color: var(--en-on-brand);
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: var(--en-shadow);
+  cursor: pointer;
+}
+
+.en-wb-nearly {
+  display: grid;
+  gap: 6px;
+}
+
+.en-wb-near {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: var(--en-card);
+  border: 2px solid var(--en-line);
+}
+
+.en-wb-missing {
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--en-accent-text);
+}
+
+.en-wb-made {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.en-wb-madeword {
+  padding: 10px 14px;
+  border: 3px solid var(--en-good);
+  border-radius: 14px;
+  background: var(--en-good-soft);
+  color: var(--en-ink);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── 설정 (어른 화면: 작고 조용하게) ──────────────────────────────── */
+.en-set-card {
+  background: var(--en-card);
+  border: 2px solid var(--en-line);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin: 12px 0;
+}
+
+.en-set-head {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.en-set-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-top: 1px solid var(--en-line);
+}
+
+.en-set-label {
+  flex: 1;
+  min-width: 180px;
+}
+
+.en-set-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.en-set-detail {
+  font-size: 13px;
+  color: var(--en-ink-soft);
+  line-height: 1.5;
+}
+
+.en-set-choices {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.en-set-choice {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 2px solid var(--en-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--en-ink-soft);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.en-set-choice.en-is-sel {
+  border-color: var(--en-lv-gold-line);
+  color: var(--en-ink);
+}
+
+.en-set-choice.en-is-danger {
+  border-color: var(--en-danger);
+  color: var(--en-danger);
+}
+
+.en-set-select {
+  min-height: 44px;
+  max-width: 100%;
+  padding: 0 10px;
+  border: 2px solid var(--en-line);
+  border-radius: 12px;
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: 15px;
+}
+
+/* ── 놀이 방법 ──────────────────────────────────────────────────── */
+.en-man-card {
+  background: var(--en-card);
+  border: 2px solid var(--en-line);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin: 12px 0;
+}
+
+.en-man-head {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.en-man-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--en-ink);
+}
+
+.en-man-list li {
+  margin: 4px 0;
+}
+
+/* 단어장의 그림은 눌러서 소리를 듣는 버튼이다 */
+.en-wb-hear {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* ── 글자 카드 (한 가지 양식으로 어디서나 같게) ──────────────────── */
+.en-card {
+  position: relative;
+  width: 62px;
+  aspect-ratio: 3 / 4;
+  border-radius: 11px;
+  /* 금테 한 줄 + 안쪽 금빛 번짐 = 황금카드 */
+  border: 2px solid var(--en-gold-line);
+  background: linear-gradient(180deg, var(--en-card-hi) 0%, var(--en-card-face) 45%, var(--en-card-lo) 100%);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.22), inset 0 0 14px var(--en-gold-glow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  flex: 0 0 auto;
+}
+
+.en-card-face {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--en-gold-ink);
+}
+
+/* 장수는 글자 아래에 작게 (한자놀이와 같은 자리) */
+.en-card-n {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--en-gold-dim);
+}
+
+.en-card-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* 카드가 눌리는 곳(교환 고르기)에서는 손가락 신호를 준다 */
+button.en-card {
+  cursor: pointer;
+}
+
+button.en-card:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 0 14px var(--en-gold-glow);
+}
+
+/* 결과 화면의 카드 줄 아래 붙는 안내 한 줄 (점수보다 조용하게) */
+.en-result-note {
+  font-size: 15px;
+  color: var(--en-ink-soft);
+  margin: 8px 0 0;
+}
+
+/* 결과 화면 안의 카드는 가운데로 모으고 위아래 숨을 준다 */
+.en-result .en-card-row {
+  margin: 10px 0 2px;
+}
+
+/* ── 낱말 만들기 (카드를 골라 칸에 넣는 화면) ────────────────────── */
+.en-mk-target {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 4px 0 14px;
+}
+
+.en-mk-slots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* 빈 칸은 카드와 같은 크기 — 어디에 카드가 들어가는지 한눈에 보이게 */
+.en-mk-slot {
+  width: 62px;
+  aspect-ratio: 3 / 4;
+  border-radius: 11px;
+  border: 3px dashed var(--en-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 지금 채워야 하는 칸 */
+.en-mk-slot.en-is-now {
+  border-style: solid;
+  border-color: var(--en-gold-line);
+  box-shadow: 0 0 0 4px var(--en-gold-glow);
+}
+
+.en-mk-slot.en-is-filled {
+  border: 2px solid var(--en-gold-line);
+  background: linear-gradient(180deg, var(--en-card-hi) 0%, var(--en-card-face) 45%, var(--en-card-lo) 100%);
+  box-shadow: inset 0 0 14px var(--en-gold-glow);
+}
+
+.en-mk-hear {
+  min-height: 56px;
+  padding: 0 18px;
+  border: 3px solid var(--en-line);
+  border-radius: 16px;
+  background: var(--en-card);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 내 카드 줄은 가운데로 모은다 (개수가 적을 때 왼쪽에 붙어 보이지 않게) */
+.en-mk-cards {
+  justify-content: center;
+}
+
+/* ── 문장 놀이 ──────────────────────────────────────────────────── */
+.en-sen-target {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 6px 0 2px;
+}
+
+.en-sen-ko {
+  font-size: 18px;
+  color: var(--en-ink-soft);
+  margin: 0 0 12px;
+}
+
+/* 문장이 놓이는 줄 — 낱말 칸이 가로로 늘어선다 */
+.en-sen-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  min-height: 64px;
+  padding: 10px;
+  border: 3px dashed var(--en-line);
+  border-radius: var(--en-radius);
+  background: var(--en-card);
+}
+
+.en-sen-slot {
+  min-width: 56px;
+  min-height: 44px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 2px dashed var(--en-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.en-sen-slot.en-is-filled {
+  border-style: solid;
+  border-color: var(--en-gold-line);
+  background: linear-gradient(180deg, var(--en-card-hi) 0%, var(--en-card-face) 45%, var(--en-card-lo) 100%);
+  color: var(--en-gold-ink);
+}
+
+/* 아래에 흩어 놓은 낱말 타일 */
+.en-sen-bank {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.en-sen-tile {
+  min-height: 56px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 14px;
+  background: var(--en-brand);
+  color: var(--en-on-brand);
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: var(--en-shadow);
+  cursor: pointer;
+}
+
+.en-sen-tile:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+/* ── 들린 낱말 표시 (말하기 채점) ────────────────────────────────── */
+.en-say-heard {
+  min-height: 32px;
+  margin: 10px 0 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.en-say-heard-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--en-ink-soft);
+}
+
+.en-say-word {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 2px solid var(--en-line);
+}
+
+/* 들린 낱말은 초록, 안 들린 낱말은 파랑 테두리 — 빨강은 쓰지 않는다 */
+.en-say-word.en-is-hit {
+  border-color: var(--en-good);
+  background: var(--en-good-soft);
+}
+
+.en-say-word.en-is-miss {
+  border-color: var(--en-again);
+  background: var(--en-again-soft);
+  opacity: 0.8;
+}

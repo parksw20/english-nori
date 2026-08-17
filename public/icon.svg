@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffb454"/>
+      <stop offset="1" stop-color="#ff8a3d"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <!-- 알파벳 마을 → 단모음 마을 순서라 첫 글자 소리를 그린다 -->
+  <text x="256" y="342" font-size="260" text-anchor="middle" font-weight="700"
+        font-family="'Segoe UI', 'Malgun Gothic', system-ui, sans-serif" fill="#3d1a00">abc</text>
+</svg>

@@ -1,0 +1,20 @@
+{
+  "name": "영어놀이 — 파닉스 영어 놀이",
+  "short_name": "영어놀이",
+  "description": "7세 아이를 위한 파닉스 기반 영어 학습 게임 (알파벳·단모음 CVC·문장·생활 표현)",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#131a2b",
+  "theme_color": "#fff6e5",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

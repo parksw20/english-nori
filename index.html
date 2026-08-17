@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <!-- user-scalable=no: 아이가 두 손가락으로 화면을 잡으면 확대돼 버려 놀이가 끊긴다 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#fff6e5" />
+    <meta name="theme-color" content="#131a2b" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="7세 아이를 위한 파닉스 기반 영어 학습 게임 — 알파벳·단모음 CVC·문장·유치원 생활 표현"
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="영어놀이" />
+    <title>영어놀이 · 파닉스 영어 게임</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+    <script>
+      // 서비스 워커는 **배포본에서만** 등록한다.
+      // 개발 서버(localhost)에서 등록하면 고친 코드가 아니라 캐시된 옛 코드가 계속 떠서,
+      // 멀쩡히 고친 기능을 "안 고쳐졌다"고 오판하게 된다(한자놀이에서 실제로 겪었다).
+      // 개발 중엔 등록하지 않고, 예전에 등록해 둔 것이 남아 있으면 스스로 해제한다.
+      if ('serviceWorker' in navigator) {
+        var isLocal = ['localhost', '127.0.0.1', '[::1]'].indexOf(location.hostname) !== -1
+        if (isLocal) {
+          navigator.serviceWorker.getRegistrations().then(function (rs) {
+            rs.forEach(function (r) {
+              r.unregister()
+            })
+          })
+        } else {
+          window.addEventListener('load', function () {
+            navigator.serviceWorker.register(new URL('sw.js', document.baseURI)).catch(function () {})
+          })
+        }
+      }
+    </script>
+  </body>
+</html>
