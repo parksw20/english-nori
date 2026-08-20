@@ -21,7 +21,7 @@ import { wordsUpTo } from './phonics'
 import * as sfx from './sfx'
 import * as srs from './srs'
 import * as tts from './tts'
-import { el, render, top } from './ui'
+import { el, render, top, topLink } from './ui'
 
 /**
  * 맞힌 낱말을 가운데에서 **좌→우로 뱅글뱅글 돌려** 보여준다.
@@ -51,7 +51,7 @@ function spinCard(w: Word, onEnd: () => void): void {
   setTimeout(close, 2600)
 }
 
-export function showAbc(onBack: () => void): void {
+export function showAbc(onBack: () => void, onDex?: () => void): void {
   const stage: StageId = progress.topUnlockedStage()
   const words = wordsUpTo(stage)
 
@@ -135,7 +135,7 @@ export function showAbc(onBack: () => void): void {
   const learned = srs.summary(words.map((w) => w.en)).learned
 
   render(
-    top('ABC 알파벳 🔤', onBack, `도감 낱말 ${words.length}개`),
+    top('ABC 알파벳 🔤', onBack, `낱말 ${words.length}개`, onDex ? topLink('📖 도감', onDex) : undefined),
     el('div', {}, [
       el('p', {
         class: 'en-dex-hint',

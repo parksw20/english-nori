@@ -32,7 +32,7 @@ export function render(...nodes: (Node | string)[]): void {
 }
 
 /** 머리말 — 뒤로 가기 + 제목 + 오른쪽 보조 정보 */
-export function top(title: string, onBack?: () => void, sub?: string): HTMLElement {
+export function top(title: string, onBack?: () => void, sub?: string, action?: Node): HTMLElement {
   const kids: (Node | string)[] = []
   if (onBack) {
     const b = el('button', { class: 'en-back', 'aria-label': '뒤로', text: '←' })
@@ -41,7 +41,21 @@ export function top(title: string, onBack?: () => void, sub?: string): HTMLEleme
   }
   kids.push(el('h1', { text: title }))
   if (sub) kids.push(el('span', { class: 'en-top-sub', text: sub }))
+  // 오른쪽 끝 자리 — 짝이 되는 화면으로 바로 건너가는 버튼 같은 것
+  if (action) kids.push(action)
   return el('div', { class: 'en-top' }, kids)
+}
+
+/**
+ * 화면 오른쪽 위 끝의 작은 건너가기 버튼.
+ *
+ * ABC 알파벳과 낱말 도감은 아이가 번갈아 보는 짝이다 — 글자를 치다가 "그 낱말이 뭐였지"를 확인하고
+ * 다시 치러 온다. 매번 지도까지 나갔다 들어오면 그 흐름이 끊긴다.
+ */
+export function topLink(label: string, onClick: () => void): HTMLButtonElement {
+  const b = el('button', { class: 'en-top-link', text: label })
+  b.addEventListener('click', onClick)
+  return b
 }
 
 /** 큰 버튼 하나 */

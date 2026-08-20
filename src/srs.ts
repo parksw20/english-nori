@@ -43,6 +43,26 @@ export type Answer = 'wrong' | 'right' | 'easy'
  */
 export type CardLevel = 'gray' | 'color' | 'clear' | 'shiny' | 'gold'
 
+/**
+ * 아이에게 보여주는 단계 이름 — **씨앗에서 꽃까지**.
+ *
+ * 색만으로는 "흑백 < 색 < 또렷 < 반짝 < 금"이라는 순서를 아이가 알 수 없다(색에는 순서가 없다).
+ * 씨앗→새싹→풀→나무→꽃은 7세가 이미 아는 순서라 설명이 필요 없고, 심어 놓고 기르는 것이라
+ * "빼앗기지 않는다"는 규칙(levelOf가 peak를 쓰는 이유)과도 이야기가 맞는다.
+ */
+export const GROWTH: Record<CardLevel, { icon: string; name: string }> = {
+  gray: { icon: '·', name: '씨앗' },
+  color: { icon: '🌱', name: '새싹' },
+  clear: { icon: '🌿', name: '풀' },
+  shiny: { icon: '🌳', name: '나무' },
+  gold: { icon: '🌸', name: '꽃' },
+}
+
+/** 그 낱말이 지금 어디까지 자랐나 */
+export function growthOf(word: string): { icon: string; name: string } {
+  return GROWTH[levelOf(word)]
+}
+
 type Store = Record<string, CardState>
 
 function load(): Store {

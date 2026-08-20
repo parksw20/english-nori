@@ -12,7 +12,7 @@ import * as cards from './cards'
 import * as progress from './progress'
 import * as srs from './srs'
 import * as tts from './tts'
-import { bigButton, el, render, top } from './ui'
+import { bigButton, el, render, top, topLink } from './ui'
 
 /** 어른이 가끔 여는 화면용 작은 버튼 — 색을 쓰지 않고 테두리만 둔다(아이 눈길을 끌 이유가 없다) */
 function miniButton(emoji: string, label: string, onClick: () => void): HTMLButtonElement {
@@ -299,7 +299,10 @@ export type DexFilter = 'all' | string
 function dexCard(w: Word): HTMLElement {
   const lv = srs.levelOf(w.en)
   const faded = srs.isFaded(w.en)
+  const g = srs.GROWTH[lv]
   const c = el('button', { class: `en-dex-card en-lv-${lv}${faded ? ' en-is-faded' : ''}`, 'data-word': w.en }, [
+    // 자람 표시는 색과 **겹쳐서** 알린다 — 색약이거나 화면이 어두우면 색만으로는 단계가 안 보인다
+    el('span', { class: 'en-dex-grow', text: g.icon, title: g.name, 'aria-label': g.name }),
     el('span', { class: 'en-dex-emoji', text: w.emoji }),
     el('span', { class: 'en-dex-en', text: w.en }),
     el('span', { class: 'en-dex-ko', text: w.ko }),
@@ -319,10 +322,10 @@ function dexCard(w: Word): HTMLElement {
  * 알파벳 탭은 낱말이 하나도 없는 글자(q·v처럼)도 **빼지 않는다**. 알파벳은 26자를 다 배우는 것이고,
  * 빈 탭이 있어야 아이가 "여기는 아직 낱말이 없구나"를 알 수 있다.
  */
-export function showCollection(onBack: () => void, filter: DexFilter = 'all'): void {
+export function showCollection(onBack: () => void, onAbc?: () => void, filter: DexFilter = 'all'): void {
   const stage = progress.topUnlockedStage()
   const words = wordsUpTo(stage)
-  const redraw = (f: DexFilter): void => showCollection(onBack, f)
+  const redraw = (f: DexFilter): void => showCollection(onBack, onAbc, f)
 
   /** 그 글자로 시작하는 낱말 (x는 첫소리로 쓰지 않으니 낱말 안에 든 것으로 본다) */
   const wordsOf = (ch: string): Word[] => {
@@ -358,11 +361,9 @@ export function showCollection(onBack: () => void, filter: DexFilter = 'all'): v
   if (filter === 'all') {
     kids.push(
       el('div', { class: 'en-dex-legend' }, [
-        el('span', { text: '⬜ 아직 안 배움' }),
-        el('span', { text: '🟧 익히는 중' }),
-        el('span', { text: '🟦 잘 아는 낱말' }),
-        el('span', { text: '🟨 완전히 아는 낱말' }),
-        el('span', { text: '┄ 점선은 복습할 때가 된 낱말' }),
+        el('span', { text: '많이 맞히고 오래 기억할수록 자라요:' }),
+        el('span', { text: '· 씨앗 → 🌱 새싹 → 🌿 풀 → 🌳 나무 → 🌸 꽃.' }),
+        el('span', { text: '한 번 자라면 내려가지 않아요. 복습할 때가 지나면 테두리가 빨개져요(시듦).' }),
       ]),
       el('div', { class: 'en-dex-grid' }, words.map(dexCard))
     )
@@ -402,7 +403,15 @@ export function showCollection(onBack: () => void, filter: DexFilter = 'all'): v
     if (mine.length) kids.push(el('div', { class: 'en-dex-grid' }, mine.map(dexCard)))
   }
 
-  render(top('낱말 도감 📖', onBack, filter === 'all' ? `${words.length}개` : filter), el('div', {}, kids))
+  render(
+    top(
+      '낱말 도감 📖',
+      onBack,
+      filter === 'all' ? `${words.length}개` : filter,
+      onAbc ? topLink('🔤 ABC', onAbc) : undefined
+    ),
+    el('div', {}, kids)
+  )
 }
 
 /**

@@ -511,6 +511,8 @@ body {
 }
 
 .en-dex-card {
+  /* 자람 표시를 구석에 붙이기 위한 기준 */
+  position: relative;
   color: var(--en-ink);
   border: 3px solid var(--en-line);
   border-radius: 16px;
@@ -562,7 +564,32 @@ body {
 
 /* 복습이 밀려 색이 빠진 카드 */
 .en-dex-card.en-is-faded {
+  /* 시듦 — 복습할 때가 지났다. 단계를 내리지 않고 테두리로만 알린다 */
   border-style: dashed;
+  border-color: var(--en-danger);
+}
+
+/* 자람 표시(씨앗~꽃) — 카드 왼쪽 위 구석 */
+.en-dex-grow {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.en-top-link {
+  border: 2px solid var(--en-line);
+  background: var(--en-card);
+  color: var(--en-ink-soft);
+  border-radius: 12px;
+  min-height: 40px;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 .en-dex-legend {

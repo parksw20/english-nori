@@ -54,6 +54,18 @@ function grantCards(n: number): Node[] {
   ]
 }
 
+// 짝이 되는 두 화면 — 서로의 오른쪽 위 버튼이 상대를 부른다.
+// 뒤로(←)는 둘 다 지도로 간다: 아이가 두 화면 사이를 오갔다고 해서 나가는 길이 길어지면 안 된다
+function toDex(): void {
+  tts.stop()
+  showCollection(toMap, toAbc)
+}
+
+function toAbc(): void {
+  tts.stop()
+  showAbc(toMap, toDex)
+}
+
 function toMap(): void {
   tts.stop()
   showMap({
@@ -61,8 +73,9 @@ function toMap(): void {
       current = s
       toVillage()
     },
-    onCollection: () => showCollection(toMap),
-    onAbc: () => showAbc(toMap),
+    // 도감 ↔ ABC는 서로 오른쪽 위 버튼으로 건너다닌다(지도를 거치지 않는다)
+    onCollection: () => toDex(),
+    onAbc: () => toAbc(),
     onWordbook: () => showWordbook(toMap),
     onManual: () => showManual(toMap),
     onSettings: () => showSettings(toMap),
