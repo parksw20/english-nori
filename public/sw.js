@@ -10,7 +10,7 @@
  * 소리(TTS)는 기기 음성을 쓰므로 오프라인에서도 난다. 다만 **발음 채점(SpeechRecognition)은
  * 네트워크가 필요**해서 오프라인에서는 저절로 꺼진다(speech.canScore가 확인한다).
  */
-const CACHE = 'yeongeo-nori-v1'
+const CACHE = 'yeongeo-nori-v2'
 
 self.addEventListener('install', (e) => {
   // 새 워커를 바로 활성화 — 아이가 앱을 두 번 껐다 켜야 하는 일이 없게
@@ -44,8 +44,14 @@ self.addEventListener('fetch', (e) => {
 
   if (isDocument) {
     // 네트워크 우선 — 새 배포를 놓치지 않는다. 오프라인이면 캐시로 떨어진다.
+    //
+    // **`cache: 'no-cache'`가 꼭 필요하다.** 그냥 fetch(req)를 하면 요청이 브라우저 HTTP 캐시를 지나가는데,
+    // GitHub Pages가 HTML에 `Cache-Control: max-age=600`을 붙이기 때문에 배포한 지 10분 안에는
+    // **낡은 index.html이 캐시에서 그대로 나온다**(실제로 새 배포 뒤에도 두 배포 전 화면이 떴다).
+    // no-cache는 캐시를 건너뛰라는 뜻이 아니라 **서버에 반드시 확인(ETag)하라**는 뜻이라,
+    // 안 바뀌었으면 304로 싸게 끝나고 바뀌었으면 새 것을 받는다.
     e.respondWith(
-      fetch(req)
+      fetch(req, { cache: 'no-cache' })
         .then((res) => put(req, res))
         .catch(() => caches.match(req).then((hit) => hit ?? caches.match('./'))),
     )

@@ -35,7 +35,10 @@
           })
         } else {
           window.addEventListener('load', function () {
-            navigator.serviceWorker.register(new URL('sw.js', document.baseURI)).catch(function () {})
+            // updateViaCache: 'none' — sw.js 자체도 HTTP 캐시에서 낡은 것이 나오지 않게 매번 서버에 확인한다
+            navigator.serviceWorker
+              .register(new URL('sw.js', document.baseURI), { updateViaCache: 'none' })
+              .catch(function () {})
           })
         }
       }

@@ -25,6 +25,7 @@ import * as srs from './srs'
 import * as tts from './tts'
 import { pickRewards, examRewardCount } from './reward'
 import { el, letterCards } from './ui'
+import { showAbc } from './abc'
 import { showManual } from './manual'
 import { showSettings } from './settings'
 import { showWordbook } from './wordbook'
@@ -61,6 +62,7 @@ function toMap(): void {
       toVillage()
     },
     onCollection: () => showCollection(toMap),
+    onAbc: () => showAbc(toMap),
     onWordbook: () => showWordbook(toMap),
     onManual: () => showManual(toMap),
     onSettings: () => showSettings(toMap),

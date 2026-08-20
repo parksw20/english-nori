@@ -14,6 +14,16 @@ import * as srs from './srs'
 import * as tts from './tts'
 import { bigButton, el, render, top } from './ui'
 
+/** 어른이 가끔 여는 화면용 작은 버튼 — 색을 쓰지 않고 테두리만 둔다(아이 눈길을 끌 이유가 없다) */
+function miniButton(emoji: string, label: string, onClick: () => void): HTMLButtonElement {
+  const b = el('button', { class: 'en-mini' }, [
+    el('span', { class: 'en-mini-emoji', text: emoji }),
+    el('span', { text: label }),
+  ])
+  b.addEventListener('click', onClick)
+  return b
+}
+
 /** 마을 아이콘 */
 const VILLAGE_EMOJI: Record<number, string> = { 0: '🔤', 1: '🏡' }
 
@@ -21,6 +31,7 @@ export interface MapActions {
   onVillage: (stage: StageId) => void
   onCollection: () => void
   onWordbook: () => void
+  onAbc: () => void
   onManual: () => void
   onSettings: () => void
   onParent: () => void
@@ -117,12 +128,17 @@ export function showMap(a: MapActions): void {
     goalBar(top_),
     statTiles(top_),
     bigButton('📖', '낱말 도감', a.onCollection, { sub: '모은 낱말을 구경해요' }),
+    bigButton('🔤', 'ABC 알파벳', a.onAbc, { sub: '글자를 눌러 낱말을 쳐 봐요' }),
     bigButton('📒', '단어장', a.onWordbook, {
       sub: `카드 ${cards.total()}장 · 만든 낱말 ${cards.completedWords().length}개`,
     }),
-    bigButton('📘', '놀이 방법', a.onManual, { sub: '어떻게 노는지 알려줘요' }),
-    bigButton('⚙️', '설정', a.onSettings, { sub: '테마·소리·기록' }),
-    bigButton('👨‍👩‍👧', '부모님 화면', a.onParent, { sub: '오늘 무엇을 했나요' }),
+    // 놀이 방법·설정·부모님 화면은 **아이가 노는 것이 아니라 어른이 가끔 여는 곳**이다.
+    // 큰 주황 버튼으로 두면 화면의 절반을 차지해 정작 놀이가 아래로 밀린다 → 작은 한 줄로 내린다.
+    el('div', { class: 'en-minirow' }, [
+      miniButton('📘', '놀이 방법', a.onManual),
+      miniButton('⚙️', '설정', a.onSettings),
+      miniButton('👨‍👩‍👧', '부모님', a.onParent),
+    ]),
     p.stickers.length > 0 ? el('div', { class: 'en-sticker-row' }, p.stickers.map((s) => el('span', { text: s }))) : el('div')
   )
 }
@@ -278,28 +294,6 @@ export function showVillage(stage: StageId, a: VillageActions): void {
 /** 도감에서 무엇을 보고 있나 — `all`이면 낱말 전체, 아니면 그 알파벳 */
 export type DexFilter = 'all' | string
 
-/**
- * ABC 알파벳 판 — 26자를 대문자·소문자 짝으로 늘어놓는다(`A a`).
- *
- * 도감의 낱말은 전부 소문자인데 아이가 바깥에서 만나는 글자는 대문자가 섞여 있다
- * (이름표·간판·책 제목). **같은 글자의 두 모습**을 한 카드에 붙여 둬야 둘이 한 글자임을 안다.
- * 누르면 그 글자를 읽어 준다 — 누르는 것이 곧 듣는 것이어야 한다.
- */
-function abcBoard(): HTMLElement {
-  return el(
-    'div',
-    { class: 'en-abc-grid' },
-    LETTERS.map((l) => {
-      const b = el('button', { class: 'en-abc-mini', 'data-letter': l.ch, 'aria-label': `${l.ch} 듣기` }, [
-        el('span', { class: 'en-abc-mini-pair', text: `${l.ch.toUpperCase()} ${l.ch}` }),
-        el('span', { class: 'en-abc-mini-name', text: l.name }),
-      ])
-      b.addEventListener('click', () => tts.say(l.ch))
-      return b
-    })
-  )
-}
-
 /** 낱말 카드 한 장 (누르면 읽어 준다) */
 function dexCard(w: Word): HTMLElement {
   const lv = srs.levelOf(w.en)
@@ -362,10 +356,6 @@ export function showCollection(onBack: () => void, filter: DexFilter = 'all'): v
 
   if (filter === 'all') {
     kids.push(
-      el('h2', { class: 'en-wb-head', text: '🔤 ABC 알파벳' }),
-      el('p', { class: 'en-dex-hint', text: '글자를 누르면 이름을 읽어 줘요. 위의 a~z를 누르면 그 글자만 모아 봐요' }),
-      abcBoard(),
-      el('h2', { class: 'en-wb-head', text: `📖 낱말 ${words.length}개` }),
       el('div', { class: 'en-dex-legend' }, [
         el('span', { text: '⬜ 아직 안 배움' }),
         el('span', { text: '🟧 익히는 중' }),

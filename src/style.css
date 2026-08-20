@@ -1525,7 +1525,7 @@ button.en-card:active {
 /* ── ABC 알파벳 판 (도감 맨 위) ──────────────────────────────────── */
 .en-abc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -1551,10 +1551,15 @@ button.en-card:active {
 }
 
 .en-abc-mini-pair {
-  font-size: 26px;
+  /*
+   * **한 줄로 유지한다.** W·M은 다른 글자보다 훨씬 넓어서 "W W"가 카드 폭을 넘고 두 줄로 접혔다.
+   * 줄바꿈을 막고 글씨를 조금 줄이면 26자가 전부 한 줄에 들어간다(가장 넓은 W 기준으로 맞췄다).
+   */
+  white-space: nowrap;
+  font-size: 23px;
   font-weight: 700;
   color: var(--en-gold-ink);
-  letter-spacing: 2px;
+  letter-spacing: 0;
 }
 
 .en-abc-mini-name {
@@ -1568,4 +1573,170 @@ button.en-card:active {
   font-size: 15px;
   color: var(--en-ink-soft);
   margin: 0 0 8px;
+}
+
+/* ── 보조 버튼 한 줄 (놀이 방법·설정·부모님) ─────────────────────── */
+.en-minirow {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0 6px;
+}
+
+/*
+ * 학습이 아니라 **어른이 가끔 여는 곳**이라 색을 쓰지 않는다.
+ * 아이 화면의 주황은 "지금 눌러야 하는 것"이라는 신호이므로 여기에 쓰면 신호가 흐려진다.
+ */
+.en-mini {
+  flex: 1;
+  min-height: 48px;
+  padding: 6px 8px;
+  border: 2px solid var(--en-line);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--en-ink-soft);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.en-mini-emoji {
+  font-size: 18px;
+}
+
+/* ── ABC 알파벳: 입력 줄 ────────────────────────────────────────── */
+.en-type-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin: 12px 0 4px;
+}
+
+/* 누른 글자가 쌓이는 자리 — 길어지면 안에서 가로 스크롤한다(화면이 밀리지 않게) */
+.en-type-slots {
+  flex: 1;
+  min-height: 64px;
+  padding: 8px 10px;
+  border: 3px solid var(--en-line);
+  border-radius: var(--en-radius);
+  background: var(--en-card);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.en-type-ch {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.en-type-empty {
+  font-size: 15px;
+  color: var(--en-ink-soft);
+}
+
+.en-type-btn {
+  min-width: 64px;
+  border: 3px solid var(--en-line);
+  border-radius: var(--en-radius);
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.en-type-go {
+  border-color: var(--en-brand);
+  background: var(--en-brand);
+  color: var(--en-on-brand);
+  box-shadow: var(--en-shadow);
+}
+
+.en-type-go:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+/* ── 맞힌 낱말 카드가 좌→우로 도는 화면 ──────────────────────────── */
+.en-spin {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--en-scrim);
+  z-index: 60;
+}
+
+.en-spin-card {
+  width: 260px;
+  max-width: 78vw;
+  padding: 26px 18px;
+  border: 4px solid var(--en-gold-line);
+  border-radius: 26px;
+  background: linear-gradient(180deg, var(--en-card-hi) 0%, var(--en-card-face) 45%, var(--en-card-lo) 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  /* 좌 → 우로 두 바퀴 돈다. 마지막에 정면으로 서서 아이가 낱말을 읽을 시간을 준다 */
+  animation: en-spin-turn 1.8s ease-out 1 both;
+  transform-style: preserve-3d;
+}
+
+@keyframes en-spin-turn {
+  0% {
+    transform: rotateY(0deg) scale(0.85);
+  }
+  70% {
+    transform: rotateY(720deg) scale(1.06);
+  }
+  100% {
+    transform: rotateY(720deg) scale(1);
+  }
+}
+
+.en-spin-emoji {
+  display: block;
+  font-size: 84px;
+  line-height: 1.1;
+}
+
+.en-spin-en {
+  display: block;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--en-gold-ink);
+  margin-top: 6px;
+}
+
+.en-spin-ko {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--en-gold-ink);
+  margin-top: 2px;
+}
+
+/* 움직임을 싫어하는 설정에서는 돌리지 않고 크기만 살짝 준다 */
+@media (prefers-reduced-motion: reduce) {
+  .en-spin-card {
+    animation: en-spin-fade 1.2s ease-out 1 both;
+  }
+
+  @keyframes en-spin-fade {
+    0% {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
 }
