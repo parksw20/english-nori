@@ -6,7 +6,7 @@
  */
 import { LETTERS, STAGE_NAMES, SHORT_VOWELS } from './data/phonics'
 import { WORDS } from './data/words'
-import { MAX_STAGE, type StageId } from './data/types'
+import { MAX_STAGE, type StageId, type Word } from './data/types'
 import { cvcByVowel, cvcWordsUpTo, wordsUpTo } from './phonics'
 import * as cards from './cards'
 import * as progress from './progress'
@@ -275,36 +275,112 @@ export function showVillage(stage: StageId, a: VillageActions): void {
   )
 }
 
-/** 낱말 도감 — SRS 단계가 카드 색으로 보인다 */
-export function showCollection(onBack: () => void): void {
+/** 도감에서 무엇을 보고 있나 — `all`이면 낱말 전체, 아니면 그 알파벳 */
+export type DexFilter = 'all' | string
+
+/** 낱말 카드 한 장 (누르면 읽어 준다) */
+function dexCard(w: Word): HTMLElement {
+  const lv = srs.levelOf(w.en)
+  const faded = srs.isFaded(w.en)
+  const c = el('button', { class: `en-dex-card en-lv-${lv}${faded ? ' en-is-faded' : ''}`, 'data-word': w.en }, [
+    el('span', { class: 'en-dex-emoji', text: w.emoji }),
+    el('span', { class: 'en-dex-en', text: w.en }),
+    el('span', { class: 'en-dex-ko', text: w.ko }),
+  ])
+  // 카드를 누르면 읽어 준다 — 글씨를 못 읽는 아이가 도감을 구경하는 방법
+  c.addEventListener('click', () => tts.say(w.en))
+  return c
+}
+
+/**
+ * 낱말 도감 — 낱말 카드가 SRS 단계에 따라 색이 짙어진다.
+ *
+ * 보기가 둘이다:
+ * - **전체** — 지금까지 나온 낱말을 전부 (원래 화면)
+ * - **알파벳별** — 그 글자의 알파벳 카드(이름·소리·대표 낱말)와 그 글자로 시작하는 낱말들
+ *
+ * 알파벳 탭은 낱말이 하나도 없는 글자(q·v처럼)도 **빼지 않는다**. 알파벳은 26자를 다 배우는 것이고,
+ * 빈 탭이 있어야 아이가 "여기는 아직 낱말이 없구나"를 알 수 있다.
+ */
+export function showCollection(onBack: () => void, filter: DexFilter = 'all'): void {
   const stage = progress.topUnlockedStage()
   const words = wordsUpTo(stage)
-  const cards = words.map((w) => {
-    const lv = srs.levelOf(w.en)
-    const faded = srs.isFaded(w.en)
-    const c = el('button', { class: `en-dex-card en-lv-${lv}${faded ? ' en-is-faded' : ''}` }, [
-      el('span', { class: 'en-dex-emoji', text: w.emoji }),
-      el('span', { class: 'en-dex-en', text: w.en }),
-      el('span', { class: 'en-dex-ko', text: w.ko }),
+  const redraw = (f: DexFilter): void => showCollection(onBack, f)
+
+  /** 그 글자로 시작하는 낱말 (x는 첫소리로 쓰지 않으니 낱말 안에 든 것으로 본다) */
+  const wordsOf = (ch: string): Word[] => {
+    const letter = LETTERS.find((l) => l.ch === ch)
+    return letter?.position === 'final'
+      ? words.filter((w) => w.en.includes(ch))
+      : words.filter((w) => w.en.startsWith(ch))
+  }
+
+  // ── 탭 줄: 전체 + a~z ───────────────────────────────────
+  const tabs = el('div', { class: 'en-dex-tabs' })
+  const tab = (label: string, value: DexFilter, sub?: string): HTMLElement => {
+    const b = el('button', { class: `en-dex-tab${filter === value ? ' en-is-sel' : ''}`, 'data-tab': value }, [
+      el('span', { class: 'en-dex-tab-main', text: label }),
+      ...(sub ? [el('span', { class: 'en-dex-tab-sub', text: sub })] : []),
     ])
-    // 카드를 누르면 읽어 준다 — 글씨를 못 읽는 아이가 도감을 구경하는 방법
-    c.addEventListener('click', () => tts.say(w.en))
-    return c
-  })
+    b.addEventListener('click', () => redraw(value))
+    return b
+  }
+  tabs.append(tab('전체', 'all', `${words.length}개`))
+  for (const l of LETTERS) {
+    const n = wordsOf(l.ch).length
+    tabs.append(tab(l.ch, l.ch, n > 0 ? `${n}개` : '·'))
+  }
 
-  const legend = el('div', { class: 'en-dex-legend' }, [
-    el('span', { text: '⬜ 아직 안 배움' }),
-    el('span', { text: '🟧 익히는 중' }),
-    el('span', { text: '🟦 잘 아는 낱말' }),
-    el('span', { text: '🟨 완전히 아는 낱말' }),
-    el('span', { text: '┄ 점선은 복습할 때가 된 낱말' }),
-  ])
+  const kids: Node[] = [tabs]
 
-  render(
-    top('낱말 도감 📖', onBack, `${words.length}개`),
-    legend,
-    el('div', { class: 'en-dex-grid' }, cards)
-  )
+  if (filter === 'all') {
+    kids.push(
+      el('div', { class: 'en-dex-legend' }, [
+        el('span', { text: '⬜ 아직 안 배움' }),
+        el('span', { text: '🟧 익히는 중' }),
+        el('span', { text: '🟦 잘 아는 낱말' }),
+        el('span', { text: '🟨 완전히 아는 낱말' }),
+        el('span', { text: '┄ 점선은 복습할 때가 된 낱말' }),
+      ]),
+      el('div', { class: 'en-dex-grid' }, words.map(dexCard))
+    )
+  } else {
+    const letter = LETTERS.find((l) => l.ch === filter)
+    const keyword = letter ? words.find((w) => w.en === letter.keyword) : undefined
+    const mine = wordsOf(filter)
+
+    if (letter) {
+      // 알파벳 카드 — 글자·이름·소리·대표 낱말. 누르면 글자 이름을 읽어 준다
+      const big = el('button', { class: 'en-abc-card', 'data-letter': letter.ch }, [
+        el('span', { class: 'en-abc-ch', text: `${letter.ch} ${letter.ch.toUpperCase()}` }),
+        el('span', { class: 'en-abc-name', text: `이름 ${letter.name} · 소리 ${letter.sound}` }),
+        el('span', {
+          class: 'en-abc-key',
+          text: `${keyword?.emoji ?? ''} ${letter.keyword}${letter.position === 'final' ? ' (끝소리)' : ''}`,
+        }),
+      ])
+      big.addEventListener('click', () => tts.say(letter.ch))
+      kids.push(big)
+
+      const hear = el('button', { class: 'en-mk-hear', text: `🔊 ${letter.keyword} 들어보기` })
+      hear.addEventListener('click', () => tts.blend(letter.keyword))
+      kids.push(hear)
+    }
+
+    kids.push(
+      el('p', {
+        class: 'en-q-ask',
+        text: mine.length
+          ? letter?.position === 'final'
+            ? `${filter}가 들어간 낱말 ${mine.length}개`
+            : `${filter}로 시작하는 낱말 ${mine.length}개`
+          : '이 글자로 된 낱말은 아직 없어요',
+      })
+    )
+    if (mine.length) kids.push(el('div', { class: 'en-dex-grid' }, mine.map(dexCard)))
+  }
+
+  render(top('낱말 도감 📖', onBack, filter === 'all' ? `${words.length}개` : filter), el('div', {}, kids))
 }
 
 /**

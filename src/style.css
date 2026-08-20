@@ -1435,3 +1435,89 @@ button.en-card:active {
   background: var(--en-again-soft);
   opacity: 0.8;
 }
+
+/* ── 도감 탭 (전체 + a~z) ────────────────────────────────────────── */
+.en-dex-tabs {
+  display: grid;
+  /* 27개가 한 줄로 늘어서면 가로로 넘친다 → 자동 줄바꿈 격자 */
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+
+.en-dex-tab {
+  min-height: 52px;
+  border: 2px solid var(--en-line);
+  border-radius: 12px;
+  background: var(--en-card);
+  color: var(--en-ink-soft);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.en-dex-tab.en-is-sel {
+  border-color: var(--en-gold-line);
+  color: var(--en-ink);
+  background: linear-gradient(180deg, var(--en-card-hi) 0%, var(--en-card-face) 45%, var(--en-card-lo) 100%);
+}
+
+/* 「전체」는 글자가 길어 조금 작게 */
+.en-dex-tab[data-tab='all'] .en-dex-tab-main {
+  font-size: 16px;
+}
+
+.en-dex-tab-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--en-ink-soft);
+}
+
+/* ── 알파벳 카드 (도감의 글자별 화면 맨 위) ──────────────────────── */
+.en-abc-card {
+  display: block;
+  width: 100%;
+  border: 3px solid var(--en-gold-line);
+  border-radius: var(--en-radius);
+  background: linear-gradient(180deg, var(--en-card-hi) 0%, var(--en-card-face) 45%, var(--en-card-lo) 100%);
+  color: var(--en-ink);
+  padding: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.en-abc-ch {
+  display: block;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--en-gold-ink);
+  letter-spacing: 4px;
+}
+
+.en-abc-name {
+  display: block;
+  font-size: 17px;
+  /*
+   * 카드 면(금빛 그라데이션) 위에 앉는 글씨다. 본문 회색(--en-ink-soft)은 다크에서 4.0,
+   * 카드 장수용 색(--en-gold-dim)도 4.18까지밖에 안 올라간다(기준 4.5) → 글자색과 같은 톤을 쓰고
+   * 크기·굵기로만 위계를 준다.
+   */
+  color: var(--en-gold-ink);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.en-abc-key {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--en-gold-ink);
+  margin-top: 6px;
+}
