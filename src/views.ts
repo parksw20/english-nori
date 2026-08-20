@@ -127,8 +127,9 @@ export function showMap(a: MapActions): void {
     el('div', {}, villages),
     goalBar(top_),
     statTiles(top_),
-    bigButton('📖', '낱말 도감', a.onCollection, { sub: '모은 낱말을 구경해요' }),
+    // 알파벳이 먼저다 — 글자를 알아야 낱말이 읽힌다. 배우는 순서대로 놓는다
     bigButton('🔤', 'ABC 알파벳', a.onAbc, { sub: '글자를 눌러 낱말을 쳐 봐요' }),
+    bigButton('📖', '낱말 도감', a.onCollection, { sub: '모은 낱말을 구경해요' }),
     bigButton('📒', '단어장', a.onWordbook, {
       sub: `카드 ${cards.total()}장 · 만든 낱말 ${cards.completedWords().length}개`,
     }),
