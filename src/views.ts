@@ -322,7 +322,12 @@ export function showCollection(onBack: () => void, filter: DexFilter = 'all'): v
       el('span', { class: 'en-dex-tab-main', text: label }),
       ...(sub ? [el('span', { class: 'en-dex-tab-sub', text: sub })] : []),
     ])
-    b.addEventListener('click', () => redraw(value))
+    b.addEventListener('click', () => {
+      // **알파벳 탭을 누르면 그 글자를 읽어 준다.** 화면을 바꾸는 것만으로는 아이가 글자 이름을 배울 수 없다 —
+      // 누르는 것이 곧 듣는 것이어야 한다(「전체」는 낱말이 아니라 보기 이름이라 읽지 않는다).
+      if (value !== 'all') tts.say(value)
+      redraw(value)
+    })
     return b
   }
   tabs.append(tab('전체', 'all', `${words.length}개`))
