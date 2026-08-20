@@ -278,6 +278,28 @@ export function showVillage(stage: StageId, a: VillageActions): void {
 /** 도감에서 무엇을 보고 있나 — `all`이면 낱말 전체, 아니면 그 알파벳 */
 export type DexFilter = 'all' | string
 
+/**
+ * ABC 알파벳 판 — 26자를 대문자·소문자 짝으로 늘어놓는다(`A a`).
+ *
+ * 도감의 낱말은 전부 소문자인데 아이가 바깥에서 만나는 글자는 대문자가 섞여 있다
+ * (이름표·간판·책 제목). **같은 글자의 두 모습**을 한 카드에 붙여 둬야 둘이 한 글자임을 안다.
+ * 누르면 그 글자를 읽어 준다 — 누르는 것이 곧 듣는 것이어야 한다.
+ */
+function abcBoard(): HTMLElement {
+  return el(
+    'div',
+    { class: 'en-abc-grid' },
+    LETTERS.map((l) => {
+      const b = el('button', { class: 'en-abc-mini', 'data-letter': l.ch, 'aria-label': `${l.ch} 듣기` }, [
+        el('span', { class: 'en-abc-mini-pair', text: `${l.ch.toUpperCase()} ${l.ch}` }),
+        el('span', { class: 'en-abc-mini-name', text: l.name }),
+      ])
+      b.addEventListener('click', () => tts.say(l.ch))
+      return b
+    })
+  )
+}
+
 /** 낱말 카드 한 장 (누르면 읽어 준다) */
 function dexCard(w: Word): HTMLElement {
   const lv = srs.levelOf(w.en)
@@ -340,6 +362,10 @@ export function showCollection(onBack: () => void, filter: DexFilter = 'all'): v
 
   if (filter === 'all') {
     kids.push(
+      el('h2', { class: 'en-wb-head', text: '🔤 ABC 알파벳' }),
+      el('p', { class: 'en-dex-hint', text: '글자를 누르면 이름을 읽어 줘요. 위의 a~z를 누르면 그 글자만 모아 봐요' }),
+      abcBoard(),
+      el('h2', { class: 'en-wb-head', text: `📖 낱말 ${words.length}개` }),
       el('div', { class: 'en-dex-legend' }, [
         el('span', { text: '⬜ 아직 안 배움' }),
         el('span', { text: '🟧 익히는 중' }),

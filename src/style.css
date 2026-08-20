@@ -1521,3 +1521,51 @@ button.en-card:active {
   color: var(--en-gold-ink);
   margin-top: 6px;
 }
+
+/* ── ABC 알파벳 판 (도감 맨 위) ──────────────────────────────────── */
+.en-abc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+/* 카드 한 장에 대문자·소문자를 나란히 — 둘이 같은 글자임을 보여주려고 */
+.en-abc-mini {
+  min-height: 68px;
+  border: 2px solid var(--en-gold-line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--en-card-hi) 0%, var(--en-card-face) 45%, var(--en-card-lo) 100%);
+  box-shadow: inset 0 0 12px var(--en-gold-glow);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  line-height: 1.05;
+}
+
+.en-abc-mini:active {
+  transform: translateY(2px);
+}
+
+.en-abc-mini-pair {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--en-gold-ink);
+  letter-spacing: 2px;
+}
+
+.en-abc-mini-name {
+  font-size: 12px;
+  font-weight: 700;
+  /* 카드 면 위에 앉는 작은 글씨 — 장수용 색(--en-gold-dim)은 카드 가운데에서 4.18까지 떨어진다(기준 4.5) */
+  color: var(--en-gold-ink);
+}
+
+.en-dex-hint {
+  font-size: 15px;
+  color: var(--en-ink-soft);
+  margin: 0 0 8px;
+}
