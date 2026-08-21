@@ -8,7 +8,7 @@ console.log(
   bad.length ? bad.map((w) => `${w.en}(적힌 ${w.stage} / 계산 ${stageOf(w.en)} = ${(segment(w.en) ?? []).join('·')})`).join('\n  ') : '없음'
 )
 
-for (const s of [0, 1, 2, 3, 4]) {
+for (const s of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
   const mine = WORDS.filter((w) => w.stage === s)
   console.log(`단계 ${s}: ${mine.length}개 · 그림가능 ${mine.filter((w) => !w.abstract).length}개 · 누계 ${WORDS.filter((w) => w.stage <= s).length}`)
 }

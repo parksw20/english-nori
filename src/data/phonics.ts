@@ -16,6 +16,9 @@ export const STAGE_NAMES: Record<StageId, string> = {
   4: '마법의 e 마을',
   5: '긴모음 마을',
   6: 'r모음 마을',
+  7: '이중모음 마을',
+  8: '긴낱말 마을',
+  9: '예외 마을',
 }
 
 /**
@@ -84,12 +87,11 @@ export const GRAPHEMES: Grapheme[] = [
   // 단계 5 — 긴 모음 팀
   ...['ai', 'ay', 'ee', 'ea', 'oa', 'ow', 'ie', 'igh'].map((g) => ({ g, sound: g, stage: 5 as StageId })),
 
-  // 단계 6 — r 모음과 이중모음
-  ...['ar', 'or', 'er', 'ir', 'ur', 'oo', 'ou', 'oi', 'oy', 'aw', 'au', 'ew'].map((g) => ({
-    g,
-    sound: g,
-    stage: 6 as StageId,
-  })),
+  // 단계 6 — r이 모음을 삼키는 소리
+  ...['ar', 'or', 'er', 'ir', 'ur'].map((g) => ({ g, sound: g, stage: 6 as StageId })),
+
+  // 단계 7 — 모음 두 개가 미끄러지는 소리(이중모음)
+  ...['oo', 'ou', 'oi', 'oy', 'aw', 'au', 'ew'].map((g) => ({ g, sound: g, stage: 7 as StageId })),
 ]
 
 /** 단모음 5개와 대표 소리 — 단계 1을 다섯 묶음으로 나눈다 */

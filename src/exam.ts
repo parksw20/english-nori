@@ -130,6 +130,63 @@ export const EXAMS: ExamSpec[] = [
     total: 20,
     pass: 14,
   },
+  {
+    stage: 5,
+    title: '긴모음 마을 시험',
+    parts: [
+      { type: 'word-listen', count: 7 },
+      { type: 'word-picture', count: 7 },
+      { type: 'missing-chunk', count: 6 },
+    ],
+    total: 20,
+    pass: 14,
+  },
+  {
+    stage: 6,
+    title: 'r모음 마을 시험',
+    parts: [
+      { type: 'word-listen', count: 7 },
+      { type: 'word-picture', count: 7 },
+      { type: 'missing-chunk', count: 6 },
+    ],
+    total: 20,
+    pass: 14,
+  },
+  {
+    stage: 7,
+    title: '이중모음 마을 시험',
+    parts: [
+      { type: 'word-listen', count: 7 },
+      { type: 'word-picture', count: 7 },
+      { type: 'missing-chunk', count: 6 },
+    ],
+    total: 20,
+    pass: 14,
+  },
+  // 단계 8·9는 **새 소리를 배우는 마을이 아니다** → 빈칸 문제를 낼 자리가 없다.
+  // 긴낱말 마을은 아는 조각으로 쪼개 읽는 연습이고, 예외 마을은 통째로 익히는 낱말이라
+  // 둘 다 "듣고 고르기 · 그림 보고 고르기"로만 묻는다.
+  {
+    stage: 8,
+    title: '긴낱말 마을 시험',
+    parts: [
+      { type: 'word-listen', count: 10 },
+      { type: 'word-picture', count: 10 },
+    ],
+    total: 20,
+    pass: 14,
+  },
+  {
+    stage: 9,
+    title: '예외 마을 시험',
+    // 그림으로 물을 수 있는 낱말이 적다(숫자와 기능어가 많은 마을이다) → 듣기를 더 낸다
+    parts: [
+      { type: 'word-listen', count: 12 },
+      { type: 'word-picture', count: 8 },
+    ],
+    total: 20,
+    pass: 14,
+  },
 ]
 
 // 구성표가 스스로 어긋나 있으면 즉시 알린다 (한자놀이와 같은 방식)
@@ -211,12 +268,31 @@ function poolsFor(stage: StageId): Pools {
     cvc: cvcWordsUpTo(stage),
     pics: picturableUpTo(stage),
     picCvc: picturableCvcUpTo(stage),
-    focus,
-    focusPics: focus.filter((w) => !w.abstract),
+    focus: padTo(focus, readable, 20),
+    // 시험 한 판이 20문항이다 → **듣기 문제가 그림 낱말을 다 써 버려도** 그림 문제가 겹치지 않으려면
+    // 그림 풀도 20개는 있어야 한다 (장부는 유형 사이에서 공유된다)
+    focusPics: padTo(
+      focus.filter((w) => !w.abstract),
+      readable.filter((w) => !w.abstract),
+      20
+    ),
     readable,
     chunks: GRAPHEMES.filter((g) => g.stage === stage).map((g) => g.g),
     stage,
   }
+}
+
+/**
+ * 풀이 문항 수보다 얇으면 **앞 마을 낱말로 채운다**.
+ *
+ * 예외 마을은 낱말이 21개인데 그림으로 물 수 있는 것이 11개뿐이라(숫자·기능어가 많다)
+ * 그림 문제 8개를 뽑는 동안 풀이 바닥나 **같은 그림이 두 번 나왔다**(검증에서 실제로 봤다).
+ * 앞 마을 낱말이 조금 섞이는 것은 복습이라 손해가 아니고, 같은 문제가 두 번 나오는 것은 손해다.
+ */
+function padTo(main: Word[], extra: Word[], want: number): Word[] {
+  if (main.length >= want) return main
+  const have = new Set(main.map((w) => w.en))
+  return [...main, ...extra.filter((w) => !have.has(w.en))].slice(0, Math.max(want, main.length))
 }
 
 function pick<T>(arr: readonly T[], rng: () => number): T {

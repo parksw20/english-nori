@@ -25,7 +25,18 @@ function miniButton(emoji: string, label: string, onClick: () => void): HTMLButt
 }
 
 /** 마을 아이콘 */
-const VILLAGE_EMOJI: Record<number, string> = { 0: '🔤', 1: '🏡', 2: '🧱', 3: '🌉', 4: '🪄', 5: '⛰️', 6: '🏰' }
+const VILLAGE_EMOJI: Record<number, string> = {
+  0: '🔤',
+  1: '🏡',
+  2: '🧱',
+  3: '🌉',
+  4: '🪄',
+  5: '🌾',
+  6: '⛰️',
+  7: '🌊',
+  8: '🏙️',
+  9: '🏰',
+}
 
 export interface MapActions {
   onVillage: (stage: StageId) => void

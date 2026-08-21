@@ -30,12 +30,19 @@ export function showManual(onBack: () => void): void {
     top('놀이 방법 📘', onBack),
     el('div', { class: 'en-man' }, [
       block('🗺️', '마을과 시험', [
-        `마을은 소리를 배우는 순서예요: ${STAGE_NAMES[0]} → ${STAGE_NAMES[1]} → ${STAGE_NAMES[2]} → ${STAGE_NAMES[3]} → ${STAGE_NAMES[4]}.`,
+        `마을은 소리를 배우는 순서예요 (모두 10곳): ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          .map((s) => STAGE_NAMES[s as 0])
+          .join(' → ')}.`,
         '지도에서 **옆으로 밀면** 다음 마을이 보여요. 지금 있는 마을은 테두리가 켜져 있어요.',
         '마을 시험에 합격하면 다음 마을이 열려요.',
         '🧱 쌍자음 마을 — 자음이 붙어 나는 소리 (so**ck** · ba**ll** · ha**nd** · **bl**ack).',
         '🌉 두글자소리 마을 — 두 글자가 **한 소리**가 돼요 (**sh**ip · **ch**ips · ba**th** · si**ng**).',
         '🪄 마법의 e 마을 — 끝의 e는 소리가 없지만 **앞 모음을 자기 이름으로** 바꿔요 (cap→cape, kit→kite).',
+        '🌾 긴모음 마을 — 모음 둘이 팀이 돼요 (tr**ai**n · b**ee** · b**oa**t · n**igh**t).',
+        '⛰️ r모음 마을 — r이 앞 모음을 삼켜요 (c**ar** · b**ir**d · teach**er**).',
+        '🌊 이중모음 마을 — 소리가 미끄러져요 (b**oo**k · h**ou**se · t**oy** · dr**aw**).',
+        '🏙️ 긴낱말 마을 — 긴 낱말은 **아는 낱말 두 개**예요 (play+ground · water+melon).',
+        '🏰 예외 마을 — 규칙대로 읽으면 틀리는 낱말이에요 (one · eight · people). 통째로 익혀요.',
         exam0 ? `${STAGE_NAMES[0]} 시험: ${exam0.total}문제 중 ${exam0.pass}개를 맞히면 합격.` : '',
         exam1 ? `${STAGE_NAMES[1]} 시험: ${exam1.total}문제 중 ${exam1.pass}개를 맞히면 합격.` : '',
         '시험 중에는 정답을 알려주지 않아요. 끝나면 틀린 낱말을 모아서 다시 들려줘요.',

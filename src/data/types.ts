@@ -7,10 +7,10 @@
  * "단계 침범" 검사가 성립하기 때문**이다. sock의 `ck`가 단계 2라는 사실을 표가 알고 있어야
  * 단계 1 낱말에 sock이 섞여 든 것을 테스트가 잡아낸다.
  */
-export type StageId = 0 | 1 | 2 | 3 | 4 | 5 | 6
+export type StageId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
-/** 지금 만들어 둔 마지막 단계 (MVP: 알파벳 + 단모음 CVC) */
-export const MAX_STAGE: StageId = 4
+/** 지금 만들어 둔 마지막 단계 — 마을 10개 (알파벳 → 예외 낱말) */
+export const MAX_STAGE: StageId = 9
 
 /** 단모음 5개 — 단계 1의 하위 묶음 */
 export type ShortVowel = 'a' | 'e' | 'i' | 'o' | 'u'
