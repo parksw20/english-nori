@@ -25,7 +25,7 @@ function miniButton(emoji: string, label: string, onClick: () => void): HTMLButt
 }
 
 /** 마을 아이콘 */
-const VILLAGE_EMOJI: Record<number, string> = { 0: '🔤', 1: '🏡' }
+const VILLAGE_EMOJI: Record<number, string> = { 0: '🔤', 1: '🏡', 2: '🧱', 3: '🌉', 4: '🪄', 5: '⛰️', 6: '🏰' }
 
 export interface MapActions {
   onVillage: (stage: StageId) => void
@@ -84,34 +84,55 @@ function goalBar(stage: StageId): HTMLElement {
   ])
 }
 
-/** 지도 — 마을을 고른다. 앞 마을 시험에 합격해야 다음 마을이 열린다 */
+/**
+ * 지도 — 마을이 **길을 따라 오른쪽으로** 늘어서고, 손가락으로 밀어서 본다.
+ *
+ * 세로 목록이던 것을 바꿨다. 마을이 둘일 때는 목록이어도 됐지만 다섯이 되면
+ * 목록은 "할 일 목록"처럼 보이고, 어디까지 왔는지가 안 보인다.
+ * 길을 따라 옆으로 가는 모양이면 **지나온 마을과 앞으로 갈 마을**이 한눈에 보이고,
+ * 잠긴 마을이 오른쪽에 있다는 것 자체가 다음 목표가 된다.
+ *
+ * 카드를 정사각형으로 두는 이유: 한 화면에 여러 마을이 들어오면서도 그림이 충분히 커야 한다.
+ */
 export function showMap(a: MapActions): void {
   const villages: Node[] = []
+  const top_ = progress.topUnlockedStage()
   for (let s = 0 as StageId; s <= MAX_STAGE; s = (s + 1) as StageId) {
     const unlocked = progress.isUnlocked(s)
     const words = wordsUpTo(s).length
     const learned = srs.summary(wordsUpTo(s).map((w) => w.en)).learned
+    const here = unlocked && s === top_
+    // 마을 사이의 길 — 지나온 길은 진하고 앞으로 갈 길은 흐리다
+    if (s > 0) villages.push(el('span', { class: `en-road${unlocked ? ' en-is-open' : ''}`, 'aria-hidden': 'true' }))
     const b = el(
       'button',
-      { class: 'en-map-village', disabled: !unlocked },
+      {
+        class: `en-map-village${here ? ' en-is-here' : ''}${progress.hasCertificate(s) ? ' en-is-done' : ''}`,
+        disabled: !unlocked,
+        'data-stage': String(s),
+      },
       [
+        el('span', { class: 'en-map-no', text: `${s + 1}` }),
         el('span', { class: 'en-map-icon', text: unlocked ? (VILLAGE_EMOJI[s] ?? '🏠') : '🔒' }),
-        el('span', { class: 'en-map-name' }, [
-          `${s + 1}. ${STAGE_NAMES[s]}`,
-          el('span', {
-            class: 'en-map-meta',
-            text: unlocked ? `낱말 ${learned} / ${words} 익힘` : '앞 마을 시험에 합격하면 열려요',
-          }),
-        ]),
+        el('span', { class: 'en-map-name', text: STAGE_NAMES[s] }),
+        el('span', {
+          class: 'en-map-meta',
+          text: unlocked ? `${learned} / ${words}` : '잠김',
+        }),
         el('span', { class: 'en-map-cert', text: progress.hasCertificate(s) ? '🏅' : '' }),
       ]
     )
     if (unlocked) b.addEventListener('click', () => a.onVillage(s))
     villages.push(b)
   }
+  const road = el('div', { class: 'en-map-road' }, villages)
+  // 지금 있는 마을이 화면 밖에 있으면 아이는 자기가 어디 있는지 모른다 → 그 마을로 밀어 준다
+  queueMicrotask(() => {
+    const here = road.querySelector('.en-is-here') as HTMLElement | null
+    if (here) road.scrollLeft = Math.max(0, here.offsetLeft - road.clientWidth / 2 + here.clientWidth / 2)
+  })
 
   const p = progress.get()
-  const top_ = progress.topUnlockedStage()
   // 영어 음성이 없는 기기(음성 미설치 브라우저 등)에서는 소리 문제가 성립하지 않는다 →
   // 아이가 아니라 **부모가 읽을** 안내를 조용히 띄운다.
   const noVoice = !tts.hasVoice()
@@ -124,7 +145,7 @@ export function showMap(a: MapActions): void {
           }),
         ])
       : el('div'),
-    el('div', {}, villages),
+    road,
     goalBar(top_),
     statTiles(top_),
     // 알파벳이 먼저다 — 글자를 알아야 낱말이 읽힌다. 배우는 순서대로 놓는다

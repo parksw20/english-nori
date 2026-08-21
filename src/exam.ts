@@ -6,11 +6,11 @@
  * 합격선은 70% (한자놀이와 같은 기준).
  */
 import { choices as makeChoices, shuffle } from './distract'
-import { LETTERS, SHORT_VOWELS } from './data/phonics'
+import { GRAPHEMES, LETTERS, SHORT_VOWELS } from './data/phonics'
 import type { Letter } from './data/types'
 import type { StageId, Word } from './data/types'
 import { WORDS } from './data/words'
-import { cvcWordsUpTo, isCvc, picturableCvcUpTo, picturableUpTo, stageOf, wordsUpTo } from './phonics'
+import { cvcWordsUpTo, isCvc, picturableCvcUpTo, picturableUpTo, segment, stageOf, wordsUpTo } from './phonics'
 
 /** 문제 유형 */
 export type QuestionType =
@@ -31,6 +31,13 @@ export type QuestionType =
   | 'picture-initial'
   /** 빠진 모음 채우기 (c_t) */
   | 'missing-vowel'
+  /**
+   * 빠진 **소리 덩어리** 채우기 (so__ → ck, __ip → sh, c_ke → a).
+   *
+   * 그 마을이 가르치는 것을 정면으로 묻는 유일한 문제다. 마법의 e 마을에서는 모음 한 글자만 지운다 —
+   * `c_k_`처럼 e까지 지우면 아이가 "e가 남아 있어야 앞 모음이 이름을 말한다"는 규칙을 볼 수 없다.
+   */
+  | 'missing-chunk'
 
 export interface Question {
   type: QuestionType
@@ -88,6 +95,41 @@ export const EXAMS: ExamSpec[] = [
     total: 20,
     pass: 14,
   },
+  // 단계 2부터는 구성이 같다 — 묻는 소리만 그 마을의 것으로 바뀐다(poolsFor의 focus·chunks).
+  // 구성을 마을마다 새로 짜지 않는 이유: 아이가 시험의 모양을 외우고 있어야 소리에 집중한다.
+  {
+    stage: 2,
+    title: '쌍자음 마을 시험',
+    parts: [
+      { type: 'word-listen', count: 7 },
+      { type: 'word-picture', count: 7 },
+      { type: 'missing-chunk', count: 6 },
+    ],
+    total: 20,
+    pass: 14,
+  },
+  {
+    stage: 3,
+    title: '두글자소리 마을 시험',
+    parts: [
+      { type: 'word-listen', count: 7 },
+      { type: 'word-picture', count: 7 },
+      { type: 'missing-chunk', count: 6 },
+    ],
+    total: 20,
+    pass: 14,
+  },
+  {
+    stage: 4,
+    title: '마법의 e 마을 시험',
+    parts: [
+      { type: 'word-listen', count: 7 },
+      { type: 'word-picture', count: 7 },
+      { type: 'missing-chunk', count: 6 },
+    ],
+    total: 20,
+    pass: 14,
+  },
 ]
 
 // 구성표가 스스로 어긋나 있으면 즉시 알린다 (한자놀이와 같은 방식)
@@ -139,14 +181,41 @@ interface Pools {
   cvc: Word[]
   pics: Word[]
   picCvc: Word[]
+  /** 이 단계에서 **새로 배운 소리**가 든 낱말 — 시험의 주인공이다 */
+  focus: Word[]
+  /** focus 중 그림으로 물어도 되는 것 */
+  focusPics: Word[]
+  /** 지금 단계에서 소리 내어 읽을 수 있는 낱말 전부 — 보기(오답)를 여기서 뽑는다 */
+  readable: Word[]
+  /** 이 단계가 가르치는 글자 조각 (ck·sh·a_e…) */
+  chunks: string[]
+  stage: StageId
 }
 
+/**
+ * 단계별 낱말 묶음.
+ *
+ * 단계 0·1은 예전 그대로 CVC를 쓴다(그 마을이 가르치는 것이 곧 CVC였다).
+ * 단계 2부터는 **그 단계에서 처음 읽히게 된 낱말**(stageOf === stage)이 시험의 주인공이다 —
+ * 안 그러면 쌍자음 마을 시험에 cat·dog만 잔뜩 나와 새로 배운 것을 하나도 안 묻는다.
+ */
 function poolsFor(stage: StageId): Pools {
+  const upTo = wordsUpTo(stage)
+  const readable = stage <= 1 ? cvcWordsUpTo(stage) : upTo.filter((w) => stageOf(w.en) <= stage)
+  // **그 마을에 적어 넣은 낱말**만 주인공이다. 계산(stageOf)으로 고르면 monkey·umbrella처럼
+  // 알파벳 마을의 대표 낱말이 쌍자음 마을 시험의 정답으로 튀어나온다 — 소리로는 그 단계지만
+  // 아이가 그 마을에서 배운 낱말이 아니다
+  const focus = stage <= 1 ? cvcWordsUpTo(stage) : upTo.filter((w) => w.stage === stage)
   return {
-    pool: wordsUpTo(stage),
+    pool: upTo,
     cvc: cvcWordsUpTo(stage),
     pics: picturableUpTo(stage),
     picCvc: picturableCvcUpTo(stage),
+    focus,
+    focusPics: focus.filter((w) => !w.abstract),
+    readable,
+    chunks: GRAPHEMES.filter((g) => g.stage === stage).map((g) => g.g),
+    stage,
   }
 }
 
@@ -212,19 +281,64 @@ export function randomQuestions(
  * 낼 수 있는 유형은 낱말이 정한다: CVC가 아니면 읽기 문제를 낼 수 없으므로 첫소리 문제로 간다.
  */
 export function practiceQuestion(word: Word, stage: StageId, nth = 0, rng: () => number = Math.random): Question {
-  const readable = isCvc(word.en) && stageOf(word.en) <= stage
+  const decodable = stageOf(word.en) <= stage
+  // 빈칸 문제는 **그 낱말에 그 마을의 소리가 들어 있을 때만** 낼 수 있다
+  const chunks = GRAPHEMES.filter((g) => g.stage === stage).map((g) => g.g)
+  const blankType: QuestionType | null = isCvc(word.en)
+    ? 'missing-vowel'
+    : chunkIn(word.en, chunks)
+      ? 'missing-chunk'
+      : null
+  const readable = decodable
   // 그림으로 물을 수 없는 낱말(🐘=big, 🦁=zoo)은 그림 문제에서 빼고 소리로 묻는다.
   // 읽을 수 없는 낱말(apple·zoo)은 첫소리만 물을 수 있는데, 그림으로 알아볼 수 있으면
   // 그림→첫글자로, 아니면 듣고→첫글자로 낸다.
   const types: QuestionType[] = readable
     ? word.abstract
-      ? ['word-listen', 'missing-vowel']
-      : ['word-picture', 'word-listen', 'missing-vowel']
+      ? ['word-listen', ...(blankType ? [blankType] : [])]
+      : ['word-picture', 'word-listen', ...(blankType ? [blankType] : [])]
     : word.abstract
       ? ['letter-sound']
       : ['picture-initial']
   const type = types[nth % types.length] as QuestionType
   return makeQuestion(type, poolsFor(stage), rng, word)
+}
+
+/**
+ * 마법의 e는 보기에 `a_e`라고 쓰면 아이가 못 읽는다 — 고르는 것은 **모음 한 글자**다.
+ * 나머지 덩어리(ck·sh)는 그대로 보여준다.
+ */
+function displayChunk(chunk: string): string {
+  return chunk.includes('_') ? (chunk[0] as string) : chunk
+}
+
+/**
+ * 낱말에서 그 단계의 소리를 찾아 **빈칸으로 만든다**.
+ *
+ * `sock`+ck → `so__`(답 ck) · `ship`+sh → `__ip`(답 sh) · `cake`+a_e → `c_ke`(답 a).
+ * 낱말을 앞에서부터 쪼개며 위치를 세므로 같은 글자가 두 번 나와도 엉뚱한 자리를 지우지 않는다.
+ */
+function chunkIn(
+  word: string,
+  chunks: string[]
+): { chunk: string; answer: string; blanked: string } | null {
+  const segs = segment(word)
+  if (!segs) return null
+  let at = 0
+  for (const seg of segs) {
+    const len = seg.includes('_') ? 3 : seg.length
+    if (chunks.includes(seg)) {
+      // 마법의 e는 모음 한 글자만 지운다: cake → c_ke (e를 남겨야 규칙이 보인다)
+      const hole = seg.includes('_') ? '_' + word.slice(at + 1, at + len) : '_'.repeat(len)
+      return {
+        chunk: seg,
+        answer: displayChunk(seg) === seg ? seg : (word[at] as string),
+        blanked: word.slice(0, at) + hole + word.slice(at + len),
+      }
+    }
+    at += len
+  }
+  return null
 }
 
 function makeQuestion(
@@ -235,7 +349,7 @@ function makeQuestion(
   /** 없으면 겹침을 따지지 않는다 (연습 문제는 한 번에 하나만 만든다) */
   ledger: Ledger = newLedger()
 ): Question {
-  const { cvc, pics, picCvc } = pools
+  const { cvc, pics, focus, focusPics, readable } = pools
   /**
    * 낱말 하나를 뽑고 **그 낱말의 첫 글자도 썼다고 적는다.**
    * 글자와 낱말을 따로 세면 "ball을 듣고 b 고르기"와 "🎾ball의 첫 글자 고르기"가 같은 시험에 나온다.
@@ -296,13 +410,15 @@ function makeQuestion(
       }
     }
     case 'word-listen': {
-      const w = target ?? takeWord(cvc)
+      // 그 마을이 가르치는 낱말에서 뽑고, 헷갈릴 보기는 **읽을 수 있는 낱말 전부**에서 가져온다.
+      // 보기를 focus 안에서만 만들면 쌍자음 마을에서 네 보기가 전부 ck로 끝나 소리 대신 모양으로 찍는다
+      const w = target ?? takeWord(focus)
       return {
         type,
         show: '',
         say: w.en,
         answer: w.en,
-        choices: makeChoices(w, cvc, rng).map((c) => c.en),
+        choices: makeChoices(w, readable, rng).map((c) => c.en),
         word: w.en,
         decode: true,
       }
@@ -311,12 +427,12 @@ function makeQuestion(
       // 그림을 보고 스펠링을 고르는 문제는 **읽을 수 있는 낱말**에서만 낸다.
       // pool 전체에서 뽑으면 umbrella·orange처럼 아직 못 읽는 낱말이 정답으로 나온다.
       // 그림이 곧 문제이므로 🐘(big)처럼 그림으로 알 수 없는 낱말도 뺀다.
-      const w = target ?? takeWord(picCvc)
+      const w = target ?? takeWord(focusPics)
       return {
         type,
         show: w.emoji,
         answer: w.en,
-        choices: makeChoices(w, cvc, rng).map((c) => c.en),
+        choices: makeChoices(w, readable, rng).map((c) => c.en),
         word: w.en,
         decode: true,
       }
@@ -338,6 +454,26 @@ function makeQuestion(
         answer: first,
         choices: shuffle([first, ...wrong.map((l) => l.ch)], rng),
         word: w.en,
+      }
+    }
+    case 'missing-chunk': {
+      // 그 단계의 소리가 실제로 든 낱말만 쓴다 (chunkIn이 없으면 지울 자리가 없다)
+      const usable = focus.filter((w) => chunkIn(w.en, pools.chunks))
+      const w = target && chunkIn(target.en, pools.chunks) ? target : takeWord(usable)
+      const hit = chunkIn(w.en, pools.chunks)
+      if (!hit) throw new Error(`${w.en}에는 단계 ${pools.stage}의 소리가 없다`)
+      const others = shuffle(
+        pools.chunks.filter((c) => c !== hit.chunk),
+        rng
+      ).slice(0, 3)
+      return {
+        type,
+        show: hit.blanked,
+        say: w.en,
+        answer: hit.answer,
+        choices: shuffle([hit.answer, ...others.map(displayChunk)], rng),
+        word: w.en,
+        decode: true,
       }
     }
     case 'missing-vowel': {

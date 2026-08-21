@@ -28,12 +28,37 @@ export function segment(word: string): string[] | null {
   const out: string[] = []
   let i = 0
   while (i < w.length) {
+    // **마법의 e를 먼저 본다.** 이걸 안 보면 snake가 s·n·a·k·e로 쪼개져 단계 2 낱말이 돼 버린다 —
+    // 단모음만 배운 아이는 그 낱말을 "스나크-에"로 읽는다. 낱말 끝의 [모음][자음 하나]e만 이 규칙이다
+    const magic = magicE(w, i)
+    if (magic) {
+      out.push(magic)
+      i += 3
+      continue
+    }
     const hit = BY_LENGTH.find((g) => w.startsWith(g.g, i))
     if (!hit) return null
     out.push(hit.g)
     i += hit.g.length
   }
   return out
+}
+
+/**
+ * 낱말 **끝**의 `[모음][자음 하나]e`를 split digraph로 본다 (cake의 `a_e`).
+ *
+ * 끝에서만 보는 이유: 가운데의 e는 소리가 나는 일이 많고(seven·open), 규칙을 넓게 잡으면
+ * 멀쩡한 단모음 낱말까지 단계 4로 밀려나 단계 1에서 낼 문제가 사라진다.
+ */
+function magicE(w: string, i: number): string | null {
+  if (i + 3 !== w.length) return null
+  const [v, c, e] = [w[i], w[i + 1], w[i + 2]]
+  if (e !== 'e' || !v || !c) return null
+  if (!SHORT_VOWELS.includes(v as ShortVowel)) return null
+  // 자음 한 글자여야 한다. w·x·y는 앞 모음과 한 덩어리로 소리 나고(saw·boy),
+  // r은 앞 모음을 삼켜 버린다(here·store·more) — 그건 마법의 e가 아니라 r모음(단계 6)이다
+  if (SHORT_VOWELS.includes(c as ShortVowel) || 'wxyr'.includes(c)) return null
+  return `${v}_e`
 }
 
 /**

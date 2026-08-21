@@ -10,7 +10,7 @@
 export type StageId = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 /** 지금 만들어 둔 마지막 단계 (MVP: 알파벳 + 단모음 CVC) */
-export const MAX_STAGE: StageId = 1
+export const MAX_STAGE: StageId = 4
 
 /** 단모음 5개 — 단계 1의 하위 묶음 */
 export type ShortVowel = 'a' | 'e' | 'i' | 'o' | 'u'
@@ -33,8 +33,8 @@ export interface Word {
   ko: string
   /** 그림 — 이모지 하나. 그림이 필요 없는 기능어는 sight word 쪽에 둔다 */
   emoji: string
-  /** 이 낱말이 처음 나오는 단계 */
-  stage: 0 | 1
+  /** 이 낱말이 처음 나오는 단계 (MAX_STAGE까지) */
+  stage: StageId
   source: WordSource
   /**
    * 품사 — **문장 틀에 끼울 수 있는지**를 가른다.

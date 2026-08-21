@@ -61,6 +61,7 @@ const ASK: Record<Question['type'], string> = {
   'word-picture': '이 그림은 어떤 낱말?',
   'picture-initial': '첫 글자는 무엇일까?',
   'missing-vowel': '빈칸에 들어갈 글자는?',
+  'missing-chunk': '빈칸에 들어갈 소리는?',
 }
 
 /** 문제 판 시작 */
@@ -89,7 +90,7 @@ export function runQuiz(opts: QuizOptions): void {
       if (q.say) tts.speak(q.say, { rate: q.type === 'word-listen' ? 0.7 : 0.85 })
     }
     if (q.show) {
-      const isWord = q.type === 'missing-vowel'
+      const isWord = q.type === 'missing-vowel' || q.type === 'missing-chunk'
       showBox.append(el('span', { class: isWord ? 'en-q-word' : '', text: q.show }))
       if (q.say) {
         const sp = el('button', { class: 'en-q-speaker', 'aria-label': '다시 듣기', text: '🔊' })

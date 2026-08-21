@@ -78,21 +78,48 @@ check('모든 낱말이 그래핌으로 쪼개진다 (표에 없는 글자 조�
   assert(bad.length === 0, `쪼갤 수 없는 낱말: ${bad.join(', ')}`)
 })
 
-// ── 2. 연습량: 단계 0~1에 쓰이는 그래핌이 낱말 3개 이상에 나오는가 ──────────────
-check('단계 0~1 그래핌마다 낱말이 3개 이상 있다 (연습량)', () => {
+// ── 2. 연습량 ────────────────────────────────────────────────────────────────
+/** 낱말들에 실제로 나온 그래핌을 센다 */
+function graphemeUse(): Map<string, number> {
   const used = new Map<string, number>()
   for (const w of wordsUpTo(MAX_STAGE)) {
     const segs = segment(w.en)
     if (!segs) continue
     for (const g of new Set(segs)) used.set(g, (used.get(g) ?? 0) + 1)
   }
-  // 단계 0~1에서 실제로 가르치는 그래핌(알파벳 낱글자)만 대상
-  const target = GRAPHEMES.filter((g) => g.stage <= MAX_STAGE).map((g) => g.g)
-  const thin = target.filter((g) => (used.get(g) ?? 0) < 3)
-  // q·v·z처럼 대표 낱말이 하나뿐인 글자는 알파벳 단계의 성질이다 → 낱말 1개 이상이면 통과시키고 경고만
-  const missing = thin.filter((g) => (used.get(g) ?? 0) === 0)
+  return used
+}
+
+check('알파벳 26자마다 낱말이 있다 (연습량)', () => {
+  const used = graphemeUse()
+  const letters = GRAPHEMES.filter((g) => g.stage === 0).map((g) => g.g)
+  const missing = letters.filter((g) => (used.get(g) ?? 0) === 0)
   assert(missing.length === 0, `낱말이 하나도 없는 글자: ${missing.join(', ')}`)
+  const thin = letters.filter((g) => (used.get(g) ?? 0) < 3)
   if (thin.length) console.log(`      (참고) 낱말이 3개 미만인 글자: ${thin.map((g) => `${g}:${used.get(g) ?? 0}`).join(' ')}`)
+})
+
+/**
+ * 단계 2 이후는 **표의 그래핌을 다 가르치지 않는다.**
+ * 표에는 sp·tw·lt처럼 Starters 안에서 마땅한 낱말이 없는 것도 있고, 그것들은 시험에서
+ * **오답 보기**로만 쓰인다(빈칸 문제의 답은 낱말에서 나오므로 낱말 없는 그래핌은 답이 될 수 없다).
+ * 그래서 "표를 다 채웠나"가 아니라 **"마을마다 배울 것이 충분한가"**를 본다.
+ */
+check('마을마다 낱말과 소리가 충분하다 (단계 2~4)', () => {
+  const used = graphemeUse()
+  for (const stage of [2, 3, 4] as const) {
+    const mine = WORDS.filter((w) => w.stage === stage)
+    assert(mine.length >= 20, `단계 ${stage}: 낱말 ${mine.length}개 (20개 이상이어야)`)
+    assert(
+      mine.filter((w) => !w.abstract).length >= 15,
+      `단계 ${stage}: 그림으로 낼 수 있는 낱말 ${mine.filter((w) => !w.abstract).length}개 (15개 이상이어야)`
+    )
+    // 그 단계의 소리가 실제 낱말에 몇 가지나 나오는가 — 빈칸 문제의 정답이 될 수 있는 것들
+    // 3가지인 이유: 마법의 e 마을은 a_e·i_e·o_e뿐이다 —
+    // Starters 목록에 u_e(cube·June)와 e_e(these는 기능어) 낱말이 없다
+    const taught = GRAPHEMES.filter((g) => g.stage === stage).filter((g) => (used.get(g.g) ?? 0) > 0)
+    assert(taught.length >= 3, `단계 ${stage}: 낱말에 나오는 소리가 ${taught.length}가지 (3가지 이상이어야)`)
+  }
 })
 
 // ── 3. 어휘 정본: Starters 목록 안에 있는가 ────────────────────────────────────

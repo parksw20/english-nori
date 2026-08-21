@@ -268,20 +268,50 @@ body {
 }
 
 /* ── 지도(마을 목록) ────────────────────────────────────────────── */
+/* ── 지도: 길을 따라 오른쪽으로 늘어선 마을 ─────────────────────── */
+.en-map-road {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  /* 손가락으로 밀어서 본다. 한 마을씩 딱 멈추게(scroll-snap) 해야 반쯤 걸친 카드가 안 남는다 */
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 4px 14px;
+  margin: 4px 0;
+}
+
+/* 스크롤 막대는 아이 화면에서 눌리는 것이라 얇게 둔다 */
+.en-map-road::-webkit-scrollbar {
+  height: 6px;
+}
+
+.en-map-road::-webkit-scrollbar-thumb {
+  background: var(--en-line);
+  border-radius: 3px;
+}
+
 .en-map-village {
   color: var(--en-ink);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding: 16px;
-  margin: 12px 0;
+  justify-content: center;
+  gap: 2px;
+  /* 정사각형 — 한 화면에 여러 마을이 들어오면서도 그림이 크다 */
+  flex: 0 0 auto;
+  width: 132px;
+  height: 132px;
+  padding: 8px;
+  position: relative;
   border: 3px solid var(--en-line);
   border-radius: var(--en-radius);
   background: var(--en-card);
-  font-size: 20px;
-  text-align: left;
+  font-size: 15px;
+  text-align: center;
   cursor: pointer;
+  scroll-snap-align: center;
 }
 
 .en-map-village[disabled] {
@@ -289,24 +319,57 @@ body {
   cursor: default;
 }
 
+/* 지금 있는 마을 — 여기부터 하면 된다는 표시 */
+.en-map-village.en-is-here {
+  border-color: var(--en-brand);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--en-brand) 30%, transparent);
+}
+
+/* 마을 사이의 길. 지나온 길만 진하다 */
+.en-road {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--en-line);
+  opacity: 0.5;
+}
+
+.en-road.en-is-open {
+  background: var(--en-brand);
+  opacity: 1;
+}
+
+.en-map-no {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--en-ink-soft);
+}
+
 .en-map-icon {
-  font-size: 44px;
+  font-size: 40px;
+  line-height: 1.1;
 }
 
 .en-map-name {
-  flex: 1;
   font-weight: 700;
+  line-height: 1.2;
 }
 
 .en-map-meta {
-  display: block;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--en-ink-soft);
 }
 
 .en-map-cert {
-  font-size: 30px;
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 22px;
 }
 
 /* ── 문제 화면 ──────────────────────────────────────────────────── */

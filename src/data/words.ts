@@ -79,7 +79,7 @@ const STAGE1: Word[] = [
   { en: 'pet', ko: '반려동물', emoji: '🐕', stage: 1, source: 'starters', pos: 'noun', abstract: true }, // 🐕는 dog🐶와 같은 개다
   { en: 'ten', ko: '십', emoji: '🔟', stage: 1, source: 'number', pos: 'num' },
   // i
-  { en: 'big', ko: '큰', emoji: '🐘', stage: 1, source: 'starters', pos: 'adj', abstract: true }, // 🐘는 코끼리다
+  { en: 'big', ko: '큰', emoji: '🦕', stage: 1, source: 'starters', pos: 'adj', abstract: true }, // 🦕는 공룡이다 (🐘는 단계 3 elephant가 쓴다)
   { en: 'kid', ko: '아이', emoji: '🧒', stage: 1, source: 'starters', pos: 'noun' },
   { en: 'sit', ko: '앉다', emoji: '🪑', stage: 1, source: 'starters', pos: 'verb', abstract: true }, // 🪑는 의자다
   { en: 'six', ko: '여섯', emoji: '6️⃣', stage: 1, source: 'number', pos: 'num' },
@@ -96,7 +96,127 @@ const STAGE1: Word[] = [
   { en: 'run', ko: '달리다', emoji: '🏃', stage: 1, source: 'starters', pos: 'verb' },
 ]
 
-export const WORDS: Word[] = [...STAGE0, ...STAGE1]
+/**
+ * 단계 2 — **쌍자음 마을**. 자음 두 개가 붙어 나는 소리(ck·ll·ss·nd·nk·mp·st·gr…).
+ *
+ * 단모음까지 배운 아이가 다음에 부딪히는 벽이다: sock을 s·o·c·k로 읽으려 하면 소리가 안 맞는다.
+ * 낱말은 Starters 표제어 안에서 **그 단계까지 배운 글자만으로 읽히는 것**만 골랐다
+ * (zebra는 목록에 있지만 e를 이름소리로 읽어야 해서 뺐다 — 단계 침범이다).
+ */
+const STAGE2: Word[] = [
+  // ck·ll·ss·pp·dd — 같은 글자가 겹친 소리
+  { en: 'sock', ko: '양말', emoji: '🧦', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'clock', ko: '시계', emoji: '🕐', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'duck', ko: '오리', emoji: '🦆', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'truck', ko: '트럭', emoji: '🚚', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'doll', ko: '인형', emoji: '🪆', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'wall', ko: '벽', emoji: '🧱', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'dress', ko: '원피스', emoji: '👗', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'glasses', ko: '안경', emoji: '👓', stage: 2, source: 'starters', pos: 'noun', plural: true },
+  { en: 'happy', ko: '행복한', emoji: '😊', stage: 2, source: 'starters', pos: 'adj' },
+  { en: 'teddy', ko: '곰인형', emoji: '🧸', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'hippo', ko: '하마', emoji: '🦛', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'tennis', ko: '테니스', emoji: '🎾', stage: 2, source: 'starters', pos: 'noun' },
+  // nd·nk·lk — 자음이 이어지는 끝소리
+  { en: 'hand', ko: '손', emoji: '✋', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'sand', ko: '모래', emoji: '🏖️', stage: 2, source: 'starters', pos: 'noun', abstract: true }, // 🏖️는 바닷가다
+  { en: 'handbag', ko: '손가방', emoji: '👜', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'candy', ko: '사탕', emoji: '🍬', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'pink', ko: '분홍', emoji: '🩷', stage: 2, source: 'starters', pos: 'adj' },
+  { en: 'drink', ko: '마시다', emoji: '🥤', stage: 2, source: 'starters', pos: 'verb', abstract: true }, // 🥤는 음료다
+  { en: 'milk', ko: '우유', emoji: '🥛', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'donkey', ko: '당나귀', emoji: '🫏', stage: 2, source: 'starters', pos: 'noun' },
+  // 첫소리 자음 덩어리 — bl·cl·dr·fr·gr·sm·st·sw·tr
+  { en: 'black', ko: '검정', emoji: '⬛', stage: 2, source: 'starters', pos: 'adj' },
+  { en: 'clap', ko: '박수치다', emoji: '👏', stage: 2, source: 'starters', pos: 'verb' },
+  { en: 'frog', ko: '개구리', emoji: '🐸', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'grandma', ko: '할머니', emoji: '👵', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'grandpa', ko: '할아버지', emoji: '👴', stage: 2, source: 'starters', pos: 'noun' },
+  { en: 'small', ko: '작은', emoji: '🐜', stage: 2, source: 'starters', pos: 'adj', abstract: true }, // 🐜는 개미다
+  { en: 'stop', ko: '멈추다', emoji: '🛑', stage: 2, source: 'starters', pos: 'verb' },
+  { en: 'swim', ko: '수영하다', emoji: '🏊', stage: 2, source: 'starters', pos: 'verb' },
+  { en: 'basketball', ko: '농구', emoji: '🏀', stage: 2, source: 'starters', pos: 'noun' },
+]
+
+/**
+ * 단계 3 — **두글자소리 마을**. 두 글자가 모여 **한 소리**가 되는 것(sh·ch·th·wh·ph·ng).
+ *
+ * 단계 2의 자음 덩어리와 헷갈리기 쉬워 순서가 중요하다: st는 두 소리(스+트)지만 sh는 한 소리(쉬)다.
+ */
+const STAGE3: Word[] = [
+  // sh
+  { en: 'ship', ko: '배', emoji: '🚢', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'shop', ko: '가게', emoji: '🏪', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'shell', ko: '조개껍데기', emoji: '🐚', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'fishing', ko: '낚시', emoji: '🎣', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'jellyfish', ko: '해파리', emoji: '🪼', stage: 3, source: 'starters', pos: 'noun' },
+  // ch
+  { en: 'chicken', ko: '닭', emoji: '🐔', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'chips', ko: '감자튀김', emoji: '🍟', stage: 3, source: 'starters', pos: 'noun', plural: true },
+  { en: 'lunch', ko: '점심', emoji: '🍱', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'kitchen', ko: '부엌', emoji: '🍳', stage: 3, source: 'starters', pos: 'noun', abstract: true }, // 🍳는 요리다
+  { en: 'watch', ko: '손목시계', emoji: '⌚', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'catch', ko: '잡다', emoji: '🧤', stage: 3, source: 'starters', pos: 'verb', abstract: true }, // 🧤는 장갑이다
+  { en: 'child', ko: '아이', emoji: '👦', stage: 3, source: 'starters', pos: 'noun', abstract: true }, // kid🧒와 뜻이 겹친다 — 그림으로는 못 가른다
+  { en: 'children', ko: '아이들', emoji: '👫', stage: 3, source: 'starters', pos: 'noun', plural: true, abstract: true },
+  // th·wh
+  { en: 'bath', ko: '목욕', emoji: '🛁', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'thanks', ko: '고마워', emoji: '🙏', stage: 3, source: 'starters', pos: 'other', abstract: true },
+  // ph
+  { en: 'photo', ko: '사진', emoji: '📷', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'elephant', ko: '코끼리', emoji: '🐘', stage: 3, source: 'starters', pos: 'noun' },
+  // ng
+  { en: 'song', ko: '노래', emoji: '🎵', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'sing', ko: '노래하다', emoji: '🎤', stage: 3, source: 'starters', pos: 'verb', abstract: true }, // 🎤는 마이크다
+  { en: 'long', ko: '긴', emoji: '📏', stage: 3, source: 'starters', pos: 'adj', abstract: true }, // 📏는 자다
+  { en: 'mango', ko: '망고', emoji: '🥭', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'evening', ko: '저녁', emoji: '🌆', stage: 3, source: 'starters', pos: 'noun' },
+  { en: 'angry', ko: '화난', emoji: '😠', stage: 3, source: 'starters', pos: 'adj' },
+  { en: 'clothes', ko: '옷', emoji: '👕', stage: 3, source: 'starters', pos: 'noun', plural: true },
+]
+
+/**
+ * 단계 4 — **마법의 e 마을**. 낱말 끝의 e가 소리를 내지 않고 **앞 모음을 자기 이름으로 바꾼다**
+ * (cap→cape, kit→kite). 아이가 처음 만나는 "규칙이 규칙을 바꾸는" 자리다.
+ *
+ * here·store처럼 e 앞이 r인 것은 넣지 않는다 — r이 모음을 삼켜 소리가 달라진다(단계 6).
+ */
+const STAGE4: Word[] = [
+  // a_e
+  { en: 'cake', ko: '케이크', emoji: '🍰', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'snake', ko: '뱀', emoji: '🐍', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'plane', ko: '비행기', emoji: '✈️', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'grape', ko: '포도', emoji: '🍇', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'game', ko: '게임', emoji: '🎮', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'face', ko: '얼굴', emoji: '😀', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'wave', ko: '파도', emoji: '🌊', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'name', ko: '이름', emoji: '🏷️', stage: 4, source: 'starters', pos: 'noun', abstract: true },
+  { en: 'lemonade', ko: '레모네이드', emoji: '🍋', stage: 4, source: 'starters', pos: 'noun', abstract: true }, // 🍋는 레몬이다
+  { en: 'classmate', ko: '반 친구', emoji: '🧑‍🤝‍🧑', stage: 4, source: 'starters', pos: 'noun', abstract: true },
+  // i_e
+  { en: 'bike', ko: '자전거', emoji: '🚲', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'rice', ko: '밥', emoji: '🍚', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'ice', ko: '얼음', emoji: '🧊', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'juice', ko: '주스', emoji: '🧃', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'lime', ko: '라임', emoji: '🍈', stage: 4, source: 'starters', pos: 'noun', abstract: true }, // 🍈는 멜론이다
+  { en: 'mice', ko: '쥐들', emoji: '🐭', stage: 4, source: 'starters', pos: 'noun', plural: true },
+  { en: 'smile', ko: '미소', emoji: '🙂', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'crocodile', ko: '악어', emoji: '🐊', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'write', ko: '쓰다', emoji: '✍️', stage: 4, source: 'starters', pos: 'verb' },
+  { en: 'ride', ko: '타다', emoji: '🚴', stage: 4, source: 'starters', pos: 'verb', abstract: true }, // 🚴는 자전거 타는 사람 — bike와 겹친다
+  { en: 'drive', ko: '운전하다', emoji: '🚗', stage: 4, source: 'starters', pos: 'verb', abstract: true }, // 🚗는 자동차다
+  { en: 'nice', ko: '좋은', emoji: '👍', stage: 4, source: 'starters', pos: 'adj', abstract: true },
+  { en: 'time', ko: '시간', emoji: '⏰', stage: 4, source: 'starters', pos: 'noun', abstract: true }, // ⏰는 시계 — clock와 겹친다
+  // o_e·u_e
+  { en: 'phone', ko: '전화', emoji: '📱', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'home', ko: '집', emoji: '🏠', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'close', ko: '닫다', emoji: '🚪', stage: 4, source: 'starters', pos: 'verb', abstract: true }, // 🚪는 문이다
+  { en: 'chocolate', ko: '초콜릿', emoji: '🍫', stage: 4, source: 'starters', pos: 'noun' },
+  { en: 'white', ko: '흰색', emoji: '⬜', stage: 4, source: 'starters', pos: 'adj' },
+  { en: 'page', ko: '쪽', emoji: '📄', stage: 4, source: 'starters', pos: 'noun', abstract: true },
+]
+
+export const WORDS: Word[] = [...STAGE0, ...STAGE1, ...STAGE2, ...STAGE3, ...STAGE4]
 
 /**
  * 활용형 → 목록 표제어.
