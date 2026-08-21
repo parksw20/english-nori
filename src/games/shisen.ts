@@ -43,6 +43,17 @@ import { el, notice, render, top } from '../ui'
 /** 짝을 잘못 고를 수 있는 횟수 */
 const CHANCES = 5
 
+/**
+ * 섞기 횟수 제한.
+ *
+ * 무제한이면 아이가 **찾는 대신 섞는다** — 막히면 눈으로 훑기 전에 섞기를 누르는 것이 늘 더 싸다.
+ * 5번이면 답답할 때 쓰기에 충분하고, 습관이 될 만큼 넉넉하지도 않다.
+ *
+ * **길이 다 막혀 저절로 섞이는 것은 세지 않는다.** 그건 아이가 고른 것이 아니라 판이 만든 사정이고,
+ * 여기에 값을 매기면 잘 골라서 판이 막힌 아이가 벌을 받는 꼴이 된다.
+ */
+const MAX_SHUFFLES = 5
+
 export const SIZES = [
   { id: 's', label: '작은 판', rows: 4, cols: 6, tiles: 24 },
   { id: 'm', label: '중간 판', rows: 6, cols: 6, tiles: 36 },
@@ -87,6 +98,13 @@ export interface ShisenResult {
   /** 판을 다 비웠는가 (기회를 다 써서 끝난 것과 구별한다) */
   allCleared: boolean
   shuffles: number
+  /** 남은 하트 — 보상 카드 장수가 이 값으로 정해진다 */
+  hearts: number
+  /**
+   * 판이 왜 끝났나. 하트가 남았는데 섞기가 막혀 끝난 판을 "기회를 다 썼어요"라고 하면
+   * 아이가 자기가 뭘 잘못했는지 잘못 배운다 — 그건 판 사정이지 아이 잘못이 아니다.
+   */
+  reason: 'cleared' | 'noHearts' | 'blocked'
   words: string[]
 }
 
@@ -116,6 +134,7 @@ export function runShisen(stage: StageId, onQuit: () => void, onDone: (r: Shisen
   const started = Date.now()
   let selected: Pos | null = null
   let shuffles = 0
+  let shufflesLeft = MAX_SHUFFLES
   let busy = false
   let chances = CHANCES
   /**
@@ -271,7 +290,7 @@ export function runShisen(stage: StageId, onQuit: () => void, onDone: (r: Shisen
     if (isCleared(board)) {
       sfx.fanfare()
       busy = true
-      setTimeout(() => finish(true), 1100)
+      setTimeout(() => finish('cleared'), 1100)
       return
     }
 
@@ -279,15 +298,18 @@ export function runShisen(stage: StageId, onQuit: () => void, onDone: (r: Shisen
     if (!findMove(board)) blockedAndShuffle()
   }
 
-  function finish(allCleared: boolean): void {
+  function finish(reason: ShisenResult['reason']): void {
     busy = true
     stopAll()
+    const allCleared = reason === 'cleared'
     onDone({
+      reason,
       seconds: Math.round((Date.now() - started) / 1000),
       pairs: TILES / 2,
       cleared: TILES / 2 - pairsLeft(),
       allCleared,
       shuffles,
+      hearts: Math.max(0, chances),
       words: chosen.map((w) => w.en),
     })
   }
@@ -297,31 +319,62 @@ export function runShisen(stage: StageId, onQuit: () => void, onDone: (r: Shisen
     busy = true
     notice('💔', '기회를 다 썼어요!', `${TILES / 2 - pairsLeft()}쌍을 없앴어요 — 한 번 더 해 볼까?`, {
       ms: 1800,
-      onClose: () => finish(false),
+      onClose: () => finish('noHearts'),
     })
   }
 
   /**
    * 이을 수 있는 짝이 하나도 없을 때. 안내창을 띄우고 **자동으로 섞는다.**
    * 섞기를 먼저 해 두는 이유: 안내창이 반투명이라 뒤에서 판이 새로 깔리는 것이 보인다.
+   *
+   * 섞기를 다 썼는데 길까지 막혔다면 판을 더 이어갈 방법이 없다 → 판을 여기서 끝낸다.
+   * (몰래 한 번 더 섞어 주면 제한이 거짓말이 되고, 그대로 두면 아이가 못 누르는 판을 붙들고 있게 된다)
    */
   function blockedAndShuffle(): void {
-    autoShuffle('길이 다 막혀서 섞었어! 🔀')
-    notice('🔀', '이을 수 있는 길이 없어요!', '카드를 섞어 줄게요 — 다시 찾아 보자', { ms: 2000 })
+    // 섞고 나서도 막혀 있을 수 있다(우연히 또 막히게 깔린다) → 길이 생길 때까지 다시 섞는다.
+    // 이건 **공짜**다: 남은 섞기를 깎지 않는다
+    for (let i = 0; i < 8; i++) {
+      autoShuffle('길이 다 막혀서 섞었어! 🔀', 'free')
+      if (findMove(board)) {
+        notice('🔀', '이을 수 있는 길이 없어요!', '카드를 섞어 줄게요 — 다시 찾아 보자 (섞기는 안 줄어요)', { ms: 2000 })
+        return
+      }
+    }
+    // 여기까지 오는 판은 사실상 없다. 그래도 아이를 못 누르는 판에 남겨 두지는 않는다
+    busy = true
+    notice('🧱', '이을 수 있는 길이 없어요!', '이 판은 여기까지 — 새 판으로 다시 해 볼까?', {
+      ms: 2200,
+      onClose: () => finish('blocked'),
+    })
   }
 
-  function autoShuffle(message: string): void {
+  /**
+   * 섞는다. `'paid'`(아이가 섞기 버튼을 누른 것)만 남은 횟수를 깎는다.
+   * `'free'`는 길이 다 막혀 게임이 스스로 섞는 것 — 아이 잘못이 아니므로 값을 매기지 않는다.
+   */
+  function autoShuffle(message: string, cost: 'paid' | 'free' = 'paid'): void {
+    if (cost === 'paid' && shufflesLeft <= 0) return
     reshuffle(board)
     shuffles++
+    if (cost === 'paid') shufflesLeft--
     selected = null
     say.textContent = message
     say.className = 'en-q-say en-again'
+    paintShuffleBtn()
     paint()
   }
 
-  const shuffleBtn = el('button', { class: 'en-shisen-shuffle', text: '🔀 섞기' })
+  const shuffleBtn = el('button', { class: 'en-shisen-shuffle' })
+
+  /** 남은 횟수를 버튼에 적는다 — 아이가 누르기 전에 몇 번 남았는지 보이게 */
+  function paintShuffleBtn(): void {
+    shuffleBtn.textContent = shufflesLeft > 0 ? `🔀 섞기 (${shufflesLeft}번 남음)` : '🔀 섞기 다 썼어요'
+    shuffleBtn.disabled = shufflesLeft <= 0
+  }
+
   shuffleBtn.addEventListener('click', () => {
-    if (!busy) autoShuffle('섞었어! 🔀')
+    if (busy || shufflesLeft <= 0) return
+    autoShuffle(`섞었어! 🔀 (${shufflesLeft - 1}번 남음)`)
   })
 
   // 판 크기 고르기 — 누르면 그 크기로 새 판을 깐다(진행 중인 판은 버린다)
@@ -354,6 +407,7 @@ export function runShisen(stage: StageId, onQuit: () => void, onDone: (r: Shisen
     ])
   )
   grid.style.setProperty('--en-cols', String(cols))
+  paintShuffleBtn()
   paint()
 
   // 큰 판은 타일이 작아진다 — 폰에서 고르면 그 사실을 알려 준다(막지는 않는다)
@@ -367,6 +421,12 @@ export function runShisen(stage: StageId, onQuit: () => void, onDone: (r: Shisen
       board,
       paint,
       chances: () => chances,
+      shufflesLeft: () => shufflesLeft,
+      /** 섞기를 n번 써 버린다 (제한에 걸린 상태를 검증하려고) */
+      useShuffles: (n: number) => {
+        for (let i = 0; i < n; i++) autoShuffle('검증용 섞기')
+      },
+      findMove: () => !!findMove(board),
       /** 지금 막혀 있으면 안내창을 띄우고 섞는다 (게임이 스스로 하는 것과 같은 경로) */
       checkBlocked: () => {
         if (findMove(board)) return false

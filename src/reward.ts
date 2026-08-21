@@ -63,3 +63,19 @@ export function examRewardCount(score: number, total: number, pass: number, firs
   const extra = span <= 0 ? 10 : Math.floor(((score - pass) / span) * 10)
   return base + extra
 }
+
+/**
+ * 사천성 보상 — **남은 하트(기회)로만** 정한다.
+ *
+ *   하트 5개 → 3장 · 3~4개 → 2장 · 1~2개 → 1장 · 0개 → 없음
+ *
+ * 판 크기로 주던 것을 바꿨다. 큰 판을 고르는 것은 아이가 잘해서가 아니라 그냥 고른 것이라
+ * 노력과 보상이 어긋났다. 하트는 **틀린 짝을 고를 때만** 줄어드니 "조심해서 잘 골랐다"와 정확히 같은 값이고,
+ * 하트가 화면 위에 내내 떠 있어서 아이가 보상이 줄어드는 것을 실시간으로 본다.
+ */
+export function shisenRewardCount(hearts: number): number {
+  if (hearts >= 5) return 3
+  if (hearts >= 3) return 2
+  if (hearts >= 1) return 1
+  return 0
+}

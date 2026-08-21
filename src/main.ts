@@ -23,7 +23,7 @@ import { runQuiz } from './quiz'
 import * as sfx from './sfx'
 import * as srs from './srs'
 import * as tts from './tts'
-import { pickRewards, examRewardCount } from './reward'
+import { pickRewards, examRewardCount, shisenRewardCount } from './reward'
 import { el, letterCards } from './ui'
 import { showAbc } from './abc'
 import { showManual } from './manual'
@@ -150,6 +150,8 @@ function startGame(id: GameId): void {
       const best = r.allCleared && progress.recordBestTime('shisen', r.seconds)
       const prev = progress.bestTimeOf('shisen')
       const shuffleNote = r.shuffles ? ` · 섞기 ${r.shuffles}번` : ''
+      // 보상은 **남은 하트**로만 정한다 (판 크기가 아니라 얼마나 조심해서 골랐는가)
+      const heartNote = r.hearts > 0 ? ` · 하트 ${r.hearts}개 남음` : ''
       showResult({
         emoji: r.allCleared ? '🀄' : '💔',
         title: best
@@ -158,10 +160,14 @@ function startGame(id: GameId): void {
             ? '판을 다 비웠어요!'
             : `${r.cleared}쌍을 없앴어요`,
         score: r.allCleared
-          ? `${r.pairs}쌍 · ${r.seconds}초${shuffleNote}${!best && prev !== null ? ` (최고 ${prev}초)` : ''}`
-          : `${r.cleared} / ${r.pairs}쌍${shuffleNote} — 기회 5번을 다 썼어요`,
-        // 판을 다 비우면 2장 (큰 판은 3장). 기회를 다 썼으면 없다
-        extra: grantCards(r.allCleared ? (r.pairs >= 32 ? 3 : 2) : 0),
+          ? `${r.pairs}쌍 · ${r.seconds}초${shuffleNote}${heartNote}${!best && prev !== null ? ` (최고 ${prev}초)` : ''}`
+          : `${r.cleared} / ${r.pairs}쌍${shuffleNote} — ${
+              r.reason === 'blocked' ? '섞기를 다 썼는데 길이 막혔어요' : '기회를 다 썼어요'
+            }`,
+        // 하트 5개 → 3장 · 3~4개 → 2장 · 1~2개 → 1장.
+        // **판을 다 비운 판만** 준다 — 중간에 끝난 판에 하트가 남았다고 카드를 주면
+        // 한 쌍도 못 없앤 판이 3장을 받는다(섞기 막힘 검증에서 실제로 그렇게 나왔다)
+        extra: grantCards(r.allCleared ? shisenRewardCount(r.hearts) : 0),
         onAgain: () => startGame('shisen'),
         onBack: toVillage,
       })

@@ -27,7 +27,7 @@ export {}
 // **동적 import를 쓰는 이유**: cards/prefs가 모듈을 읽는 순간 localStorage를 만진다 →
 // 위 폴리필이 먼저 실행되어야 하므로 정적 import로는 순서를 보장할 수 없다.
 const cards = await import('../src/cards')
-const { pickRewards, examRewardCount } = await import('../src/reward')
+const { pickRewards, examRewardCount, shisenRewardCount } = await import('../src/reward')
 const { cvcWordsUpTo } = await import('../src/phonics')
 
 let pass = 0
@@ -161,6 +161,17 @@ check('보상이 합격선 근처에서 몰리지 않는다 (구간이 고르게
   for (let i = 1; i < steps.length; i++) {
     assert((steps[i] ?? 0) >= (steps[i - 1] ?? 0), '점수가 올랐는데 보상이 줄었다')
   }
+})
+
+check('사천성 보상은 남은 하트로 정해진다 (5→3장 · 3~4→2장 · 1~2→1장 · 0→없음)', () => {
+  const got = [0, 1, 2, 3, 4, 5].map(shisenRewardCount)
+  assert(got.join() === '0,1,1,2,2,3', `하트 0~5개 보상: ${got.join()}`)
+  // 하트를 더 남기고도 카드가 줄어드는 일이 없어야 한다
+  for (let h = 1; h <= 5; h++) {
+    assert(shisenRewardCount(h) >= shisenRewardCount(h - 1), `하트 ${h}개가 ${h - 1}개보다 적게 받는다`)
+  }
+  // 기회를 다 쓴 판(하트 0)은 카드가 없다 — 음수로 들어와도 마찬가지
+  assert(shisenRewardCount(-1) === 0, '하트가 음수인데 카드를 준다')
 })
 
 console.log(`\n${pass}개 통과, ${fails.length}개 실패`)
