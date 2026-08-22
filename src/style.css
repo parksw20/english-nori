@@ -56,6 +56,8 @@
   --en-card-lo: #c9c9d1;
   --en-gold-line: #d4a017;
   --en-gold-ink: #7d5200;
+  /* 모음 — 교실에서 오래 쓰는 '붉은 모음'. 황금카드 위에 얹히므로 카드 밝기를 따라간다 */
+  --en-gold-vowel: #9c1c1c;
   /* ×N은 카드 아래쪽(회색) 위에 앉는다 — 그 배경 기준으로 4.5:1을 넘겨야 한다 */
   --en-gold-dim: #6b4600;
   --en-gold-glow: rgba(212, 160, 23, 0.18);
@@ -102,6 +104,7 @@
     --en-card-lo: #2c2f36;
     --en-gold-line: #f0c000;
     --en-gold-ink: #ffd75e;
+    --en-gold-vowel: #ffd0d0;
     --en-gold-dim: #cfa63a;
     --en-gold-glow: rgba(240, 192, 0, 0.14);
     --en-danger: #ff8a8a;
@@ -140,6 +143,7 @@
   --en-card-lo: #2c2f36;
   --en-gold-line: #f0c000;
   --en-gold-ink: #ffd75e;
+  --en-gold-vowel: #ffd0d0;
   --en-gold-dim: #cfa63a;
   --en-gold-glow: rgba(240, 192, 0, 0.14);
   --en-danger: #ff8a8a;
@@ -1538,7 +1542,19 @@ button.en-card:active {
 }
 
 /* ── 도감 탭 (전체 + a~z) ────────────────────────────────────────── */
+/**
+ * 알파벳 탭 줄은 **스크롤해도 위에 남는다.**
+ * 낱말이 258개가 되면서 목록이 길어졌는데, 아래로 내려간 아이가 다른 글자를 보려면
+ * 맨 위까지 되돌아 올라와야 했다.
+ */
 .en-dex-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  /* 카드가 탭 밑으로 비쳐 지나가면 글자가 겹쳐 보인다 → 바탕을 깔고 아래에 경계를 둔다 */
+  background: var(--en-bg);
+  box-shadow: 0 6px 10px -6px rgba(0, 0, 0, 0.45);
+  padding: 8px 0;
   display: grid;
   /* 27개가 한 줄로 늘어서면 가로로 넘친다 → 자동 줄바꿈 격자 */
   grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
@@ -1840,4 +1856,236 @@ button.en-card:active {
       opacity: 1;
     }
   }
+}
+
+/* ── 가로세로 퀴즈 ───────────────────────────────────────────────── */
+.en-cw-now {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin: 6px 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.en-cw-now-emoji {
+  font-size: 30px;
+}
+
+.en-cw-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--en-cw-cols), 1fr);
+  gap: 3px;
+  /* 판이 커도 화면 안에 다 들어와야 한다 — 아이는 스크롤하며 십자말을 풀지 못한다 */
+  max-width: min(94vw, 460px);
+  margin: 0 auto 10px;
+}
+
+.en-cw-blank {
+  aspect-ratio: 1;
+}
+
+.en-cw-cell {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 2px solid var(--en-line);
+  border-radius: 6px;
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: clamp(13px, 3.6vw, 22px);
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.en-cw-cell.en-is-on {
+  background: color-mix(in srgb, var(--en-brand) 18%, var(--en-card));
+}
+
+.en-cw-cell.en-is-cursor {
+  border-color: var(--en-brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--en-brand) 35%, transparent);
+}
+
+.en-cw-cell.en-is-done {
+  background: color-mix(in srgb, var(--en-good) 22%, var(--en-card));
+  border-color: var(--en-good);
+}
+
+.en-cw-no {
+  position: absolute;
+  top: 1px;
+  left: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--en-ink-soft);
+}
+
+.en-cw-pad {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 8px auto;
+  max-width: min(96vw, 460px);
+}
+
+.en-cw-padrow {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.en-cw-key {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  border: 2px solid var(--en-line);
+  border-radius: 10px;
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: 19px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.en-cw-key:active {
+  background: color-mix(in srgb, var(--en-brand) 25%, var(--en-card));
+}
+
+.en-cw-erase,
+.en-cw-hear {
+  flex: 0 0 90px;
+}
+
+.en-cw-clues {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.en-cw-cluecol {
+  flex: 1;
+  min-width: 0;
+}
+
+.en-cw-cluehead {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--en-ink-soft);
+}
+
+.en-cw-clue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 5px;
+  padding: 4px 6px;
+  border: 2px solid var(--en-line);
+  border-radius: 10px;
+  background: var(--en-card);
+  color: var(--en-ink);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.en-cw-clue.en-is-on {
+  border-color: var(--en-brand);
+}
+
+.en-cw-clue.en-is-done {
+  border-color: var(--en-good);
+  opacity: 0.75;
+}
+
+.en-cw-clueno {
+  font-weight: 800;
+  color: var(--en-ink-soft);
+}
+
+.en-cw-clueemoji {
+  font-size: 22px;
+}
+
+.en-cw-clueko {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.en-big.en-is-locked {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* ── ABC 알파벳: 모음 표시와 자판 배열 ───────────────────────────── */
+/**
+ * **모음은 다른 색이다.**
+ * 낱말에는 모음이 반드시 하나는 들어간다(파닉스의 첫 규칙) — 그런데 글자판에서 a와 b가 똑같이 생기면
+ * 아이는 그 사실을 볼 수가 없다. 교실에서 오래 쓰는 방법을 그대로 따랐다: 모음은 붉은 계열, 자음은 원래 색.
+ */
+.en-abc-mini.en-is-vowel {
+  border-color: var(--en-gold-vowel);
+}
+
+.en-abc-mini.en-is-vowel .en-abc-mini-pair {
+  color: var(--en-gold-vowel);
+  /*
+   * 색만으로 알리지 않는다 — 어두운 화면에서 모음색과 자음색은 **밝기가 같아서**(대비 1:1)
+   * 색을 못 가르는 아이에게는 두 카드가 똑같아 보인다. 밑줄은 흑백으로 봐도 남는다.
+   */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+}
+
+/* 가로세로 글자판에서도 모음은 같은 표시를 쓴다 — 같은 것은 같게 보여야 한다 */
+.en-cw-key.en-is-vowel {
+  border-color: var(--en-danger);
+  color: var(--en-danger);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+}
+
+/* 띄어쓰기는 눈에 안 보이는 글자다 → 입력 줄에서는 자리를 차지하고 밑줄로 보이게 한다 */
+.en-type-ch.en-is-space {
+  min-width: 18px;
+  color: var(--en-ink-soft);
+}
+
+/* 키보드 배열은 줄마다 글자 수가 달라 격자가 아니라 줄로 쌓는다 */
+.en-abc-grid.en-is-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.en-abc-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.en-abc-grid.en-is-keyboard .en-abc-mini {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.en-type-space {
+  /* 띄어쓰기는 눈에 안 보이는 글자다 → 글쇠라도 넓어야 "여기 뭔가 들어간다"가 보인다 */
+  min-width: 84px;
+}
+
+/* 지금 고른 배열 */
+.en-mini.en-is-sel {
+  border-color: var(--en-accent-text);
+  color: var(--en-accent-text);
+  font-weight: 800;
 }

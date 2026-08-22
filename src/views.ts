@@ -186,6 +186,7 @@ export interface VillageActions {
 }
 
 export type GameId =
+  | 'crossword'
   | 'soundhunt'
   | 'wordbuild'
   | 'intercept'
@@ -236,6 +237,23 @@ const GAMES = [
       return b > 0 ? `최고 ${b}점` : null
     },
     needsCvc: true,
+  },
+  {
+    id: 'crossword' as const,
+    emoji: '✏️',
+    name: '가로세로 퀴즈',
+    sub: '그림을 보고 칸에 낱말을 채워요',
+    best: () => {
+      // 난이도마다 기록이 따로 있다 — 가장 어려운 것부터 보여준다(자랑거리가 되는 쪽)
+      for (const id of ['hard', 'mid', 'easy'] as const) {
+        const t = progress.bestTimeOf(`crossword-${id}`)
+        if (t !== null) return `${id === 'hard' ? '고급' : id === 'mid' ? '중급' : '초급'} 최고 ${t}초`
+      }
+      return null
+    },
+    needsCvc: false,
+    /** 이 마을부터 열린다 — 철자를 처음부터 만드는 놀이라 소리를 좀 배운 뒤에 온다 */
+    minStage: 2 as StageId,
   },
   {
     id: 'shisen' as const,
@@ -307,6 +325,8 @@ export function showVillage(stage: StageId, a: VillageActions): void {
   for (const g of GAMES) {
     // 낱말 만들기·사천성·짝맞추기는 읽을 수 있는 낱말(CVC)이 6개 이상 있어야 성립한다
     if (g.needsCvc && cvcCount < 6) continue
+    // 가로세로는 3번 마을부터 — 앞 마을에서는 목록에 아예 넣지 않는다(잠긴 버튼을 늘리지 않는다)
+    if ('minStage' in g && stage < (g.minStage as number)) continue
     const record = g.best()
     // 기록이 있으면 설명 대신 기록을 보여준다 — "최고 기록!"을 본 아이가
     // 다음에 열었을 때 그 기록을 찾을 곳이 있어야 한다

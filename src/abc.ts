@@ -15,6 +15,7 @@
  * 여기는 26자가 늘 다 있고 아무것도 소모하지 않는다 — 쓰기 연습이지 보상 놀이가 아니다.
  */
 import { LETTERS } from './data/phonics'
+import * as prefs from './prefs'
 import type { StageId, Word } from './data/types'
 import * as progress from './progress'
 import { wordsUpTo } from './phonics'
@@ -51,6 +52,12 @@ function spinCard(w: Word, onEnd: () => void): void {
   setTimeout(close, 2600)
 }
 
+/** 모음 — 낱말마다 반드시 들어가는 글자라 **눈에 다르게** 보여야 한다 */
+const VOWELS = ['a', 'e', 'i', 'o', 'u']
+
+/** 어른 자판(QWERTY) 배열 — 아이가 나중에 진짜 키보드를 칠 때 자리를 미리 익힌다 */
+const KEYBOARD_ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
+
 export function showAbc(onBack: () => void, onDex?: () => void): void {
   const stage: StageId = progress.topUnlockedStage()
   const words = wordsUpTo(stage)
@@ -72,7 +79,10 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
   function paintTyped(): void {
     slots.replaceChildren(
       ...(typed.length
-        ? typed.map((ch) => el('span', { class: 'en-type-ch', text: ch }))
+        ? typed.map((ch) =>
+            // 띄어쓰기는 빈 칸이라 화면에서 폭이 0이 된다 → 눈에 보이는 기호로 대신 그린다
+            el('span', { class: `en-type-ch${ch === ' ' ? ' en-is-space' : ''}`, text: ch === ' ' ? '␣' : ch })
+          )
         : [el('span', { class: 'en-type-empty', text: '글자를 눌러 낱말을 쳐 보세요' })])
     )
     // 길게 치면 끝이 보이도록 오른쪽으로 따라간다
@@ -92,9 +102,18 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
     paintTyped()
   })
 
+  // 띄어쓰기 — ice cream처럼 두 낱말로 된 표제어를 못 치고 있었다.
+  // 「입력」 왼쪽에 두는 이유: 글자판이 아니라 **입력 줄의 도구**이기 때문이다(⌫ 옆이 제자리)
+  const space = el('button', { class: 'en-type-btn en-type-space', text: '␣ 띄기' })
+  space.addEventListener('click', () => {
+    // 맨 앞이나 연달아 두 번은 막는다 — 눈에 안 보이는 글자라 아이가 왜 안 되는지 모른다
+    if (typed.length === 0 || typed[typed.length - 1] === ' ') return
+    push(' ')
+  })
+
   const go = el('button', { class: 'en-type-btn en-type-go', text: '입력' })
   go.addEventListener('click', () => {
-    const word = typed.join('')
+    const word = typed.join('').trim()
     if (word.length === 0) return
     const hit = words.find((w) => w.en === word)
     if (!hit) {
@@ -118,22 +137,66 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
     })
   })
 
-  // ── 알파벳 판: 대문자·소문자 짝 ─────────────────────────────────
-  const boardCards = LETTERS.map((l) => {
-    const b = el('button', { class: 'en-abc-mini', 'data-letter': l.ch, 'aria-label': `${l.ch} 넣기` }, [
-      el('span', { class: 'en-abc-mini-pair', text: `${l.ch.toUpperCase()} ${l.ch}` }),
-      el('span', { class: 'en-abc-mini-name', text: l.name }),
-    ])
+  // ── 알파벳 판 ────────────────────────────────────────────────
+  const board = el('div', { class: 'en-abc-grid' })
+
+  function letterCard(ch: string): HTMLElement {
+    const l = LETTERS.find((x) => x.ch === ch)
+    const b = el(
+      'button',
+      {
+        class: `en-abc-mini${VOWELS.includes(ch) ? ' en-is-vowel' : ''}`,
+        'data-letter': ch,
+        'aria-label': `${ch}${VOWELS.includes(ch) ? ' (모음)' : ''} 넣기`,
+      },
+      [
+        el('span', { class: 'en-abc-mini-pair', text: `${ch.toUpperCase()} ${ch}` }),
+        el('span', { class: 'en-abc-mini-name', text: l?.name ?? '' }),
+      ]
+    )
     b.addEventListener('click', () => {
       // 누르면 글자를 읽어 주고 입력 줄에 쌓인다 — 누르는 것이 곧 듣는 것이어야 한다
-      tts.say(l.ch)
-      push(l.ch)
+      tts.say(ch)
+      push(ch)
     })
     return b
-  })
+  }
+
+  function paintBoard(): void {
+    const layout = prefs.get().abcLayout
+    board.className = `en-abc-grid${layout === 'keyboard' ? ' en-is-keyboard' : ''}`
+    if (layout === 'keyboard') {
+      board.replaceChildren(
+        ...KEYBOARD_ROWS.map((row) => el('div', { class: 'en-abc-row' }, [...row].map(letterCard)))
+      )
+    } else {
+      board.replaceChildren(...LETTERS.map((l) => letterCard(l.ch)))
+    }
+  }
+
+  /** 순차(A~Z) / 키보드(QWERTY) 고르기 */
+  const layoutRow = el(
+    'div',
+    { class: 'en-minirow' },
+    ([
+      ['abc', '🔤 순차', 'A부터 Z까지 차례대로'],
+      ['keyboard', '⌨️ 키보드', '어른 자판과 같은 자리'],
+    ] as const).map(([id, label, sub]) => {
+      const on = prefs.get().abcLayout === id
+      const b = el('button', { class: `en-mini${on ? ' en-is-sel' : ''}`, title: sub, text: label })
+      b.addEventListener('click', () => {
+        prefs.setAbcLayout(id)
+        // 글자판만 다시 그린다 — 화면을 통째로 다시 그리면 치던 글자가 날아간다
+        paintBoard()
+        for (const x of layoutRow.children) x.classList.toggle('en-is-sel', (x as HTMLElement).textContent === label)
+      })
+      return b
+    })
+  )
 
   const learned = srs.summary(words.map((w) => w.en)).learned
 
+  paintBoard()
   render(
     top('ABC 알파벳 🔤', onBack, `낱말 ${words.length}개`, onDex ? topLink('📖 도감', onDex) : undefined),
     el('div', {}, [
@@ -141,8 +204,9 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
         class: 'en-dex-hint',
         text: '글자를 누르면 아래에 쌓여요. 도감에 있는 낱말을 치고 「입력」을 눌러 보세요',
       }),
-      el('div', { class: 'en-abc-grid' }, boardCards),
-      el('div', { class: 'en-type-row' }, [slots, back, go]),
+      layoutRow,
+      board,
+      el('div', { class: 'en-type-row' }, [slots, space, back, go]),
       say,
       el('p', { class: 'en-dex-hint', text: `지금 도감에 ${words.length}개 · 익힌 낱말 ${learned}개` }),
     ])

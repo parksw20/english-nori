@@ -38,7 +38,16 @@ export interface Prefs {
    * "아는 사람만 통과하는" 한 단계가 필요해서 넣었다.
    */
   resetPassword: string
+  /**
+   * ABC 알파벳 글자판 배열.
+   *
+   * `abc`는 A부터 Z까지 차례대로 — 아이가 아는 순서라 글자를 **찾기** 쉽다.
+   * `keyboard`는 어른 자판(QWERTY)과 같은 자리 — 순서를 다 외운 아이가 진짜 키보드로 넘어갈 준비를 한다.
+   */
+  abcLayout: AbcLayout
 }
+
+export type AbcLayout = 'abc' | 'keyboard'
 
 export const DEFAULT_RESET_PASSWORD = '1234'
 
@@ -62,6 +71,7 @@ const DEFAULTS: Prefs = {
   interceptRamp: true,
   sentenceScoring: true,
   resetPassword: DEFAULT_RESET_PASSWORD,
+  abcLayout: 'abc',
 }
 
 let p: Prefs = load()
@@ -121,6 +131,11 @@ export function setSfxVolume(v: number): void {
 
 export function setInterceptRamp(on: boolean): void {
   p = { ...p, interceptRamp: on }
+  save()
+}
+
+export function setAbcLayout(v: AbcLayout): void {
+  p = { ...p, abcLayout: v }
   save()
 }
 

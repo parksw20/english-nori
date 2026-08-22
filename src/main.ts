@@ -12,6 +12,7 @@ import { runMatch } from './games/match'
 import { runPhrases } from './games/phrases'
 import { runSentence } from './games/sentence'
 import { runIntercept } from './games/intercept'
+import { runCrossword } from './games/crossword'
 import { runShisen } from './games/shisen'
 import { runSoundHunt } from './games/soundhunt'
 import { runSpeak } from './games/speak'
@@ -137,6 +138,27 @@ function startGame(id: GameId): void {
         // 100점마다 1장
         extra: grantCards(Math.floor(r.score / 100)),
         onAgain: () => startGame('intercept'),
+        onBack: toVillage,
+      })
+    })
+    return
+  }
+  if (id === 'crossword') {
+    runCrossword(current, toVillage, (r) => {
+      // 스스로 철자를 만든 낱말이다 — 고른 것보다 훨씬 깊게 익힌 것이라 '척척'으로 올린다
+      for (const w of r.words) srs.review(w, r.cleared ? 'easy' : 'right')
+      const best = r.cleared && progress.recordBestTime(`crossword-${r.levelId}`, r.seconds)
+      const prev = progress.bestTimeOf(`crossword-${r.levelId}`)
+      const label = r.levelId === 'hard' ? '고급' : r.levelId === 'mid' ? '중급' : '초급'
+      showResult({
+        emoji: r.cleared ? '✏️' : '🌱',
+        title: best ? `최고 기록! ${r.seconds}초` : r.cleared ? '판을 다 채웠어요!' : `${r.solved}개 채웠어요`,
+        score: r.cleared
+          ? `${label} · 낱말 ${r.total}개 · ${r.seconds}초${!best && prev !== null ? ` (최고 ${prev}초)` : ''}`
+          : `${label} · ${r.solved} / ${r.total}개 — 다음엔 다 채워 보자`,
+        // 다 채운 판만 준다: 초급 3장 · 중급 5장 · 고급 8장
+        extra: grantCards(r.reward),
+        onAgain: () => startGame('crossword'),
         onBack: toVillage,
       })
     })
