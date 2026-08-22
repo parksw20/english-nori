@@ -51,10 +51,17 @@ export interface Level {
  * 판이 커지는 만큼 낱말도 길어진다: 초급은 3~4글자만 나와서 아이가 판 전체를 한눈에 본다.
  */
 export const LEVELS: Level[] = [
-  { id: 'easy', label: '초급', stage: 2, size: 7, words: 4, maxLen: 4, reward: 3 },
-  { id: 'mid', label: '중급', stage: 3, size: 9, words: 6, maxLen: 6, reward: 5 },
-  { id: 'hard', label: '고급', stage: 4, size: 11, words: 8, maxLen: 8, reward: 8 },
+  { id: 'easy', label: '초급', stage: 2, size: 7, words: 6, maxLen: 5, reward: 3 },
+  { id: 'mid', label: '중급', stage: 3, size: 9, words: 9, maxLen: 6, reward: 5 },
+  { id: 'hard', label: '고급', stage: 4, size: 11, words: 12, maxLen: 8, reward: 8 },
 ]
+
+/*
+ * 낱말 수는 **판 크기에 맞춰 실제로 채워지는 값**으로 정했다(tools/cw-fill.mts로 30판씩 재 봤다):
+ * 7×7 6개 29/30 · 9×9 9개 24/30 · 11×11 12개 25/30.
+ * 처음엔 4·6·8개였는데 7×7에 낱말 4개는 판이 텅 비어 보였다(사용자 지적).
+ * 한 개씩 더 올리면(7·10·14) 성공률이 17·6·4/30으로 급락한다 — 겹칠 글자가 모자라서다.
+ */
 
 export function levelOf(id: string): Level {
   const l = LEVELS.find((x) => x.id === id)

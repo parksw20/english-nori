@@ -96,6 +96,27 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
 
   const grid = el('div', { class: 'en-cw-grid' })
   grid.style.setProperty('--en-cw-cols', String(puzzle.cols))
+
+  /**
+   * 칸 크기를 **줄 수에 맞춰 계산한다.**
+   *
+   * 판 폭만 고정해 두었더니 초급(4줄)은 칸이 69px인데 고급(11줄)은 22px이 되어
+   * 글자(22px)가 칸을 꽉 채워 읽을 수가 없었다. 화면에 들어가는 한도에서 69px까지 키우고,
+   * 글씨는 칸 크기에 비례시킨다 — 칸이 작아지면 글씨도 같이 작아져야 넘치지 않는다.
+   */
+  const GAP = 3
+  /** 칸 한 변의 최대 크기. 69px은 판이 화면을 다 먹어서 30% 줄였다(사용자 판단) */
+  const MAX_CELL = 48
+  function fitCells(): void {
+    const room = (grid.parentElement?.clientWidth ?? window.innerWidth) - 8
+    const byWidth = Math.floor((room - GAP * (puzzle!.cols - 1)) / puzzle!.cols)
+    // 판이 화면 높이의 절반을 넘으면 글자판이 화면 밖으로 밀린다 → 세로도 함께 본다
+    const byHeight = Math.floor((window.innerHeight * 0.4 - GAP * (puzzle!.rows - 1)) / puzzle!.rows)
+    const cell = Math.max(22, Math.min(MAX_CELL, byWidth, byHeight))
+    grid.style.setProperty('--en-cw-cell', `${cell}px`)
+    grid.style.width = `${cell * puzzle!.cols + GAP * (puzzle!.cols - 1)}px`
+  }
+  window.addEventListener('resize', fitCells)
   const say = el('p', { class: 'en-q-say' })
   const hintLine = el('p', { class: 'en-cw-now' })
 
@@ -319,6 +340,7 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
     // ABC 알파벳 화면과 **같은 차례**로 둔다: 배열 고르기 → 글자판 → 도구(⌫·🔊)
     el('div', { class: 'en-q' }, [grid, say, hintLine, layoutRow, board, tools])
   )
+  fitCells()
   paint()
 
   if (import.meta.env.DEV) {

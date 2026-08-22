@@ -1892,11 +1892,11 @@ button.en-card:active {
 
 .en-cw-grid {
   display: grid;
-  grid-template-columns: repeat(var(--en-cw-cols), 1fr);
+  /* 칸 크기는 줄 수에 맞춰 JS가 정한다(--en-cw-cell) — 고급 11줄이 초급과 같은 폭에 들어가면
+     칸이 22px이 되어 글자가 안 보인다 */
+  grid-template-columns: repeat(var(--en-cw-cols), var(--en-cw-cell, 44px));
   gap: 3px;
-  /* 판이 커도 화면 안에 다 들어와야 한다 — 아이는 스크롤하며 십자말을 풀지 못한다.
-     칸이 너무 커서 판·문제·글자판이 한 화면에 안 들어오길래 절반으로 줄였다 */
-  max-width: min(70vw, 276px);
+  max-width: 94vw;
   margin: 0 auto 10px;
 }
 
@@ -1912,7 +1912,8 @@ button.en-card:active {
   border-radius: 6px;
   background: var(--en-card);
   color: var(--en-ink);
-  font-size: clamp(13px, 3.6vw, 22px);
+  /* 글씨는 칸에 비례한다 — 칸이 작아지는데 글씨가 그대로면 칸을 넘어 읽을 수 없다 */
+  font-size: calc(var(--en-cw-cell, 44px) * 0.5);
   font-weight: 800;
   text-transform: uppercase;
   cursor: pointer;
