@@ -280,6 +280,17 @@ body {
   -webkit-overflow-scrolling: touch;
   padding: 10px 4px 14px;
   margin: 4px 0;
+  /* 마우스로 끌 수 있는 곳임을 손 모양으로 알린다 */
+  cursor: grab;
+  /* 끌 때 마을 이름이 파랗게 잡히면 미는 느낌이 깨진다 */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.en-map-road.en-is-grabbing {
+  cursor: grabbing;
+  /* 끄는 동안에는 스냅이 손을 따라오지 못하게 (놓을 때만 맞춘다) */
+  scroll-snap-type: none;
 }
 
 /* 스크롤 막대는 아이 화면에서 눌리는 것이라 얇게 둔다 */

@@ -12,7 +12,7 @@ import * as cards from './cards'
 import * as progress from './progress'
 import * as srs from './srs'
 import * as tts from './tts'
-import { bigButton, el, render, top, topLink } from './ui'
+import { bigButton, dragScroll, el, render, top, topLink } from './ui'
 
 /** 어른이 가끔 여는 화면용 작은 버튼 — 색을 쓰지 않고 테두리만 둔다(아이 눈길을 끌 이유가 없다) */
 function miniButton(emoji: string, label: string, onClick: () => void): HTMLButtonElement {
@@ -137,6 +137,8 @@ export function showMap(a: MapActions): void {
     villages.push(b)
   }
   const road = el('div', { class: 'en-map-road' }, villages)
+  // 손가락으로는 그냥 밀리지만 마우스는 스크롤 막대를 잡아야 한다 → 끌어서도 움직이게
+  dragScroll(road)
   // 지금 있는 마을이 화면 밖에 있으면 아이는 자기가 어디 있는지 모른다 → 그 마을로 밀어 준다
   queueMicrotask(() => {
     const here = road.querySelector('.en-is-here') as HTMLElement | null

@@ -58,6 +58,60 @@ export function topLink(label: string, onClick: () => void): HTMLButtonElement {
   return b
 }
 
+/**
+ * 옆으로 미는 상자를 **마우스로도 끌 수 있게** 한다.
+ *
+ * 터치는 브라우저가 알아서 밀어 주지만 마우스는 스크롤 막대를 잡아야만 움직인다 —
+ * 어른도 잘 못 찾는 얇은 막대를 아이에게 찾으라고 할 수 없다.
+ *
+ * 끌고 나서 손을 떼는 순간 **그 자리의 버튼이 눌리면 안 된다**(마을을 지나치려다 들어가 버린다).
+ * 그래서 5px 넘게 움직였으면 이어지는 click을 잡아서 막는다(캡처 단계에서 먼저 가로챈다).
+ */
+export function dragScroll(box: HTMLElement): void {
+  let dragging = false
+  let startX = 0
+  let startLeft = 0
+  let moved = 0
+
+  const end = (): void => {
+    dragging = false
+    box.classList.remove('en-is-grabbing')
+  }
+
+  box.addEventListener('pointerdown', (e) => {
+    // 터치·펜은 브라우저의 관성 스크롤이 훨씬 낫다 → 마우스 왼쪽 버튼만 가로챈다
+    if (e.pointerType !== 'mouse' || e.button !== 0) return
+    dragging = true
+    moved = 0
+    startX = e.clientX
+    startLeft = box.scrollLeft
+    box.classList.add('en-is-grabbing')
+  })
+
+  box.addEventListener('pointermove', (e) => {
+    if (!dragging) return
+    const dx = e.clientX - startX
+    moved = Math.max(moved, Math.abs(dx))
+    box.scrollLeft = startLeft - dx
+  })
+
+  box.addEventListener('pointerup', end)
+  // 상자 밖에서 손을 떼면 pointerup이 안 온다 → 나가는 순간 끝낸다
+  box.addEventListener('pointerleave', end)
+  box.addEventListener('pointercancel', end)
+
+  box.addEventListener(
+    'click',
+    (e) => {
+      if (moved <= 5) return
+      e.stopPropagation()
+      e.preventDefault()
+      moved = 0
+    },
+    true
+  )
+}
+
 /** 큰 버튼 하나 */
 export function bigButton(
   emoji: string,
