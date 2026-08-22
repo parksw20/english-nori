@@ -13,6 +13,7 @@ import * as tts from './tts'
 import { AGAIN_WORDS, GOOD_WORDS, el, pickOne, progressBar, render, top } from './ui'
 
 const EMOJI_OF = new Map(WORDS.map((w) => [w.en, w.emoji]))
+const WORD_OF = new Map(WORDS.map((w) => [w.en, w]))
 
 /** 보기를 그림으로 보여줄 문제 유형 — 아직 글자를 못 읽는 단계용 */
 function choicesAreEmoji(q: Question): boolean {
@@ -102,12 +103,29 @@ export function runQuiz(opts: QuizOptions): void {
       const sp = el('button', { class: 'en-q-speaker', 'aria-label': '듣기', text: '🔊' })
       sp.addEventListener('click', speakNow)
       showBox.append(sp)
-      // 영어 음성이 없는 기기에서는 소리만 내는 문제를 아이가 풀 방법이 없다
-      // (그림도 글자도 없으니 찍기밖에 안 된다) → 들려줄 말을 글자로 보여준다.
-      // 근본 해결은 음성이 있는 기기에서 놀는 것이고, 그 안내는 지도 화면에 띄운다.
-      if (!tts.hasVoice() && q.say) {
-        showBox.append(el('span', { class: 'en-q-word', text: q.say }))
+      /**
+       * 영어 음성이 없는 기기에서는 소리만 내는 문제를 풀 방법이 없다(찍기밖에 안 된다) →
+       * 대신 볼 것을 준다. **다만 정답을 그대로 보여주면 안 된다.**
+       *
+       * 처음에는 들려줄 말(q.say)을 그냥 글자로 찍었는데, 듣기 문제는 들려줄 말이 곧 정답이라
+       * 「🔊 hat」 아래에 보기 hat이 있는, 답이 위에 적힌 문제가 나왔다(사용자가 발견).
+       * 그림이 있으면 그림으로, 없으면 한글 뜻으로 바꾼다 — 둘 다 답을 알려주지 않으면서 풀 수는 있게 한다.
+       *
+       * 크롬은 목소리 목록을 **늦게** 준다 → 잠시 뒤 다시 보고, 그새 목소리가 생겼으면 이 힌트를 치운다.
+       */
+      const hint = el('span', { class: 'en-q-word' })
+      const paintHint = (): void => {
+        if (!q.say || tts.hasVoice()) {
+          hint.remove()
+          return
+        }
+        const w = q.word ? WORD_OF.get(q.word) : undefined
+        const givesAnswer = q.say === q.answer || q.answer === w?.en?.[0]
+        hint.textContent = !givesAnswer ? q.say : w && !w.abstract ? w.emoji : (w?.ko ?? '')
+        if (hint.textContent) showBox.append(hint)
       }
+      paintHint()
+      setTimeout(paintHint, 1200)
     }
 
     const grid = el('div', { class: 'en-q-choices' })

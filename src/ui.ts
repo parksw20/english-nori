@@ -5,6 +5,8 @@
  * 규칙을 각 화면에 흩어 놓으면 어느 화면은 빨간 X를 띄우게 된다.
  */
 
+import * as prefs from './prefs'
+
 /** 요소 하나 만들기. children에 문자열을 주면 텍스트로 들어간다 */
 export function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -110,6 +112,44 @@ export function dragScroll(box: HTMLElement): void {
     },
     true
   )
+}
+
+/**
+ * 글자판 배열 고르기 — **ABC 알파벳과 가로세로가 같은 것을 쓴다.**
+ *
+ * 두 화면에서 글자 자리가 다르면 아이가 매번 다시 찾는다. 고른 값도 하나로 저장해서
+ * 한 곳에서 바꾸면 다른 곳도 따라간다.
+ */
+export function layoutPicker(onChange: () => void): HTMLElement {
+  const row = el('div', { class: 'en-minirow en-layout-pick' })
+  const items: { id: prefs.AbcLayout; label: string; sub: string }[] = [
+    { id: 'abc', label: '🔤 순차', sub: 'A부터 Z까지 차례대로' },
+    { id: 'keyboard', label: '⌨️ 키보드', sub: '어른 자판과 같은 자리' },
+  ]
+  const paint = (): void => {
+    for (const b of row.children) b.classList.toggle('en-is-sel', (b as HTMLElement).dataset.layout === prefs.get().abcLayout)
+  }
+  row.append(
+    ...items.map((it) => {
+      const b = el('button', { class: 'en-mini', title: it.sub, text: it.label, 'data-layout': it.id })
+      b.addEventListener('click', () => {
+        prefs.setAbcLayout(it.id)
+        paint()
+        // 화면을 통째로 다시 그리지 않는다 — 치던 글자가 날아간다
+        onChange()
+      })
+      return b
+    })
+  )
+  paint()
+  return row
+}
+
+/** 그 배열에서 글자가 놓이는 줄 */
+export function letterRows(): string[] {
+  return prefs.get().abcLayout === 'keyboard'
+    ? ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
+    : ['abcdefg', 'hijklmn', 'opqrstu', 'vwxyz']
 }
 
 /** 큰 버튼 하나 */

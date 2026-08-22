@@ -15,7 +15,7 @@ import { picturableUpTo, stageOf } from '../phonics'
 import * as progress from '../progress'
 import * as sfx from '../sfx'
 import * as tts from '../tts'
-import { el, notice, render, top } from '../ui'
+import { el, layoutPicker, letterRows, notice, render, top } from '../ui'
 
 export interface CrosswordResult {
   levelId: Level['id']
@@ -29,8 +29,6 @@ export interface CrosswordResult {
   /** 다 풀었을 때 주는 글자 카드 수 */
   reward: number
 }
-
-const KEY_ROWS = ['abcdefg', 'hijklmn', 'opqrstu', 'vwxyz']
 
 /** 난이도 고르기 — 잠긴 것은 **보여주되 누를 수 없게** 한다(다음 목표가 보여야 한다) */
 export function runCrossword(
@@ -294,26 +292,31 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
   }
 
   // ── 글자판 ────────────────────────────────────────────────
-  const pad = el(
-    'div',
-    { class: 'en-cw-pad' },
-    KEY_ROWS.map((row) =>
-      el(
-        'div',
-        { class: 'en-cw-padrow' },
-        [...row].map((ch) => {
-          const k = el('button', { class: 'en-cw-key', text: ch, 'data-key': ch })
-          k.addEventListener('click', () => typeLetter(ch))
-          return k
-        })
-      )
+  // 배열은 **ABC 알파벳 화면과 같은 것**을 쓴다 — 화면마다 글자 자리가 다르면 아이가 매번 다시 찾는다
+  const pad = el('div', { class: 'en-cw-pad' })
+
+  function paintPad(): void {
+    const back = el('button', { class: 'en-cw-key en-cw-erase', text: '⌫', 'aria-label': '지우기' })
+    back.addEventListener('click', erase)
+    const hear = el('button', { class: 'en-cw-key en-cw-hear', text: '🔊', 'aria-label': '들어보기' })
+    hear.addEventListener('click', () => current && tts.say(current.word))
+    pad.replaceChildren(
+      ...letterRows().map((row) =>
+        el(
+          'div',
+          { class: 'en-cw-padrow' },
+          [...row].map((ch) => {
+            const k = el('button', { class: 'en-cw-key', text: ch, 'data-key': ch })
+            k.addEventListener('click', () => typeLetter(ch))
+            return k
+          })
+        )
+      ),
+      el('div', { class: 'en-cw-padrow' }, [back, hear])
     )
-  )
-  const back = el('button', { class: 'en-cw-key en-cw-erase', text: '⌫', 'aria-label': '지우기' })
-  back.addEventListener('click', erase)
-  const hear = el('button', { class: 'en-cw-key en-cw-hear', text: '🔊', 'aria-label': '들어보기' })
-  hear.addEventListener('click', () => current && tts.say(current.word))
-  pad.append(el('div', { class: 'en-cw-padrow' }, [back, hear]))
+  }
+  paintPad()
+  const layoutRow = layoutPicker(paintPad)
 
   // 물리 키보드도 받는다 — 어른이 옆에서 도와줄 때 훨씬 빠르다
   const onKey = (e: KeyboardEvent): void => {
@@ -330,7 +333,8 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
     top(`가로세로 ${level.label}`, onQuit, `낱말 ${puzzle.words.length}개`),
     // 문제(그림+뜻)는 **글자판 바로 위**에 둔다 — 아이 눈이 판과 글쇠 사이를 오가는데
     // 문제가 맨 위에 있으면 칠 때마다 화면 꼭대기까지 올려다봐야 한다
-    el('div', { class: 'en-q' }, [grid, say, hintLine, pad])
+    // 문제는 글자판 **바로 위**에 붙어 있어야 한다 → 배열 고르기는 글자판 아래로 내린다(가끔 쓰는 것이다)
+    el('div', { class: 'en-q' }, [grid, say, hintLine, pad, layoutRow])
   )
   paint()
 

@@ -22,7 +22,7 @@ import { wordsUpTo } from './phonics'
 import * as sfx from './sfx'
 import * as srs from './srs'
 import * as tts from './tts'
-import { el, render, top, topLink } from './ui'
+import { el, layoutPicker, letterRows, render, top, topLink } from './ui'
 
 /**
  * 맞힌 낱말을 가운데에서 **좌→우로 뱅글뱅글 돌려** 보여준다.
@@ -54,9 +54,6 @@ function spinCard(w: Word, onEnd: () => void): void {
 
 /** 모음 — 낱말마다 반드시 들어가는 글자라 **눈에 다르게** 보여야 한다 */
 const VOWELS = ['a', 'e', 'i', 'o', 'u']
-
-/** 어른 자판(QWERTY) 배열 — 아이가 나중에 진짜 키보드를 칠 때 자리를 미리 익힌다 */
-const KEYBOARD_ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
 
 export function showAbc(onBack: () => void, onDex?: () => void): void {
   const stage: StageId = progress.topUnlockedStage()
@@ -163,37 +160,16 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
   }
 
   function paintBoard(): void {
-    const layout = prefs.get().abcLayout
-    board.className = `en-abc-grid${layout === 'keyboard' ? ' en-is-keyboard' : ''}`
-    if (layout === 'keyboard') {
-      board.replaceChildren(
-        ...KEYBOARD_ROWS.map((row) => el('div', { class: 'en-abc-row' }, [...row].map(letterCard)))
-      )
-    } else {
-      board.replaceChildren(...LETTERS.map((l) => letterCard(l.ch)))
-    }
+    const keyboard = prefs.get().abcLayout === 'keyboard'
+    board.className = `en-abc-grid${keyboard ? ' en-is-keyboard' : ''}`
+    board.replaceChildren(
+      ...(keyboard
+        ? letterRows().map((row) => el('div', { class: 'en-abc-row' }, [...row].map(letterCard)))
+        : LETTERS.map((l) => letterCard(l.ch)))
+    )
   }
 
-  /** 순차(A~Z) / 키보드(QWERTY) 고르기 */
-  const layoutRow = el(
-    'div',
-    { class: 'en-minirow' },
-    ([
-      ['abc', '🔤 순차', 'A부터 Z까지 차례대로'],
-      ['keyboard', '⌨️ 키보드', '어른 자판과 같은 자리'],
-    ] as const).map(([id, label, sub]) => {
-      const on = prefs.get().abcLayout === id
-      const b = el('button', { class: `en-mini${on ? ' en-is-sel' : ''}`, title: sub, text: label })
-      b.addEventListener('click', () => {
-        prefs.setAbcLayout(id)
-        // 글자판만 다시 그린다 — 화면을 통째로 다시 그리면 치던 글자가 날아간다
-        paintBoard()
-        for (const x of layoutRow.children) x.classList.toggle('en-is-sel', (x as HTMLElement).textContent === label)
-      })
-      return b
-    })
-  )
-
+  const layoutRow = layoutPicker(paintBoard)
   const learned = srs.summary(words.map((w) => w.en)).learned
 
   paintBoard()
