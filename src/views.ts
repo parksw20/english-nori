@@ -139,11 +139,28 @@ export function showMap(a: MapActions): void {
   const road = el('div', { class: 'en-map-road' }, villages)
   // 손가락으로는 그냥 밀리지만 마우스는 스크롤 막대를 잡아야 한다 → 끌어서도 움직이게
   dragScroll(road)
-  // 지금 있는 마을이 화면 밖에 있으면 아이는 자기가 어디 있는지 모른다 → 그 마을로 밀어 준다
-  queueMicrotask(() => {
+  /**
+   * **지금 하고 있는 마을을 늘 가운데에 둔다.**
+   *
+   * 처음에는 microtask에서 scrollLeft를 한 번만 계산해 넣었는데, 그 시점에는 아직 배치가 안 끝나
+   * (이모지 글꼴이 늦게 오면 카드 크기가 바뀐다) 엉뚱한 자리에 멈추고 scroll-snap이 그 자리에서
+   * 가장 가까운 마을로 붙어 버렸다 — 마지막 마을이 잡히는 일이 생겼다.
+   *
+   * 그래서 **배치가 끝난 뒤에**(rAF 두 번) scrollIntoView로 옮기고, 글꼴이 늦게 와서 폭이 바뀌는
+   * 경우까지 대비해 한 번 더 맞춘다. scrollIntoView는 scroll-snap을 아는 브라우저 기능이라
+   * 우리가 계산한 값이 스냅에 밀리는 일도 없다.
+   */
+  const centerHere = (): void => {
     const here = road.querySelector('.en-is-here') as HTMLElement | null
-    if (here) road.scrollLeft = Math.max(0, here.offsetLeft - road.clientWidth / 2 + here.clientWidth / 2)
+    if (!here || !document.body.contains(road)) return
+    here.scrollIntoView({ inline: 'center', block: 'nearest' })
+  }
+  requestAnimationFrame(() => requestAnimationFrame(centerHere))
+  document.fonts?.ready.then(centerHere).catch(() => {
+    /* 글꼴 정보를 못 받아도 아래 타이머로 맞춰진다 */
   })
+  // 첫 화면에서는 rAF 두 번으로도 이르다(검증에서 처음 열 때만 왼쪽 끝에 머물렀다) → 한 번 더
+  setTimeout(centerHere, 300)
 
   const p = progress.get()
   // 영어 음성이 없는 기기(음성 미설치 브라우저 등)에서는 소리 문제가 성립하지 않는다 →

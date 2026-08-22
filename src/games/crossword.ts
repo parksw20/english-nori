@@ -15,7 +15,7 @@ import { picturableUpTo, stageOf } from '../phonics'
 import * as progress from '../progress'
 import * as sfx from '../sfx'
 import * as tts from '../tts'
-import { el, layoutPicker, letterRows, notice, render, top } from '../ui'
+import { el, layoutPicker, letterBoard, notice, render, top } from '../ui'
 
 export interface CrosswordResult {
   levelId: Level['id']
@@ -291,31 +291,14 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
     })
   }
 
-  // ── 글자판 ────────────────────────────────────────────────
-  // 배열은 **ABC 알파벳 화면과 같은 것**을 쓴다 — 화면마다 글자 자리가 다르면 아이가 매번 다시 찾는다
-  const pad = el('div', { class: 'en-cw-pad' })
+  // ── 글자판 — **ABC 알파벳 화면과 같은 판**(같은 카드·같은 배열) ─────
+  const { board, repaint: paintPad } = letterBoard(typeLetter)
+  const back = el('button', { class: 'en-cw-key en-cw-erase', text: '⌫', 'aria-label': '지우기' })
+  back.addEventListener('click', erase)
+  const hear = el('button', { class: 'en-cw-key en-cw-hear', text: '🔊', 'aria-label': '들어보기' })
+  hear.addEventListener('click', () => current && tts.say(current.word))
+  const tools = el('div', { class: 'en-cw-padrow' }, [back, hear])
 
-  function paintPad(): void {
-    const back = el('button', { class: 'en-cw-key en-cw-erase', text: '⌫', 'aria-label': '지우기' })
-    back.addEventListener('click', erase)
-    const hear = el('button', { class: 'en-cw-key en-cw-hear', text: '🔊', 'aria-label': '들어보기' })
-    hear.addEventListener('click', () => current && tts.say(current.word))
-    pad.replaceChildren(
-      ...letterRows().map((row) =>
-        el(
-          'div',
-          { class: 'en-cw-padrow' },
-          [...row].map((ch) => {
-            const k = el('button', { class: 'en-cw-key', text: ch, 'data-key': ch })
-            k.addEventListener('click', () => typeLetter(ch))
-            return k
-          })
-        )
-      ),
-      el('div', { class: 'en-cw-padrow' }, [back, hear])
-    )
-  }
-  paintPad()
   const layoutRow = layoutPicker(paintPad)
 
   // 물리 키보드도 받는다 — 어른이 옆에서 도와줄 때 훨씬 빠르다
@@ -333,8 +316,8 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
     top(`가로세로 ${level.label}`, onQuit, `낱말 ${puzzle.words.length}개`),
     // 문제(그림+뜻)는 **글자판 바로 위**에 둔다 — 아이 눈이 판과 글쇠 사이를 오가는데
     // 문제가 맨 위에 있으면 칠 때마다 화면 꼭대기까지 올려다봐야 한다
-    // 문제는 글자판 **바로 위**에 붙어 있어야 한다 → 배열 고르기는 글자판 아래로 내린다(가끔 쓰는 것이다)
-    el('div', { class: 'en-q' }, [grid, say, hintLine, pad, layoutRow])
+    // ABC 알파벳 화면과 **같은 차례**로 둔다: 배열 고르기 → 글자판 → 도구(⌫·🔊)
+    el('div', { class: 'en-q' }, [grid, say, hintLine, layoutRow, board, tools])
   )
   paint()
 

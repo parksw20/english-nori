@@ -2087,9 +2087,16 @@ button.en-card:active {
   min-width: 44px;
 }
 
+/* 띄어쓰기는 진짜 자판처럼 글자판 아래 한 줄을 통째로 쓴다 — 눈에 안 보이는 글자라 넓어야 찾는다 */
+.en-type-space-row {
+  display: flex;
+  margin: 0 0 10px;
+}
+
 .en-type-space {
-  /* 띄어쓰기는 눈에 안 보이는 글자다 → 글쇠라도 넓어야 "여기 뭔가 들어간다"가 보인다 */
-  min-width: 84px;
+  flex: 1;
+  min-height: 52px;
+  letter-spacing: 2px;
 }
 
 /* 지금 고른 배열 */

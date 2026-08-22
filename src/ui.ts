@@ -5,6 +5,7 @@
  * 규칙을 각 화면에 흩어 놓으면 어느 화면은 빨간 X를 띄우게 된다.
  */
 
+import { LETTERS } from './data/phonics'
 import * as prefs from './prefs'
 
 /** 요소 하나 만들기. children에 문자열을 주면 텍스트로 들어간다 */
@@ -144,6 +145,51 @@ export function layoutPicker(onChange: () => void): HTMLElement {
   paint()
   return row
 }
+
+/**
+ * 알파벳 글자판 — **ABC 알파벳 화면과 가로세로 퀴즈가 같은 판을 쓴다.**
+ *
+ * 두 화면에서 글자판이 다르게 생기면 아이는 그것을 다른 물건으로 여긴다(실제로 그렇게 보였다).
+ * 카드 생김새·배열·모음 표시가 한 군데서 나오게 여기 둔다.
+ *
+ * @param onPick 글자를 눌렀을 때. 소리를 낼지는 부르는 쪽이 정한다
+ */
+export function letterBoard(onPick: (ch: string) => void): { board: HTMLElement; repaint: () => void } {
+  const board = el('div', { class: 'en-abc-grid' })
+
+  const card = (ch: string): HTMLElement => {
+    const l = LETTERS.find((x) => x.ch === ch)
+    const b = el(
+      'button',
+      {
+        class: `en-abc-mini${VOWELS.includes(ch) ? ' en-is-vowel' : ''}`,
+        'data-letter': ch,
+        'aria-label': `${ch}${VOWELS.includes(ch) ? ' (모음)' : ''}`,
+      },
+      [
+        el('span', { class: 'en-abc-mini-pair', text: `${ch.toUpperCase()} ${ch}` }),
+        el('span', { class: 'en-abc-mini-name', text: l?.name ?? '' }),
+      ]
+    )
+    b.addEventListener('click', () => onPick(ch))
+    return b
+  }
+
+  const repaint = (): void => {
+    const keyboard = prefs.get().abcLayout === 'keyboard'
+    board.className = `en-abc-grid${keyboard ? ' en-is-keyboard' : ''}`
+    board.replaceChildren(
+      ...(keyboard
+        ? letterRows().map((row) => el('div', { class: 'en-abc-row' }, [...row].map(card)))
+        : LETTERS.map((l) => card(l.ch)))
+    )
+  }
+  repaint()
+  return { board, repaint }
+}
+
+/** 모음 — 낱말마다 반드시 들어가는 글자라 눈에 다르게 보인다(흰 글자) */
+const VOWELS = ['a', 'e', 'i', 'o', 'u']
 
 /** 그 배열에서 글자가 놓이는 줄 */
 export function letterRows(): string[] {
