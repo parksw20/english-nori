@@ -32,9 +32,6 @@ export interface CrosswordResult {
 
 const KEY_ROWS = ['abcdefg', 'hijklmn', 'opqrstu', 'vwxyz']
 
-/** 모음은 글자판에서도 다르게 보인다 (ABC 알파벳 화면과 같은 표시) */
-const VOWELS = ['a', 'e', 'i', 'o', 'u']
-
 /** 난이도 고르기 — 잠긴 것은 **보여주되 누를 수 없게** 한다(다음 목표가 보여야 한다) */
 export function runCrossword(
   stage: StageId,
@@ -102,7 +99,6 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
   const grid = el('div', { class: 'en-cw-grid' })
   grid.style.setProperty('--en-cw-cols', String(puzzle.cols))
   const say = el('p', { class: 'en-q-say' })
-  const clueBox = el('div', { class: 'en-cw-clues' })
   const hintLine = el('p', { class: 'en-cw-now' })
 
   function cellsOf(w: Placed): { r: number; c: number }[] {
@@ -152,30 +148,7 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
         grid.append(box)
       }
     }
-    paintClues()
     paintNow()
-  }
-
-  /** 문제 목록 — 그림과 한글 뜻. 맞힌 것은 흐려지고 영어 철자가 드러난다 */
-  function paintClues(): void {
-    const line = (dir: 'across' | 'down'): HTMLElement => {
-      const mine = puzzle!.words.filter((w) => w.dir === dir)
-      return el('div', { class: 'en-cw-cluecol' }, [
-        el('p', { class: 'en-cw-cluehead', text: dir === 'across' ? '가로 →' : '세로 ↓' }),
-        ...mine.map((w) => {
-          const word = byWord.get(w.word) as Word
-          const done = isSolved(w)
-          const b = el('button', { class: `en-cw-clue${done ? ' en-is-done' : ''}${current === w ? ' en-is-on' : ''}` }, [
-            el('span', { class: 'en-cw-clueno', text: String(w.no) }),
-            el('span', { class: 'en-cw-clueemoji', text: word.emoji }),
-            el('span', { class: 'en-cw-clueko', text: done ? `${word.ko} · ${w.word}` : word.ko }),
-          ])
-          b.addEventListener('click', () => select(w))
-          return b
-        }),
-      ])
-    }
-    clueBox.replaceChildren(line('across'), line('down'))
   }
 
   function paintNow(): void {
@@ -329,11 +302,7 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
         'div',
         { class: 'en-cw-padrow' },
         [...row].map((ch) => {
-          const k = el('button', {
-            class: `en-cw-key${VOWELS.includes(ch) ? ' en-is-vowel' : ''}`,
-            text: ch,
-            'data-key': ch,
-          })
+          const k = el('button', { class: 'en-cw-key', text: ch, 'data-key': ch })
           k.addEventListener('click', () => typeLetter(ch))
           return k
         })
@@ -357,12 +326,11 @@ function runLevel(stage: StageId, level: Level, onQuit: () => void, onDone: (r: 
   }
   window.addEventListener('keydown', onKey)
 
-  const giveUp = el('button', { class: 'en-mini', text: '그만하기' })
-  giveUp.addEventListener('click', () => finish(false))
-
   render(
     top(`가로세로 ${level.label}`, onQuit, `낱말 ${puzzle.words.length}개`),
-    el('div', { class: 'en-q' }, [hintLine, grid, say, pad, clueBox, el('div', { class: 'en-minirow' }, [giveUp])])
+    // 문제(그림+뜻)는 **글자판 바로 위**에 둔다 — 아이 눈이 판과 글쇠 사이를 오가는데
+    // 문제가 맨 위에 있으면 칠 때마다 화면 꼭대기까지 올려다봐야 한다
+    el('div', { class: 'en-q' }, [grid, say, hintLine, pad])
   )
   paint()
 
