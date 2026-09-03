@@ -20,9 +20,8 @@ import { wordsUpTo } from './phonics'
 import * as sfx from './sfx'
 import * as srs from './srs'
 import * as tts from './tts'
-import * as prefs from './prefs'
 import { makeTracer } from './trace'
-import { el, layoutPicker, letterBoard, render, top, topLink } from './ui'
+import { effectiveLayout, el, layoutPicker, letterBoard, render, top, topLink } from './ui'
 
 /**
  * 맞힌 낱말을 가운데에서 **좌→우로 뱅글뱅글 돌려** 보여준다.
@@ -135,7 +134,7 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
   const { board, repaint: paintBoard } = letterBoard((ch) => {
     // 누르면 글자를 읽어 준다 — 누르는 것이 곧 듣는 것이어야 한다
     tts.say(ch)
-    if (prefs.get().abcLayout === 'write') {
+    if (effectiveLayout({ write: true }) === 'write') {
       // 쓰기 방식: 입력 줄에 쌓지 않고 **따라 쓰기 판의 글자를 바꾼다**
       tracer.show(ch)
       return
@@ -161,7 +160,7 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
 
   /** 방식이 바뀌면 보일 것과 숨길 것을 가른다 — 쓰기에서는 입력 줄이 뜻이 없다 */
   function applyMode(): void {
-    const write = prefs.get().abcLayout === 'write'
+    const write = effectiveLayout({ write: true }) === 'write'
     tracer.el.hidden = !write
     // 입력 줄·띄어쓰기는 세 방식 모두 보인다 — 쓰기에서는 통과한 글자가 여기 쌓인다
     if (!write) tracer.stop()

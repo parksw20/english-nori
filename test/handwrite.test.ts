@@ -77,6 +77,15 @@ check('시작·끝만 맞고 가운데를 크게 돌아가면 떨어진다', () 
   assert(!v.ok, '크게 돌아간 선이 통과했다')
 })
 
+check('붙어 있는 두 획을 이어 붙인 길도 한 획으로 통과한다 (B의 2·3획)', () => {
+  // 위 반원 끝(25,50)에서 아래 반원이 시작한다 → 아이가 손을 안 떼고 한 번에 긋는다
+  const upper = [...line(25, 10, 80, 10, 6), ...line(80, 10, 80, 50, 6), ...line(80, 50, 25, 50, 6)]
+  const lower = [...line(25, 50, 85, 50, 6), ...line(85, 50, 85, 90, 6), ...line(85, 90, 25, 90, 6)]
+  const joined = [...upper, ...lower]
+  assert(judgeStroke(joined, joined).ok, '이어 붙인 길을 그대로 그었는데 떨어졌다')
+  assert(!judgeStroke(upper, joined).ok, '반만 그었는데 이어 붙인 길에 통과했다')
+})
+
 check('resample은 같은 간격으로 n점을 준다', () => {
   const r = resample(line(0, 0, 100, 0, 3), 11)
   assert(r.length === 11, `점 수 ${r.length}`)

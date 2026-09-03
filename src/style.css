@@ -2100,6 +2100,12 @@ button.en-card:active {
   letter-spacing: 2px;
 }
 
+/* 아직 안 열린 배열 */
+.en-mini.en-is-locked {
+  opacity: 0.5;
+  cursor: default;
+}
+
 /* 지금 고른 배열 */
 .en-mini.en-is-sel {
   border-color: var(--en-accent-text);

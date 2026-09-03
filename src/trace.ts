@@ -225,6 +225,19 @@ function glyphPad(letter: string, kind: 'upper' | 'lower', onEvent: (e: PadEvent
   }
   const dOf = (): string => pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ')
 
+  /** i번 획부터 j번 획까지가 **손을 떼지 않고** 이어 그을 수 있는 모양인가 (앞 획의 끝 = 다음 획의 시작) */
+  function connectable(i: number, j: number): boolean {
+    for (let m = i; m < j; m++) {
+      const a = guidePaths[m]
+      const b = guidePaths[m + 1]
+      if (!a || !b) return false
+      const end = a.getPointAtLength(a.getTotalLength())
+      const start = b.getPointAtLength(0)
+      if (Math.hypot(end.x - start.x, end.y - start.y) > 14) return false
+    }
+    return true
+  }
+
   /** 안내 획을 같은 간격의 점으로 — 판정은 점끼리 비교한다 */
   function guidePoints(i: number): Pt[] {
     const p = guidePaths[i]
@@ -257,15 +270,31 @@ function glyphPad(letter: string, kind: 'upper' | 'lower', onEvent: (e: PadEvent
      * 손을 뗀 순간 그 획을 판정한다 — 글자를 다 쓴 뒤 한꺼번에 보면 어느 획이 틀렸는지 아이가 모른다.
      * 틀린 획은 지우고 같은 획을 다시 긋게 한다(앞서 맞힌 획은 남긴다).
      */
-    const v = judgeStroke(pts, guidePoints(expected))
-    if (!v.ok) {
+    /**
+     * **이어 쓰기**: B의 2·3획처럼 앞 획이 끝나는 자리에서 다음 획이 시작하면 아이는 손을 떼지 않고
+     * 한 번에 긋는다(사용자 지적). 그래서 남은 획을 **여러 개 이어 붙인 길**과도 견줘 보고,
+     * 가장 많이 맞힌 쪽을 인정한다. 붙어 있지 않은 획(E의 1→2)은 이어 붙이지 않는다 — 모양이 다르다.
+     */
+    let passed = 0
+    let first: ReturnType<typeof judgeStroke> | null = null
+    for (let k = Math.min(guidePaths.length - expected, 4); k >= 1; k--) {
+      if (k > 1 && !connectable(expected, expected + k - 1)) continue
+      const guide = Array.from({ length: k }, (_, j) => guidePoints(expected + j)).flat()
+      const v = judgeStroke(pts, guide)
+      if (v.ok) {
+        passed = k
+        break
+      }
+      if (k === 1) first = v
+    }
+    if (passed === 0) {
       stroke.classList.add('en-is-wrong')
       window.setTimeout(() => stroke.remove(), 350)
-      onEvent({ type: 'bad', hint: hintFor(v) })
+      onEvent({ type: 'bad', hint: hintFor(first ?? { ok: false, reason: 'off-path' }) })
       return
     }
     stroke.classList.add('en-is-ok')
-    expected++
+    expected += passed
     if (expected >= guidePaths.length) {
       done = true
       box.classList.add('en-is-done')

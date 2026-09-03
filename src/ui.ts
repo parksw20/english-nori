@@ -7,6 +7,34 @@
 
 import { LETTERS } from './data/phonics'
 import * as prefs from './prefs'
+import * as progress from './progress'
+
+/**
+ * 글자판 방식이 **열리는 마을**.
+ *
+ * 쓰기가 맨 처음이고, 순차(A~Z)는 4번 마을, 키보드(QWERTY)는 7번 마을에서 열린다(사용자 지정).
+ * 손으로 쓸 줄 알아야 고르는 판이 뜻을 갖고, 순서를 다 안 뒤에야 어른 자판 자리가 뜻을 갖는다.
+ */
+export const LAYOUT_STAGE: Record<prefs.AbcLayout, number> = { write: 0, abc: 3, keyboard: 6 }
+
+export function layoutOpen(id: prefs.AbcLayout): boolean {
+  return progress.topUnlockedStage() >= LAYOUT_STAGE[id]
+}
+
+/**
+ * 지금 실제로 쓸 방식 — 저장된 값이 아직 안 열렸으면(예: 예전에 키보드를 골라 뒀는데 기록을 지움)
+ * 열린 것 중 첫 번째로 물러난다. 쓰기가 없는 화면(가로세로)에서는 순차가 바닥이다.
+ */
+export function effectiveLayout(opts: { write?: boolean } = {}): prefs.AbcLayout {
+  const cur = prefs.get().abcLayout
+  const allowed: prefs.AbcLayout[] = [
+    ...(opts.write ? (['write'] as const) : []),
+    ...(layoutOpen('abc') ? (['abc'] as const) : []),
+    ...(layoutOpen('keyboard') ? (['keyboard'] as const) : []),
+  ]
+  if (allowed.includes(cur)) return cur
+  return allowed[0] ?? 'abc'
+}
 
 /** 요소 하나 만들기. children에 문자열을 주면 텍스트로 들어간다 */
 export function el<K extends keyof HTMLElementTagNameMap>(
@@ -130,20 +158,28 @@ export function layoutPicker(onChange: () => void, opts: { write?: boolean } = {
     { id: 'keyboard', label: '⌨️ 키보드', sub: '어른 자판과 같은 자리' },
   ]
   const paint = (): void => {
-    // 쓰기 항목이 없는 화면에서 저장된 값이 write면 순차로 보이게 한다
-    const cur = prefs.get().abcLayout
-    const shown = cur === 'write' && !opts.write ? 'abc' : cur
+    const shown = effectiveLayout(opts)
     for (const b of row.children) b.classList.toggle('en-is-sel', (b as HTMLElement).dataset.layout === shown)
   }
   row.append(
     ...items.map((it) => {
-      const b = el('button', { class: 'en-mini', title: it.sub, text: it.label, 'data-layout': it.id })
-      b.addEventListener('click', () => {
-        prefs.setAbcLayout(it.id)
-        paint()
-        // 화면을 통째로 다시 그리지 않는다 — 치던 글자가 날아간다
-        onChange()
+      const open = layoutOpen(it.id)
+      // 잠긴 방식은 **보이되 눌리지 않는다** — 몇 번 마을에서 열리는지가 다음 목표가 된다
+      const b = el('button', {
+        class: `en-mini${open ? '' : ' en-is-locked'}`,
+        title: open ? it.sub : `${LAYOUT_STAGE[it.id] + 1}번 마을에서 열려요`,
+        text: open ? it.label : `${it.label} 🔒${LAYOUT_STAGE[it.id] + 1}`,
+        'data-layout': it.id,
+        disabled: !open,
       })
+      if (open) {
+        b.addEventListener('click', () => {
+          prefs.setAbcLayout(it.id)
+          paint()
+          // 화면을 통째로 다시 그리지 않는다 — 치던 글자가 날아간다
+          onChange()
+        })
+      }
       return b
     })
   )
@@ -181,7 +217,7 @@ export function letterBoard(onPick: (ch: string) => void): { board: HTMLElement;
   }
 
   const repaint = (): void => {
-    const keyboard = prefs.get().abcLayout === 'keyboard'
+    const keyboard = effectiveLayout() === 'keyboard'
     board.className = `en-abc-grid${keyboard ? ' en-is-keyboard' : ''}`
     board.replaceChildren(
       ...(keyboard
@@ -198,7 +234,7 @@ const VOWELS = ['a', 'e', 'i', 'o', 'u']
 
 /** 그 배열에서 글자가 놓이는 줄 */
 export function letterRows(): string[] {
-  return prefs.get().abcLayout === 'keyboard'
+  return effectiveLayout() === 'keyboard'
     ? ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
     : ['abcdefg', 'hijklmn', 'opqrstu', 'vwxyz']
 }
