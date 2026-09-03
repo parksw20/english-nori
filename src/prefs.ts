@@ -41,13 +41,14 @@ export interface Prefs {
   /**
    * ABC 알파벳 글자판 배열.
    *
+   * `write`는 **따라 쓰기** — 글자를 고르면 실루엣 위에 획 순서가 나오고 손으로 덧그린다. 맨 처음 방식이다.
    * `abc`는 A부터 Z까지 차례대로 — 아이가 아는 순서라 글자를 **찾기** 쉽다.
    * `keyboard`는 어른 자판(QWERTY)과 같은 자리 — 순서를 다 외운 아이가 진짜 키보드로 넘어갈 준비를 한다.
    */
   abcLayout: AbcLayout
 }
 
-export type AbcLayout = 'abc' | 'keyboard'
+export type AbcLayout = 'write' | 'abc' | 'keyboard'
 
 export const DEFAULT_RESET_PASSWORD = '1234'
 
@@ -71,7 +72,7 @@ const DEFAULTS: Prefs = {
   interceptRamp: true,
   sentenceScoring: true,
   resetPassword: DEFAULT_RESET_PASSWORD,
-  abcLayout: 'abc',
+  abcLayout: 'write',
 }
 
 let p: Prefs = load()

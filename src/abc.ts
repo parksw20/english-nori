@@ -20,6 +20,8 @@ import { wordsUpTo } from './phonics'
 import * as sfx from './sfx'
 import * as srs from './srs'
 import * as tts from './tts'
+import * as prefs from './prefs'
+import { makeTracer } from './trace'
 import { el, layoutPicker, letterBoard, render, top, topLink } from './ui'
 
 /**
@@ -131,12 +133,37 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
 
   // ── 알파벳 판 (가로세로 퀴즈와 **같은 판**을 쓴다) ─────────────
   const { board, repaint: paintBoard } = letterBoard((ch) => {
-    // 누르면 글자를 읽어 주고 입력 줄에 쌓인다 — 누르는 것이 곧 듣는 것이어야 한다
+    // 누르면 글자를 읽어 준다 — 누르는 것이 곧 듣는 것이어야 한다
     tts.say(ch)
+    if (prefs.get().abcLayout === 'write') {
+      // 쓰기 방식: 입력 줄에 쌓지 않고 **따라 쓰기 판의 글자를 바꾼다**
+      tracer.show(ch)
+      return
+    }
     push(ch)
   })
 
-  const layoutRow = layoutPicker(paintBoard)
+  /**
+   * 따라 쓰기 판 — 쓰기 방식에서만 보인다.
+   * 글자를 고르면 실루엣 위에 획 순서가 바로 한 번 나오고, 다 그린 뒤 3초마다 되풀이된다.
+   */
+  const tracer = makeTracer('a', (ch) => tts.say(ch))
+  const typeRow = el('div', { class: 'en-type-row' }, [slots, back, go])
+  const spaceRow = el('div', { class: 'en-type-space-row' }, [space])
+
+  /** 방식이 바뀌면 보일 것과 숨길 것을 가른다 — 쓰기에서는 입력 줄이 뜻이 없다 */
+  function applyMode(): void {
+    const write = prefs.get().abcLayout === 'write'
+    tracer.el.hidden = !write
+    typeRow.hidden = write
+    spaceRow.hidden = write
+    say.hidden = write
+    if (!write) tracer.stop()
+    else tracer.show(tracer.el.dataset.letter ?? 'a')
+    paintBoard()
+  }
+
+  const layoutRow = layoutPicker(applyMode, { write: true })
   const learned = srs.summary(words.map((w) => w.en)).learned
 
   render(
@@ -148,13 +175,15 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
       }),
       // 입력 줄은 **글자판 위**에 둔다 — 아이 눈이 글자를 누르고 바로 위에서 결과를 본다.
       // 띄어쓰기는 진짜 자판처럼 글자판 **아래에 길게** 둔다(가끔 쓰지만 찾기는 쉬워야 한다)
-      el('div', { class: 'en-type-row' }, [slots, back, go]),
       layoutRow,
+      tracer.el,
+      typeRow,
       board,
-      el('div', { class: 'en-type-space-row' }, [space]),
+      spaceRow,
       say,
       el('p', { class: 'en-dex-hint', text: `지금 도감에 ${words.length}개 · 익힌 낱말 ${learned}개` }),
     ])
   )
   paintTyped()
+  applyMode()
 }

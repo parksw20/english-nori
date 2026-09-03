@@ -121,14 +121,19 @@ export function dragScroll(box: HTMLElement): void {
  * 두 화면에서 글자 자리가 다르면 아이가 매번 다시 찾는다. 고른 값도 하나로 저장해서
  * 한 곳에서 바꾸면 다른 곳도 따라간다.
  */
-export function layoutPicker(onChange: () => void): HTMLElement {
+export function layoutPicker(onChange: () => void, opts: { write?: boolean } = {}): HTMLElement {
   const row = el('div', { class: 'en-minirow en-layout-pick' })
   const items: { id: prefs.AbcLayout; label: string; sub: string }[] = [
+    // 쓰기는 ABC 알파벳 화면에만 있다 — 가로세로에서는 글자를 판에 넣는 것이지 그리는 것이 아니다
+    ...(opts.write ? [{ id: 'write' as const, label: '✍️ 쓰기', sub: '획 순서를 보고 따라 써요' }] : []),
     { id: 'abc', label: '🔤 순차', sub: 'A부터 Z까지 차례대로' },
     { id: 'keyboard', label: '⌨️ 키보드', sub: '어른 자판과 같은 자리' },
   ]
   const paint = (): void => {
-    for (const b of row.children) b.classList.toggle('en-is-sel', (b as HTMLElement).dataset.layout === prefs.get().abcLayout)
+    // 쓰기 항목이 없는 화면에서 저장된 값이 write면 순차로 보이게 한다
+    const cur = prefs.get().abcLayout
+    const shown = cur === 'write' && !opts.write ? 'abc' : cur
+    for (const b of row.children) b.classList.toggle('en-is-sel', (b as HTMLElement).dataset.layout === shown)
   }
   row.append(
     ...items.map((it) => {

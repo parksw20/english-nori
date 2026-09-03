@@ -325,19 +325,49 @@ const GAMES = [
 ]
 
 /** 마을 안 — 오늘의 놀이, 미니게임, 시험 */
+/**
+ * 놀이 카드 한 장 — 마을 화면의 격자에 놓인다.
+ *
+ * 긴 주황 막대 11개가 세로로 쌓이니 화면 두 장을 넘겨야 끝이 보였고 전부 같은 색이라
+ * 무엇이 중요한지도 안 보였다 → 지도의 마을 카드처럼 정사각형 카드를 격자로 깐다.
+ * 꼭 해야 하는 둘(오늘의 놀이·마을 시험)만 주황으로 남기고 나머지는 카드색이다.
+ */
+function gameCard(
+  emoji: string,
+  name: string,
+  sub: string,
+  onClick: () => void,
+  opts: { primary?: boolean; disabled?: boolean } = {}
+): HTMLButtonElement {
+  const b = el(
+    'button',
+    { class: `en-game-card${opts.primary ? ' en-is-primary' : ''}`, disabled: opts.disabled },
+    [
+      el('span', { class: 'en-game-emoji', text: emoji }),
+      el('span', { class: 'en-game-name', text: name }),
+      el('span', { class: 'en-game-sub', text: sub }),
+    ]
+  )
+  if (!opts.disabled) b.addEventListener('click', onClick)
+  return b
+}
+
 export function showVillage(stage: StageId, a: VillageActions): void {
   const cool = progress.examCooldownLeft(stage)
   const words = wordsUpTo(stage).map((w) => w.en)
   const sum = srs.summary(words)
   const cvcCount = cvcWordsUpTo(stage).length
 
-  const kids: Node[] = [
-    bigButton('🌟', '오늘의 놀이', a.onToday, {
-      sub:
-        progress.bestOf('today') > 0
-          ? `복습할 것 ${sum.due}개 · 🏆 최고 ${progress.bestOf('today')}개 맞힘`
-          : `새 낱말과 복습 — 10분이면 끝나요 (복습할 것 ${sum.due}개)`,
-    }),
+  const cards: Node[] = [
+    gameCard(
+      '🌟',
+      '오늘의 놀이',
+      progress.bestOf('today') > 0
+        ? `복습 ${sum.due}개 · 🏆 최고 ${progress.bestOf('today')}개`
+        : `새 낱말과 복습 (복습 ${sum.due}개)`,
+      a.onToday,
+      { primary: true }
+    ),
   ]
   for (const g of GAMES) {
     // 낱말 만들기·사천성·짝맞추기는 읽을 수 있는 낱말(CVC)이 6개 이상 있어야 성립한다
@@ -347,19 +377,22 @@ export function showVillage(stage: StageId, a: VillageActions): void {
     const record = g.best()
     // 기록이 있으면 설명 대신 기록을 보여준다 — "최고 기록!"을 본 아이가
     // 다음에 열었을 때 그 기록을 찾을 곳이 있어야 한다
-    kids.push(bigButton(g.emoji, g.name, () => a.onGame(g.id), { sub: record ? `🏆 ${record}` : g.sub }))
+    cards.push(gameCard(g.emoji, g.name, record ? `🏆 ${record}` : g.sub, () => a.onGame(g.id)))
   }
-  kids.push(
-    bigButton('🏅', progress.hasCertificate(stage) ? '마을 시험 다시 보기' : '마을 시험', a.onExam, {
-      sub: cool > 0 ? `${Math.ceil(cool / 60000)}분 뒤에 다시 볼 수 있어요` : '20문제 중 14개를 맞히면 합격',
-      disabled: cool > 0,
-    })
+  cards.push(
+    gameCard(
+      '🏅',
+      progress.hasCertificate(stage) ? '시험 다시 보기' : '마을 시험',
+      cool > 0 ? `${Math.ceil(cool / 60000)}분 뒤에 볼 수 있어요` : '20문제 중 14개 맞히면 합격',
+      a.onExam,
+      { primary: true, disabled: cool > 0 }
+    )
   )
 
   render(
     top(STAGE_NAMES[stage], a.onBack, `익힘 ${sum.learned}/${sum.total}`),
     goalBar(stage),
-    el('div', {}, kids)
+    el('div', { class: 'en-game-grid' }, cards)
   )
 }
 
