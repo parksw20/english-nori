@@ -2188,7 +2188,7 @@ button.en-card:active {
 .en-trace-pad {
   /* 손가락으로 그릴 만큼 크게. 두 장이 나란히 들어가는 폭 */
   width: min(42vw, 260px);
-  aspect-ratio: 100 / 110;
+  aspect-ratio: 100 / 126;
   border: 3px dashed var(--en-line);
   border-radius: 16px;
   background: var(--en-card);
@@ -2206,6 +2206,22 @@ button.en-card:active {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* 공책 줄 — 세로 3등분. 가운뎃줄은 촘촘한 점선로 구분한다 */
+.en-trace-line {
+  stroke: var(--en-ink-soft);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  opacity: 0.6;
+}
+
+.en-trace-line-mid {
+  stroke-dasharray: 1.5 2.5;
+}
+
+.en-trace-line-base {
+  opacity: 0.9;
 }
 
 /* 실루엣 — 따라 그릴 길. 굵고 흐리다 */

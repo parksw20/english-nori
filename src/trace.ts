@@ -14,6 +14,38 @@ import { STROKES } from './data/strokes'
 import { el } from './ui'
 
 const NS = 'http://www.w3.org/2000/svg'
+
+/**
+ * 판의 좌표계 — **손글씨 공책**처럼 세로를 3등분한다.
+ *
+ * 점선 네 줄(윗줄 9 · 가운뎃줄 45 · 기준선 81 · 아랫줄 117)이 같은 간격(36)으로 놓이고,
+ * 대문자는 윗줄~기준선, 소문자는 가운뎃줄~기준선에 앉는다(올림획 b·d·h는 윗줄까지, 내림획 g·p·y는 아랫줄까지).
+ * 처음엔 글자가 상자 가운데 떠 있어서 대·소문자의 키 차이가 안 보였다(사용자 지적) —
+ * 아이는 "a는 작고 b는 크다"를 줄에 대고 배운다.
+ */
+const VB_W = 100
+const VB_H = 126
+const LINES = { top: 9, mid: 45, base: 81, bottom: 117 } as const
+
+/** 획 데이터(strokes.ts)의 y를 공책 줄에 맞춘다. 데이터는 대문자 10~90 · 소문자 x높이 40~80(올림 10, 내림 100) 기준이다 */
+function yUpper(y: number): number {
+  return LINES.top + ((y - 10) * (LINES.base - LINES.top)) / 80
+}
+function yLower(y: number): number {
+  if (y <= 40) return LINES.top + ((y - 10) * (LINES.mid - LINES.top)) / 30 // 올림획: 10→윗줄, 40→가운뎃줄
+  if (y <= 80) return LINES.mid + ((y - 40) * (LINES.base - LINES.mid)) / 40 // x높이: 40→가운뎃줄, 80→기준선
+  return LINES.base + ((y - 80) * (LINES.bottom - LINES.base)) / 20 // 내림획: 80→기준선, 100→아랫줄
+}
+
+/** path의 좌표 쌍마다 y만 바꾼다 (M·L·Q 모두 (x y) 쌍이라 홀수째 숫자가 y다) */
+function mapPathY(d: string, fy: (y: number) => number): string {
+  let i = 0
+  return d.replace(/-?[\d.]+/g, (num) => {
+    const isY = i % 2 === 1
+    i++
+    return isY ? fy(Number(num)).toFixed(1) : num
+  })
+}
 /** 되풀이 간격 */
 const LOOP_MS = 3000
 /** 획 하나를 긋는 시간 — 길이에 비례하되 너무 빠르지 않게 */
@@ -38,7 +70,7 @@ function svgEl<K extends keyof SVGElementTagNameMap>(tag: K, attrs: Record<strin
  * 글자 하나(대문자 또는 소문자)를 그리는 판.
  * 세 겹이다: 실루엣(뒤) → 획 안내(가운데, 움직임) → 아이의 선(앞)
  */
-function glyphPad(letter: string): {
+function glyphPad(letter: string, kind: 'upper' | 'lower'): {
   box: HTMLElement
   play: () => number
   duration: () => number
@@ -47,8 +79,16 @@ function glyphPad(letter: string): {
   reset: () => void
   clear: () => void
 } {
-  const paths = STROKES[letter] ?? []
-  const svg = svgEl('svg', { viewBox: '0 0 100 110', class: 'en-trace-svg' })
+  const fy = kind === 'upper' ? yUpper : yLower
+  const paths = (STROKES[letter] ?? []).map((d) => mapPathY(d, fy))
+  const svg = svgEl('svg', { viewBox: `0 0 ${VB_W} ${VB_H}`, class: 'en-trace-svg' })
+
+  // ⓪ 공책 줄 — 윗줄·가운뎃줄·기준선·아랫줄. 가운뎃줄은 다른 무늬로(소문자 키를 재는 줄이다)
+  const lines = svgEl('g', { class: 'en-trace-lines' })
+  for (const [name, y] of Object.entries(LINES)) {
+    lines.append(svgEl('line', { x1: '3', x2: String(VB_W - 3), y1: String(y), y2: String(y), class: `en-trace-line en-trace-line-${name}` }))
+  }
+  svg.append(lines)
 
   // ① 실루엣 — 따라 그릴 길. 굵고 흐리다
   const ghost = svgEl('g', { class: 'en-trace-ghost' })
@@ -95,8 +135,8 @@ function glyphPad(letter: string): {
       let x = s0.x - dx * 9
       let y = s0.y - dy * 9
       // 상자 밖으로 나가지 않게
-      x = Math.max(5, Math.min(93, x))
-      y = Math.max(9, Math.min(106, y))
+      x = Math.max(5, Math.min(VB_W - 7, x))
+      y = Math.max(9, Math.min(VB_H - 4, y))
       // 이미 놓인 번호와 겹치면 오른쪽·아래로 밀어낸다
       for (let tries = 0; tries < 6 && placed.some((q) => Math.hypot(q.x - x, q.y - y) < 9); tries++) {
         x += 7
@@ -171,7 +211,7 @@ function glyphPad(letter: string): {
   let points: string[] = []
   const toLocal = (e: PointerEvent): { x: number; y: number } => {
     const r = svg.getBoundingClientRect()
-    return { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 110 }
+    return { x: ((e.clientX - r.left) / r.width) * VB_W, y: ((e.clientY - r.top) / r.height) * VB_H }
   }
   svg.addEventListener('pointerdown', (e) => {
     e.preventDefault()
@@ -251,8 +291,8 @@ export function makeTracer(initial: string, onSpeak?: (letter: string) => void):
     current = letter
     holder.dataset.letter = letter
     stopLoop()
-    upper = glyphPad(letter.toUpperCase())
-    lower = glyphPad(letter.toLowerCase())
+    upper = glyphPad(letter.toUpperCase(), 'upper')
+    lower = glyphPad(letter.toLowerCase(), 'lower')
     pads.replaceChildren(upper.box, lower.box)
     title.textContent = `${letter.toUpperCase()} ${letter} 따라 써 보세요 ✍️`
     // 처음 한 번은 **바로**, 그다음부터는 다 그린 뒤 3초마다.
