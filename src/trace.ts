@@ -11,6 +11,7 @@
  * - 아이가 그린 선은 진하게 남고, 「지우기」로 지운다
  */
 import { STROKES } from './data/strokes'
+import { hintFor, judgeStroke, type Pt } from './handwrite'
 import { el } from './ui'
 
 const NS = 'http://www.w3.org/2000/svg'
@@ -18,14 +19,15 @@ const NS = 'http://www.w3.org/2000/svg'
 /**
  * 판의 좌표계 — **손글씨 공책**처럼 세로를 3등분한다.
  *
- * 점선 네 줄(윗줄 9 · 가운뎃줄 45 · 기준선 81 · 아랫줄 117)이 같은 간격(36)으로 놓이고,
+ * 판(높이 126)을 **정확히 3등분**하는 점선 두 줄(가운뎃줄 42 · 기준선 84)이 있고, 윗줄·아랫줄은 판 테두리다.
  * 대문자는 윗줄~기준선, 소문자는 가운뎃줄~기준선에 앉는다(올림획 b·d·h는 윗줄까지, 내림획 g·p·y는 아랫줄까지).
+ * 글자는 테두리에 닿지 않게 위아래 8씩 안쪽에 둔다.
  * 처음엔 글자가 상자 가운데 떠 있어서 대·소문자의 키 차이가 안 보였다(사용자 지적) —
  * 아이는 "a는 작고 b는 크다"를 줄에 대고 배운다.
  */
 const VB_W = 100
 const VB_H = 126
-const LINES = { top: 9, mid: 45, base: 81, bottom: 117 } as const
+const LINES = { top: 8, mid: 42, base: 84, bottom: 118 } as const
 
 /** 획 데이터(strokes.ts)의 y를 공책 줄에 맞춘다. 데이터는 대문자 10~90 · 소문자 x높이 40~80(올림 10, 내림 100) 기준이다 */
 function yUpper(y: number): number {
@@ -70,8 +72,12 @@ function svgEl<K extends keyof SVGElementTagNameMap>(tag: K, attrs: Record<strin
  * 글자 하나(대문자 또는 소문자)를 그리는 판.
  * 세 겹이다: 실루엣(뒤) → 획 안내(가운데, 움직임) → 아이의 선(앞)
  */
-function glyphPad(letter: string, kind: 'upper' | 'lower'): {
+/** 판에서 일어나는 일 — 획 하나를 맞게 그었다 / 틀렸다(힌트) / 글자를 다 썼다 */
+type PadEvent = { type: 'ok' } | { type: 'bad'; hint: string } | { type: 'done' }
+
+function glyphPad(letter: string, kind: 'upper' | 'lower', onEvent: (e: PadEvent) => void): {
   box: HTMLElement
+  isDone: () => boolean
   play: () => number
   duration: () => number
   /** 번호를 놓는다 — 재생을 기다리지 않고 바로 보이게 */
@@ -207,35 +213,76 @@ function glyphPad(letter: string, kind: 'upper' | 'lower'): {
     return at
   }
 
-  // ── 아이가 그리기 ─────────────────────────────────────
+  // ── 아이가 그리기 + 획마다 판정 ───────────────────────────
   let drawing: SVGPathElement | null = null
-  let points: string[] = []
-  const toLocal = (e: PointerEvent): { x: number; y: number } => {
+  let pts: Pt[] = []
+  /** 다음에 그어야 할 획 번호 */
+  let expected = 0
+  let done = false
+  const toLocal = (e: PointerEvent): Pt => {
     const r = svg.getBoundingClientRect()
     return { x: ((e.clientX - r.left) / r.width) * VB_W, y: ((e.clientY - r.top) / r.height) * VB_H }
   }
+  const dOf = (): string => pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ')
+
+  /** 안내 획을 같은 간격의 점으로 — 판정은 점끼리 비교한다 */
+  function guidePoints(i: number): Pt[] {
+    const p = guidePaths[i]
+    if (!p) return []
+    const L = p.getTotalLength()
+    return Array.from({ length: 24 }, (_, k) => {
+      const q = p.getPointAtLength((L * k) / 23)
+      return { x: q.x, y: q.y }
+    })
+  }
+
   svg.addEventListener('pointerdown', (e) => {
+    if (done) return
     e.preventDefault()
     svg.setPointerCapture(e.pointerId)
-    const { x, y } = toLocal(e)
-    points = [`M${x.toFixed(1)} ${y.toFixed(1)}`]
-    drawing = svgEl('path', { d: points[0] as string })
+    pts = [toLocal(e)]
+    drawing = svgEl('path', { d: dOf() })
     ink.append(drawing)
   })
   svg.addEventListener('pointermove', (e) => {
     if (!drawing) return
-    const { x, y } = toLocal(e)
-    points.push(`L${x.toFixed(1)} ${y.toFixed(1)}`)
-    drawing.setAttribute('d', points.join(' '))
+    pts.push(toLocal(e))
+    drawing.setAttribute('d', dOf())
   })
   const end = (): void => {
+    if (!drawing) return
+    const stroke = drawing
     drawing = null
+    /**
+     * 손을 뗀 순간 그 획을 판정한다 — 글자를 다 쓴 뒤 한꺼번에 보면 어느 획이 틀렸는지 아이가 모른다.
+     * 틀린 획은 지우고 같은 획을 다시 긋게 한다(앞서 맞힌 획은 남긴다).
+     */
+    const v = judgeStroke(pts, guidePoints(expected))
+    if (!v.ok) {
+      stroke.classList.add('en-is-wrong')
+      window.setTimeout(() => stroke.remove(), 350)
+      onEvent({ type: 'bad', hint: hintFor(v) })
+      return
+    }
+    stroke.classList.add('en-is-ok')
+    expected++
+    if (expected >= guidePaths.length) {
+      done = true
+      box.classList.add('en-is-done')
+      onEvent({ type: 'done' })
+    } else {
+      onEvent({ type: 'ok' })
+    }
   }
   svg.addEventListener('pointerup', end)
   svg.addEventListener('pointercancel', end)
 
   function clear(): void {
     ink.replaceChildren()
+    expected = 0
+    done = false
+    drawing = null
+    box.classList.remove('en-is-done')
   }
 
   function prepare(): void {
@@ -243,21 +290,27 @@ function glyphPad(letter: string, kind: 'upper' | 'lower'): {
     placeMarks()
   }
 
-  return { box, play, duration, prepare, reset, clear }
+  return { box, isDone: () => done, play, duration, prepare, reset, clear }
 }
 
 /**
  * 따라 쓰기 판 — 대문자와 소문자를 나란히.
  * 둘을 같이 두는 이유는 카드(A a)와 같다: 같은 글자의 두 모습이라는 것을 손으로도 안다.
  */
-export function makeTracer(initial: string, onSpeak?: (letter: string) => void): Tracer {
+export function makeTracer(
+  initial: string,
+  onSpeak?: (letter: string) => void,
+  /** 대문자·소문자를 다 맞게 썼을 때 */
+  onPass?: (letter: string) => void
+): Tracer {
   const holder = el('div', { class: 'en-trace' })
   const pads = el('div', { class: 'en-trace-pads' })
   const title = el('p', { class: 'en-trace-title' })
+  const msg = el('p', { class: 'en-trace-msg' })
   const clearBtn = el('button', { class: 'en-mini', text: '🧽 지우기' })
   const againBtn = el('button', { class: 'en-mini', text: '▶ 순서 다시' })
   const hearBtn = el('button', { class: 'en-mini', text: '🔊 듣기' })
-  holder.append(title, pads, el('div', { class: 'en-minirow' }, [againBtn, clearBtn, hearBtn]))
+  holder.append(title, pads, msg, el('div', { class: 'en-minirow' }, [againBtn, clearBtn, hearBtn]))
 
   let current = initial
   let upper: ReturnType<typeof glyphPad> | null = null
@@ -292,10 +345,26 @@ export function makeTracer(initial: string, onSpeak?: (letter: string) => void):
     current = letter
     holder.dataset.letter = letter
     stopLoop()
-    upper = glyphPad(letter.toUpperCase(), 'upper')
-    lower = glyphPad(letter.toLowerCase(), 'lower')
+    msg.textContent = ''
+    msg.className = 'en-trace-msg'
+    const onEvent = (e: PadEvent): void => {
+      if (e.type === 'bad') {
+        msg.textContent = e.hint
+        msg.className = 'en-trace-msg en-again'
+        return
+      }
+      msg.textContent = e.type === 'done' ? '좋아! 👏' : '맞아, 다음 획! ✏️'
+      msg.className = 'en-trace-msg en-good'
+      // 대문자·소문자를 **둘 다** 다 썼을 때만 통과 — 카드에 둘이 같이 있는 이유와 같다
+      if (upper?.isDone() && lower?.isDone()) {
+        msg.textContent = `${letter.toUpperCase()} ${letter} 통과! 입력 줄에 넣었어요 ✅`
+        onPass?.(letter)
+      }
+    }
+    upper = glyphPad(letter.toUpperCase(), 'upper', onEvent)
+    lower = glyphPad(letter.toLowerCase(), 'lower', onEvent)
     pads.replaceChildren(upper.box, lower.box)
-    title.textContent = `${letter.toUpperCase()} ${letter} 따라 써 보세요 ✍️`
+    title.textContent = `${letter.toUpperCase()} ${letter} 순서대로 써 보세요 ✍️`
     // 처음 한 번은 **바로**, 그다음부터는 다 그린 뒤 3초마다.
     // rAF가 아니라 타이머로 여는 이유: 화면이 가려져 있으면 rAF가 멈춰 첫 재생(과 번호 배치)이 밀린다
     timers.push(window.setTimeout(playBoth, 0))
@@ -304,6 +373,8 @@ export function makeTracer(initial: string, onSpeak?: (letter: string) => void):
   clearBtn.addEventListener('click', () => {
     upper?.clear()
     lower?.clear()
+    msg.textContent = ''
+    msg.className = 'en-trace-msg'
   })
   againBtn.addEventListener('click', () => {
     stopLoop()

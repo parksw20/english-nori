@@ -147,7 +147,15 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
    * 따라 쓰기 판 — 쓰기 방식에서만 보인다.
    * 글자를 고르면 실루엣 위에 획 순서가 바로 한 번 나오고, 다 그린 뒤 3초마다 되풀이된다.
    */
-  const tracer = makeTracer('a', (ch) => tts.say(ch))
+  const tracer = makeTracer(
+    'a',
+    (ch) => tts.say(ch),
+    (ch) => {
+      // 대·소문자를 순서대로 다 썼다 → 그 글자를 **입력 줄에 넣는다** (순차·키보드에서 카드를 누른 것과 같다)
+      sfx.good()
+      push(ch)
+    }
+  )
   const typeRow = el('div', { class: 'en-type-row' }, [slots, back, go])
   const spaceRow = el('div', { class: 'en-type-space-row' }, [space])
 
@@ -155,9 +163,7 @@ export function showAbc(onBack: () => void, onDex?: () => void): void {
   function applyMode(): void {
     const write = prefs.get().abcLayout === 'write'
     tracer.el.hidden = !write
-    typeRow.hidden = write
-    spaceRow.hidden = write
-    say.hidden = write
+    // 입력 줄·띄어쓰기는 세 방식 모두 보인다 — 쓰기에서는 통과한 글자가 여기 쌓인다
     if (!write) tracer.stop()
     else tracer.show(tracer.el.dataset.letter ?? 'a')
     paintBoard()

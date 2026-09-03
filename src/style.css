@@ -2234,6 +2234,36 @@ button.en-card:active {
   stroke-width: 8;
 }
 
+.en-trace-ink path.en-is-ok {
+  stroke: var(--en-good);
+}
+
+.en-trace-ink path.en-is-wrong {
+  stroke: var(--en-danger);
+  opacity: 0.6;
+}
+
+/* 다 쓴 판 */
+.en-trace-pad.en-is-done {
+  border-style: solid;
+  border-color: var(--en-good);
+}
+
+.en-trace-msg {
+  min-height: 22px;
+  margin: 6px 0 2px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.en-trace-msg.en-good {
+  color: var(--en-good);
+}
+
+.en-trace-msg.en-again {
+  color: var(--en-accent-text);
+}
+
 .en-trace-no text {
   font-size: 9px;
   font-weight: 800;

@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "tsx test/data.test.ts && tsx test/shisen.test.ts && tsx test/cards.test.ts && tsx test/speech.test.ts && tsx test/crossword.test.ts && tsx test/strokes.test.ts",
+    "test": "tsx test/data.test.ts && tsx test/shisen.test.ts && tsx test/cards.test.ts && tsx test/speech.test.ts && tsx test/crossword.test.ts && tsx test/strokes.test.ts && tsx test/handwrite.test.ts",
     "lan": "vite --host 0.0.0.0",
     "lan:preview": "vite preview --host 0.0.0.0"
   },
