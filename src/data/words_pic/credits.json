@@ -1,0 +1,2512 @@
+{
+ "apple": {
+  "en": "apple",
+  "ko": "사과",
+  "file": "File:Pink lady and cross section.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pink_lady_and_cross_section.jpg",
+  "artist": "fir0002  flagstaffotos [at] gmail.com\n\t\tCanon 20D + Sigma 150mm f/2.8",
+  "license": "GFDL 1.2",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html",
+  "how": "위키 대표"
+ },
+ "cat": {
+  "en": "cat",
+  "ko": "고양이",
+  "file": "File:Siam lilacpoint.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Siam_lilacpoint.jpg",
+  "artist": "Karin Langner-Bahmann, upload von Martin Bahmann",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "dog": {
+  "en": "dog",
+  "ko": "개",
+  "file": "File:Huskiesatrest.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Huskiesatrest.jpg",
+  "artist": "M. Rehemtulla",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "big": {
+  "en": "big",
+  "ko": "큰",
+  "file": "File:African Bush Elephant.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:African_Bush_Elephant.jpg",
+  "artist": "Muhammad Mahdi Karim Facebook\n\n\n\n\n\nThe making of this document was supported by Wikimedia CH. (Submit your project!)\nFor",
+  "license": "GFDL 1.2",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html",
+  "how": "위키 대표"
+ },
+ "sock": {
+  "en": "sock",
+  "ko": "양말",
+  "file": "File:HandKnittedWhiteLaceSock.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:HandKnittedWhiteLaceSock.jpg",
+  "artist": "Loggie-log",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "duck": {
+  "en": "duck",
+  "ko": "오리",
+  "file": "File:Bucephala-albeola-010.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Bucephala-albeola-010.jpg",
+  "artist": "Mdf",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "run": {
+  "en": "run",
+  "ko": "달리다",
+  "file": "File:Speedsuit.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Speedsuit.jpg",
+  "artist": "Chris Hunkeler",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "happy": {
+  "en": "happy",
+  "ko": "행복한",
+  "file": "File:Laughing boy at golden hour.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Laughing_boy_at_golden_hour.jpg",
+  "artist": "Basile Morin",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "milk": {
+  "en": "milk",
+  "ko": "우유",
+  "file": "File:Glass of Milk (33657535532).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Glass_of_Milk_(33657535532).jpg",
+  "artist": "NIAID",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "ship": {
+  "en": "ship",
+  "ko": "배",
+  "file": "File:Containerterminal Altenwerder (Hamburg-Altenwerder).Iris Bolten.4.phb.ajb.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Containerterminal_Altenwerder_(Hamburg-Altenwerder).Iris_Bolten.4.phb.ajb.jpg",
+  "artist": "Ajepbah",
+  "license": "CC BY-SA 3.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "how": "위키 대표"
+ },
+ "red": {
+  "en": "red",
+  "ko": "빨강",
+  "file": "File:Garden strawberry (Fragaria × ananassa) single2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Garden_strawberry_(Fragaria_%C3%97_ananassa)_single2.jpg",
+  "artist": "Ivar Leidus",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "black": {
+  "en": "black",
+  "ko": "검정",
+  "file": "File:Corvus corone -near Canford Cliffs, Poole, England-8.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Corvus_corone_-near_Canford_Cliffs,_Poole,_England-8.jpg",
+  "artist": "Ian Kirk from Broadstone, Dorset, UK",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "swim": {
+  "en": "swim",
+  "ko": "수영하다",
+  "file": "File:40. Schwimmzonen- und Mastersmeeting Enns 2017 100m Brust Herren USC Traun-9897.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:40._Schwimmzonen-_und_Mastersmeeting_Enns_2017_100m_Brust_Herren_USC_Traun-9897.jpg",
+  "artist": "Isiwal",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "white": {
+  "en": "white",
+  "ko": "흰색",
+  "file": "File:Polar Bear - Alaska (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Polar_Bear_-_Alaska_(cropped).jpg",
+  "artist": "Alan Wilson",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "ball": {
+  "en": "ball",
+  "ko": "공",
+  "file": "File:Many balls.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Many_balls.jpg",
+  "artist": "Conrad 7",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "egg": {
+  "en": "egg",
+  "ko": "달걀",
+  "file": "File:Huevo frito.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Huevo_frito.jpg",
+  "artist": "Horacio Cambeiro",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "fish": {
+  "en": "fish",
+  "ko": "물고기",
+  "file": "File:Balantiocheilos melanopterus - Karlsruhe Zoo 02 (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Balantiocheilos_melanopterus_-_Karlsruhe_Zoo_02_(cropped).jpg",
+  "artist": "H. Zell",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "goat": {
+  "en": "goat",
+  "ko": "염소",
+  "file": "File:Hausziege 04.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Hausziege_04.jpg",
+  "artist": "Kuebi = Armin Kübelbeck",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "hat": {
+  "en": "hat",
+  "ko": "모자",
+  "file": "File:Felthat.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Felthat.jpg",
+  "artist": "Ealdgyth",
+  "license": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "how": "위키 대표"
+ },
+ "ice-cream": {
+  "en": "ice cream",
+  "ko": "아이스크림",
+  "file": "File:Ice cream with whipped cream, chocolate syrup, and a wafer (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ice_cream_with_whipped_cream,_chocolate_syrup,_and_a_wafer_(cropped).jpg",
+  "artist": "Nicolas Ettlin",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "jacket": {
+  "en": "jacket",
+  "ko": "재킷",
+  "file": "File:Jacket2-1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Jacket2-1.jpg",
+  "artist": "Dudesleeper /  Talk",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "kite": {
+  "en": "kite",
+  "ko": "연",
+  "file": "File:Kitesflying.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Kitesflying.jpg",
+  "artist": "Jon Sullivan",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "lamp": {
+  "en": "lamp",
+  "ko": "램프",
+  "file": "File:Gluehlampe 01 KMJ.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Gluehlampe_01_KMJ.png",
+  "artist": "KMJ, alpha masking by Edokter",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "monkey": {
+  "en": "monkey",
+  "ko": "원숭이",
+  "file": "File:Ubud Monkey Family.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ubud_Monkey_Family.jpg",
+  "artist": "Deerpeter",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "nose": {
+  "en": "nose",
+  "ko": "코",
+  "file": "File:Fort Ross Elena wearing Traditional Russian Costume (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Fort_Ross_Elena_wearing_Traditional_Russian_Costume_(cropped).jpg",
+  "artist": "Franco Folini",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "orange": {
+  "en": "orange",
+  "ko": "오렌지",
+  "file": "File:Oranges - whole-halved-segment.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Oranges_-_whole-halved-segment.jpg",
+  "artist": "Ivar Leidus",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "pen": {
+  "en": "pen",
+  "ko": "펜",
+  "file": "File:Carandache Ecridor.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Carandache_Ecridor.jpg",
+  "artist": "Vadim Zhuravlev",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "queen": {
+  "en": "queen",
+  "ko": "여왕",
+  "file": "File:Margaret of Denmark, Norway & Sweden (1389) effigy 2010 (1).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Margaret_of_Denmark,_Norway_%26_Sweden_(1389)_effigy_2010_(1).jpg",
+  "artist": "Jacob Truedson Demitz for Ristesson",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "sun": {
+  "en": "sun",
+  "ko": "해",
+  "file": "File:The Sun in white light.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Sun_in_white_light.jpg",
+  "artist": "Matúš Motlo",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "tiger": {
+  "en": "tiger",
+  "ko": "호랑이",
+  "file": "File:Bengal tiger (Panthera tigris tigris) female 3 crop.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Bengal_tiger_(Panthera_tigris_tigris)_female_3_crop.jpg",
+  "artist": "Charles J. Sharp",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "umbrella": {
+  "en": "umbrella",
+  "ko": "우산",
+  "file": "File:M0354 000727-005 1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:M0354_000727-005_1.jpg",
+  "artist": "MONNIN Jacques",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "van": {
+  "en": "van",
+  "ko": "승합차",
+  "file": "File:2018 Ford Transit Custom 300 Base 2.0 facelift.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:2018_Ford_Transit_Custom_300_Base_2.0_facelift.jpg",
+  "artist": "Vauxford",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "water": {
+  "en": "water",
+  "ko": "물",
+  "file": "File:Clean water for a village in West Lombok (10686572086).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Clean_water_for_a_village_in_West_Lombok_(10686572086).jpg",
+  "artist": "Josh Estey/AusAID",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "box": {
+  "en": "box",
+  "ko": "상자",
+  "file": "File:Box.agr.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Box.agr.jpg",
+  "artist": "ArnoldReinhold",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "yellow": {
+  "en": "yellow",
+  "ko": "노랑",
+  "file": "File:P1030323.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:P1030323.JPG",
+  "artist": "Elena Chochkova",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "zoo": {
+  "en": "zoo",
+  "ko": "동물원",
+  "file": "File:Sea Lion and Keeper at the Welsh Mountain Zoo - geograph.org.uk - 4684996.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sea_Lion_and_Keeper_at_the_Welsh_Mountain_Zoo_-_geograph.org.uk_-_4684996.jpg",
+  "artist": "Jeff Buck",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "bag": {
+  "en": "bag",
+  "ko": "가방",
+  "file": "File:Bolsas-de-asa-plana-interior-bolsapubli.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Bolsas-de-asa-plana-interior-bolsapubli.jpg",
+  "artist": "Bolsapubli",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "dad": {
+  "en": "dad",
+  "ko": "아빠",
+  "file": "File:Father's love (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Father%27s_love_(cropped).jpg",
+  "artist": "Hripsime Poghosyan",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "man": {
+  "en": "man",
+  "ko": "남자",
+  "file": "File:Outdoors-man-portrait (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Outdoors-man-portrait_(cropped).jpg",
+  "artist": "Abhi Puthenpurackal",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "mat": {
+  "en": "mat",
+  "ko": "매트",
+  "file": "File:Ardha-Navāsana.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Ardha-Nav%C4%81sana.JPG",
+  "artist": "Iveto",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "sad": {
+  "en": "sad",
+  "ko": "슬픈",
+  "file": "File:Crying-girl.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Crying-girl.jpg",
+  "artist": "Crimfants",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "bed": {
+  "en": "bed",
+  "ko": "침대",
+  "file": "File:2008-04-12 Freilichtmuseum Detmold (11).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:2008-04-12_Freilichtmuseum_Detmold_(11).jpg",
+  "artist": "R-E-AL (talk | contribs | Gallery)  (German Wikipedia)",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "leg": {
+  "en": "leg",
+  "ko": "다리",
+  "file": "File:Human knees.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Human_knees.jpg",
+  "artist": "Genusfotografen (Tomas Gunnarsson) / Wikimedia Sverige",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "men": {
+  "en": "men",
+  "ko": "남자들",
+  "file": "File:Outdoors-man-portrait (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Outdoors-man-portrait_(cropped).jpg",
+  "artist": "Abhi Puthenpurackal",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "pet": {
+  "en": "pet",
+  "ko": "반려동물",
+  "file": "File:Golde33443.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Golde33443.jpg",
+  "artist": "Golden Trvs Gol twister",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "kid": {
+  "en": "kid",
+  "ko": "아이",
+  "file": "File:International children dressed in their native costumes participate in the 100th anniversary of the Statue of Liberty - DPLA - 4461efafd5c4ba7fde8eedb1f13f439e.jpeg",
+  "page": "https://commons.wikimedia.org/wiki/File:International_children_dressed_in_their_native_costumes_participate_in_the_100th_anniversary_of_the_Statue_of_Liberty_-_DPLA_-_4461efafd5c4ba7fde8eedb1f13f439e.jpeg",
+  "artist": "Department of Defense. American Forces Information Service. Defense Visual Information Center. 1994",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "sit": {
+  "en": "sit",
+  "ko": "앉다",
+  "file": "File:Università di louisville, il pensatore di rodin 02.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Universit%C3%A0_di_louisville,_il_pensatore_di_rodin_02.jpg",
+  "artist": "Sailko",
+  "license": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "how": "위키 대표"
+ },
+ "pig": {
+  "en": "pig",
+  "ko": "돼지",
+  "file": "File:Pig farm Vampula 1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pig_farm_Vampula_1.jpg",
+  "artist": "kallerna",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "hot": {
+  "en": "hot",
+  "ko": "뜨거운",
+  "file": "File:Large bonfire.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Large_bonfire.jpg",
+  "artist": "Fir0002",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "pot": {
+  "en": "pot",
+  "ko": "냄비",
+  "file": "File:Pans (113563802).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pans_(113563802).jpg",
+  "artist": "Tracy Hunter from Kabul,, Afghanistan",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "fox": {
+  "en": "fox",
+  "ko": "여우",
+  "file": "File:Vulpes vulpes ssp fulvus.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Vulpes_vulpes_ssp_fulvus.jpg",
+  "artist": "Joanne Redwood",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "bus": {
+  "en": "bus",
+  "ko": "버스",
+  "file": "File:LTZ1328-19-20241030-160332.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:LTZ1328-19-20241030-160332.jpg",
+  "artist": "SIA321",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "fun": {
+  "en": "fun",
+  "ko": "재미",
+  "file": "File:Argos playground.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Argos_playground.jpg",
+  "artist": "NikosLikomitros",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "mum": {
+  "en": "mum",
+  "ko": "엄마",
+  "file": "File:Woman at Lover's Bridge Tanjung Sepat (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Woman_at_Lover%27s_Bridge_Tanjung_Sepat_(cropped).jpg",
+  "artist": "John Ragai",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "rug": {
+  "en": "rug",
+  "ko": "깔개",
+  "file": "File:Wollteppich 1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Wollteppich_1.jpg",
+  "artist": "Ryj",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "clock": {
+  "en": "clock",
+  "ko": "시계",
+  "file": "File:Pendulum clock by Jacob Kock, antique furniture photography, IMG 0931 edit.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pendulum_clock_by_Jacob_Kock,_antique_furniture_photography,_IMG_0931_edit.jpg",
+  "artist": "Christoph Braun",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "truck": {
+  "en": "truck",
+  "ko": "트럭",
+  "file": "File:2001 Ford F-250 Super Duty XL regular cab flatbed, front left, 05-17-2025.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:2001_Ford_F-250_Super_Duty_XL_regular_cab_flatbed,_front_left,_05-17-2025.jpg",
+  "artist": "MercurySable99",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "doll": {
+  "en": "doll",
+  "ko": "인형",
+  "file": "File:Poupée c 1870.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Poup%C3%A9e_c_1870.jpg",
+  "artist": "Photo: Andreas Praefcke",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "wall": {
+  "en": "wall",
+  "ko": "벽",
+  "file": "File:Brick.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Brick.jpg",
+  "artist": "Andrewlister",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "dress": {
+  "en": "dress",
+  "ko": "원피스",
+  "file": "File:Afternoon ensemble MET 63.212a-b CP4.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Afternoon_ensemble_MET_63.212a-b_CP4.jpg",
+  "artist": "",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "glasses": {
+  "en": "glasses",
+  "ko": "안경",
+  "file": "File:2023 Okulary korekcyjne.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:2023_Okulary_korekcyjne.jpg",
+  "artist": "Jacek Halicki",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "teddy": {
+  "en": "teddy",
+  "ko": "곰인형",
+  "file": "File:Teddy bear early 1900s - Smithsonian Museum of Natural History.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Teddy_bear_early_1900s_-_Smithsonian_Museum_of_Natural_History.jpg",
+  "artist": "Smithsonian Museum of Natural History",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "hippo": {
+  "en": "hippo",
+  "ko": "하마",
+  "file": "File:Portrait Hippopotamus in the water.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Portrait_Hippopotamus_in_the_water.jpg",
+  "artist": "Muhammad Mahdi Karim",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "tennis": {
+  "en": "tennis",
+  "ko": "테니스",
+  "file": "File:Closeup of a tennis ball (2).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Closeup_of_a_tennis_ball_(2).jpg",
+  "artist": "Miscellaneous contributor",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "hand": {
+  "en": "hand",
+  "ko": "손",
+  "file": "File:Hand, fingers - back.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Hand,_fingers_-_back.jpg",
+  "artist": "Genusfotografen (Tomas Gunnarsson) / Wikimedia",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "sand": {
+  "en": "sand",
+  "ko": "모래",
+  "file": "File:Libya 4608 Idehan Ubari Dunes Luca Galuzzi 2007.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Libya_4608_Idehan_Ubari_Dunes_Luca_Galuzzi_2007.jpg",
+  "artist": "Luca Galuzzi (Lucag)",
+  "license": "CC BY-SA 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+  "how": "위키 대표"
+ },
+ "handbag": {
+  "en": "handbag",
+  "ko": "손가방",
+  "file": "File:Mi'kmaq porcupine quill purse (40412695490).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mi%27kmaq_porcupine_quill_purse_(40412695490).jpg",
+  "artist": "Thomas Quine",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "candy": {
+  "en": "candy",
+  "ko": "사탕",
+  "file": "File:Candy in Damascus.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Candy_in_Damascus.jpg",
+  "artist": "Elisa  Azzali",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "pink": {
+  "en": "pink",
+  "ko": "분홍",
+  "file": "File:Flamingos Laguna Colorada.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Flamingos_Laguna_Colorada.jpg",
+  "artist": "Valdiney Pimenta",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "drink": {
+  "en": "drink",
+  "ko": "마시다",
+  "file": "File:Nordkirchen-100415-12272-Trinkender.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Nordkirchen-100415-12272-Trinkender.jpg",
+  "artist": "Mbdortmund",
+  "license": "GFDL 1.2",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html",
+  "how": "위키 대표"
+ },
+ "donkey": {
+  "en": "donkey",
+  "ko": "당나귀",
+  "file": "File:Donkey in Clovelly, North Devon, England.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Donkey_in_Clovelly,_North_Devon,_England.jpg",
+  "artist": "Adrian Pingstone",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "clap": {
+  "en": "clap",
+  "ko": "박수치다",
+  "file": "File:Arabic arts festival applause.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Arabic_arts_festival_applause.jpg",
+  "artist": "Indigo Goat from Liverpool",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "frog": {
+  "en": "frog",
+  "ko": "개구리",
+  "file": "File:Red-eyed Leaf Frog (49661076226).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Red-eyed_Leaf_Frog_(49661076226).jpg",
+  "artist": "Charlie Jackson",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "grandma": {
+  "en": "grandma",
+  "ko": "할머니",
+  "file": "File:The Favorite by Georgios Iakovidis.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Favorite_by_Georgios_Iakovidis.jpg",
+  "artist": "Georgios Jakobides",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "grandpa": {
+  "en": "grandpa",
+  "ko": "할아버지",
+  "file": "File:The Favorite by Georgios Iakovidis.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Favorite_by_Georgios_Iakovidis.jpg",
+  "artist": "Georgios Jakobides",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "small": {
+  "en": "small",
+  "ko": "작은",
+  "file": "File:Red Ant - March 2025.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Red_Ant_-_March_2025.jpg",
+  "artist": "Samantha Henneke from Seagrove, North Carolina, USA",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "stop": {
+  "en": "stop",
+  "ko": "멈추다",
+  "file": "File:STOP sign.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:STOP_sign.jpg",
+  "artist": "Bidgee",
+  "license": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "how": "위키 대표"
+ },
+ "basketball": {
+  "en": "basketball",
+  "ko": "농구",
+  "file": "File:Steph Curry (51915116957).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Steph_Curry_(51915116957).jpg",
+  "artist": "Erik Drost",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "shop": {
+  "en": "shop",
+  "ko": "가게",
+  "file": "File:Westside Market in Manhattan, NYC IMG 5615.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Westside_Market_in_Manhattan,_NYC_IMG_5615.JPG",
+  "artist": "Billy Hathorn",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "shell": {
+  "en": "shell",
+  "ko": "조개껍데기",
+  "file": "File:Conchiglie Seashells 01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Conchiglie_Seashells_01.jpg",
+  "artist": "Alessio Sbarbaro User_talk:Yoggysot",
+  "license": "CC BY-SA 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+  "how": "위키 대표"
+ },
+ "fishing": {
+  "en": "fishing",
+  "ko": "낚시",
+  "file": "File:Stilts fishermen Sri Lanka 02.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Stilts_fishermen_Sri_Lanka_02.jpg",
+  "artist": "Bernard Gagnon",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "jellyfish": {
+  "en": "jellyfish",
+  "ko": "해파리",
+  "file": "File:Jelly cc11.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Jelly_cc11.jpg",
+  "artist": "Dan90266",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "chicken": {
+  "en": "chicken",
+  "ko": "닭",
+  "file": "File:Male and female chicken sitting together.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Male_and_female_chicken_sitting_together.jpg",
+  "artist": "Andrei Niemimäki from Turku, Finland",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "chips": {
+  "en": "chips",
+  "ko": "감자튀김",
+  "file": "File:French Fries.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:French_Fries.JPG",
+  "artist": "StockSnap",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "lunch": {
+  "en": "lunch",
+  "ko": "점심",
+  "file": "File:Traditional picnic party.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Traditional_picnic_party.jpg",
+  "artist": "Serragok",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "kitchen": {
+  "en": "kitchen",
+  "ko": "부엌",
+  "file": "File:La cuisine (musée dart nouveau, Riga) (7563655820).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:La_cuisine_(mus%C3%A9e_dart_nouveau,_Riga)_(7563655820).jpg",
+  "artist": "Jean-Pierre Dalbéra from Paris, France",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "watch": {
+  "en": "watch",
+  "ko": "손목시계",
+  "file": "File:Casio OCEANUS OCW-S1350PC-1AJR 01.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Casio_OCEANUS_OCW-S1350PC-1AJR_01.JPG",
+  "artist": "Kansai explorer",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "catch": {
+  "en": "catch",
+  "ko": "잡다",
+  "file": "File:Vilseck High School student catches baseball (6905836).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Vilseck_High_School_student_catches_baseball_(6905836).jpg",
+  "artist": "U.S. Army photo by Sgt. Cory Reese",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "제목"
+ },
+ "child": {
+  "en": "child",
+  "ko": "아이",
+  "file": "File:International children dressed in their native costumes participate in the 100th anniversary of the Statue of Liberty - DPLA - 4461efafd5c4ba7fde8eedb1f13f439e.jpeg",
+  "page": "https://commons.wikimedia.org/wiki/File:International_children_dressed_in_their_native_costumes_participate_in_the_100th_anniversary_of_the_Statue_of_Liberty_-_DPLA_-_4461efafd5c4ba7fde8eedb1f13f439e.jpeg",
+  "artist": "Department of Defense. American Forces Information Service. Defense Visual Information Center. 1994",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "children": {
+  "en": "children",
+  "ko": "아이들",
+  "file": "File:International children dressed in their native costumes participate in the 100th anniversary of the Statue of Liberty - DPLA - 4461efafd5c4ba7fde8eedb1f13f439e.jpeg",
+  "page": "https://commons.wikimedia.org/wiki/File:International_children_dressed_in_their_native_costumes_participate_in_the_100th_anniversary_of_the_Statue_of_Liberty_-_DPLA_-_4461efafd5c4ba7fde8eedb1f13f439e.jpeg",
+  "artist": "Department of Defense. American Forces Information Service. Defense Visual Information Center. 1994",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "bath": {
+  "en": "bath",
+  "ko": "목욕",
+  "file": "File:Clawfoot bathtub.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Clawfoot_bathtub.jpg",
+  "artist": "Yannick Trottier (ytrottier)",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "thanks": {
+  "en": "thanks",
+  "ko": "고마워",
+  "file": "File:Wedding hugs.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Wedding_hugs.jpg",
+  "artist": "Braden Kowitz",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "photo": {
+  "en": "photo",
+  "ko": "사진",
+  "file": "File:Picture of Polaroid image.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Picture_of_Polaroid_image.jpg",
+  "artist": "420 xXx.MinecraftGamer.xXx 69",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "elephant": {
+  "en": "elephant",
+  "ko": "코끼리",
+  "file": "File:African Bush Elephant.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:African_Bush_Elephant.jpg",
+  "artist": "Muhammad Mahdi Karim Facebook\n\n\n\n\n\nThe making of this document was supported by Wikimedia CH. (Submit your project!)\nFor",
+  "license": "GFDL 1.2",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html",
+  "how": "위키 대표"
+ },
+ "song": {
+  "en": "song",
+  "ko": "노래",
+  "file": "File:Evensong in York Minster.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Evensong_in_York_Minster.jpg",
+  "artist": "Allan Engelhardt",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "sing": {
+  "en": "sing",
+  "ko": "노래하다",
+  "file": "File:Ah cricket 20122 (7364759010).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ah_cricket_20122_(7364759010).jpg",
+  "artist": "Owen Lucas from Bath, UK",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "long": {
+  "en": "long",
+  "ko": "긴",
+  "file": "File:Diverse·Maßstäbe,15.365.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Diverse%C2%B7Ma%C3%9Fst%C3%A4be,15.365.jpg",
+  "artist": "Geof",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "mango": {
+  "en": "mango",
+  "ko": "망고",
+  "file": "File:Mangos - single and halved.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mangos_-_single_and_halved.jpg",
+  "artist": "Ivar Leidus",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "evening": {
+  "en": "evening",
+  "ko": "저녁",
+  "file": "File:Full cycle of a Sunset on the high plains of the Mojave Desert.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Full_cycle_of_a_Sunset_on_the_high_plains_of_the_Mojave_Desert.jpg",
+  "artist": "Jessie Eastland",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "angry": {
+  "en": "angry",
+  "ko": "화난",
+  "file": "File:Le Colère mêlée de crainte (from Caractères des passions, gravés sur les desseins de l'illustre Monsieur le Brun) MET DP854052.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Le_Col%C3%A8re_m%C3%AAl%C3%A9e_de_crainte_(from_Caract%C3%A8res_des_passions,_grav%C3%A9s_sur_les_desseins_de_l%27illustre_Monsieur_le_Brun)_MET_DP854052.jpg",
+  "artist": "Sébastien Leclerc II / After Charles Le Brun",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "clothes": {
+  "en": "clothes",
+  "ko": "옷",
+  "file": "File:Leipzig2012.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Leipzig2012.jpg",
+  "artist": "sprd.net AG",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "cake": {
+  "en": "cake",
+  "ko": "케이크",
+  "file": "File:Pound layer cake.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pound_layer_cake.jpg",
+  "artist": "Scheinwerfermann",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "snake": {
+  "en": "snake",
+  "ko": "뱀",
+  "file": "File:Trimeresurus sabahi fucatus, Banded pit viper - Takua Pa District, Phang-nga Province (46710893582).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Trimeresurus_sabahi_fucatus,_Banded_pit_viper_-_Takua_Pa_District,_Phang-nga_Province_(46710893582).jpg",
+  "artist": "Rushenb",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "plane": {
+  "en": "plane",
+  "ko": "비행기",
+  "file": "File:United Airlines Boeing 777-200 Meulemans.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:United_Airlines_Boeing_777-200_Meulemans.jpg",
+  "artist": "Jules Meulemans",
+  "license": "GFDL",
+  "licenseUrl": "http://www.gnu.org/copyleft/fdl.html",
+  "how": "위키 대표"
+ },
+ "grape": {
+  "en": "grape",
+  "ko": "포도",
+  "file": "File:Grapes, Rostov-on-Don, Russia.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Grapes,_Rostov-on-Don,_Russia.jpg",
+  "artist": "Vyacheslav Argenberg",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "how": "위키 대표"
+ },
+ "game": {
+  "en": "game",
+  "ko": "게임",
+  "file": "File:US Navy 110713-N-NT881-124 Personnel Specialist 2nd Class James Vail, left, and Boatswain's Mate 2nd Class Nathaniel Eaton play board games with ch.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:US_Navy_110713-N-NT881-124_Personnel_Specialist_2nd_Class_James_Vail,_left,_and_Boatswain%27s_Mate_2nd_Class_Nathaniel_Eaton_play_board_games_with_ch.jpg",
+  "artist": "U.S. Navy photo by Chief Mass Communication Specialist Steve Carlson",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "face": {
+  "en": "face",
+  "ko": "얼굴",
+  "file": "File:Human faces.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Human_faces.jpg",
+  "artist": "Autisticeditor 20",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "wave": {
+  "en": "wave",
+  "ko": "파도",
+  "file": "File:Porto Covo Outubro 2014-3.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Porto_Covo_Outubro_2014-3.jpg",
+  "artist": "Alvesgaspar",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "name": {
+  "en": "name",
+  "ko": "이름",
+  "file": "File:Caitlin's name badge (2722635443).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Caitlin%27s_name_badge_(2722635443).jpg",
+  "artist": "Nick Gray from New York City, USA",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "lemonade": {
+  "en": "lemonade",
+  "ko": "레모네이드",
+  "file": "File:Lemonade - 27682817724.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Lemonade_-_27682817724.jpg",
+  "artist": "HarshLight",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "classmate": {
+  "en": "classmate",
+  "ko": "반 친구",
+  "file": "File:Elementary classroom in Alaska.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Elementary_classroom_in_Alaska.jpg",
+  "artist": "Liz",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "bike": {
+  "en": "bike",
+  "ko": "자전거",
+  "file": "File:Left side of Flying Pigeon.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Left_side_of_Flying_Pigeon.jpg",
+  "artist": "齐健 from Peking, People's Republic of China",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "rice": {
+  "en": "rice",
+  "ko": "밥",
+  "file": "File:Meshi 001.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Meshi_001.jpg",
+  "artist": "Ocdp",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "ice": {
+  "en": "ice",
+  "ko": "얼음",
+  "file": "File:Ice cubes openphoto.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ice_cubes_openphoto.jpg",
+  "artist": "Darren Hester",
+  "license": "CC BY-SA 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+  "how": "위키 대표"
+ },
+ "juice": {
+  "en": "juice",
+  "ko": "주스",
+  "file": "File:Orangejuice.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Orangejuice.jpg",
+  "artist": "rawpixel.com",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "lime": {
+  "en": "lime",
+  "ko": "라임",
+  "file": "File:Lime Blossom.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Lime_Blossom.jpg",
+  "artist": "Prosthetic Head",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "mice": {
+  "en": "mice",
+  "ko": "쥐들",
+  "file": "File:Мышь 2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:%D0%9C%D1%8B%D1%88%D1%8C_2.jpg",
+  "artist": "George Shuklin (talk)",
+  "license": "CC BY-SA 1.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/1.0",
+  "how": "위키 대표"
+ },
+ "smile": {
+  "en": "smile",
+  "ko": "미소",
+  "file": "File:Leonardo da Vinci 043-mod.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_043-mod.jpg",
+  "artist": "Leonardo da Vinci",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "crocodile": {
+  "en": "crocodile",
+  "ko": "악어",
+  "file": "File:Nile crocodile head.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Nile_crocodile_head.jpg",
+  "artist": "Leigh Bedford",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "write": {
+  "en": "write",
+  "ko": "쓰다",
+  "file": "File:Notebooks.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Notebooks.jpg",
+  "artist": "L.Marie",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "ride": {
+  "en": "ride",
+  "ko": "타다",
+  "file": "File:Cycliste à place d'Italie-Paris crop.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Cycliste_%C3%A0_place_d%27Italie-Paris_crop.jpg",
+  "artist": "This photo was taken by Roman Bonnefoy (  Romanceor [parlons-en]). Feel free to use my pictures, but please credit me as",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "drive": {
+  "en": "drive",
+  "ko": "운전하다",
+  "file": "File:Convertible Mercedes Car Driving On A Highway.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Convertible_Mercedes_Car_Driving_On_A_Highway.jpg",
+  "artist": "DWS MontagZen",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "nice": {
+  "en": "nice",
+  "ko": "좋은",
+  "file": "File:Jempol Ngadep Atas (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Jempol_Ngadep_Atas_(cropped).jpg",
+  "artist": "Pinerineks",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "time": {
+  "en": "time",
+  "ko": "시간",
+  "file": "File:Pendulum clock by Jacob Kock, antique furniture photography, IMG 0931 edit.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pendulum_clock_by_Jacob_Kock,_antique_furniture_photography,_IMG_0931_edit.jpg",
+  "artist": "Christoph Braun",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "phone": {
+  "en": "phone",
+  "ko": "전화",
+  "file": "File:Wikipedia homepage on a large Android phone, 2015-04-16.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikipedia_homepage_on_a_large_Android_phone,_2015-04-16.jpg",
+  "artist": "Sage Ross",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "home": {
+  "en": "home",
+  "ko": "집",
+  "file": "File:Country cottage, Inch Island - geograph.org.uk - 3951065 (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Country_cottage,_Inch_Island_-_geograph.org.uk_-_3951065_(cropped).jpg",
+  "artist": "Kenneth Allen",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "close": {
+  "en": "close",
+  "ko": "닫다",
+  "file": "File:Padlock klódka ubt.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Padlock_kl%C3%B3dka_ubt.JPG",
+  "artist": "Tomasz Sienicki [user: tsca, mail: tomasz.sienicki at gmail.com]",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "chocolate": {
+  "en": "chocolate",
+  "ko": "초콜릿",
+  "file": "File:Three Bars (1).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Three_Bars_(1).jpg",
+  "artist": "Lynnereal",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "page": {
+  "en": "page",
+  "ko": "쪽",
+  "file": "File:Blank page intentionally end of book.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Blank_page_intentionally_end_of_book.jpg",
+  "artist": "Roke~commonswiki",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "tree": {
+  "en": "tree",
+  "ko": "나무",
+  "file": "File:Usamljeni jasen - panoramio (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Usamljeni_jasen_-_panoramio_(cropped).jpg",
+  "artist": "menergo",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "sheep": {
+  "en": "sheep",
+  "ko": "양",
+  "file": "File:Flock of sheep.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Flock_of_sheep.jpg",
+  "artist": "Keith Weller",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "bee": {
+  "en": "bee",
+  "ko": "벌",
+  "file": "File:Tetragonula carbonaria (14521993792).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Tetragonula_carbonaria_(14521993792).jpg",
+  "artist": "Graham Wise from Brisbane, Australia",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "feet": {
+  "en": "feet",
+  "ko": "발들",
+  "file": "File:Foot on white background.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Foot_on_white_background.jpg",
+  "artist": "Genusfotografen (Tomas Gunnarsson) / Wikimedia",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "green": {
+  "en": "green",
+  "ko": "초록",
+  "file": "File:Lisc lipy.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Lisc_lipy.jpg",
+  "artist": "Krzysztof P. Jasiutowicz",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "sleep": {
+  "en": "sleep",
+  "ko": "자다",
+  "file": "File:Domenico Fetti - Sleeping Girl - WGA7863.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Domenico_Fetti_-_Sleeping_Girl_-_WGA7863.jpg",
+  "artist": "Domenico Fetti",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "sweet": {
+  "en": "sweet",
+  "ko": "달콤한",
+  "file": "File:Candy in Damascus.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Candy_in_Damascus.jpg",
+  "artist": "Elisa  Azzali",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "meat": {
+  "en": "meat",
+  "ko": "고기",
+  "file": "File:FoodMeat.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:FoodMeat.jpg",
+  "artist": "Unknown photographer",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "bread": {
+  "en": "bread",
+  "ko": "빵",
+  "file": "File:Korb mit Brötchen.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Korb_mit_Br%C3%B6tchen.JPG",
+  "artist": "3268zauber",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "ear": {
+  "en": "ear",
+  "ko": "귀",
+  "file": "File:Human right ear (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Human_right_ear_(cropped).jpg",
+  "artist": "Genusfotografen (Tomas Gunnarsson) / Wikimedia Sverige",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "beach": {
+  "en": "beach",
+  "ko": "바닷가",
+  "file": "File:Beach at Fort Lauderdale.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Beach_at_Fort_Lauderdale.jpg",
+  "artist": "Daniel Dudek",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "eat": {
+  "en": "eat",
+  "ko": "먹다",
+  "file": "File:Monkey eating.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Monkey_eating.jpg",
+  "artist": "Muhammad Mahdi Karim",
+  "license": "GFDL 1.2",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html",
+  "how": "제목"
+ },
+ "read": {
+  "en": "read",
+  "ko": "읽다",
+  "file": "File:Bedtime story - Madeline.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Bedtime_story_-_Madeline.JPG",
+  "artist": "Ldorfman",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "clean": {
+  "en": "clean",
+  "ko": "깨끗한",
+  "file": "File:Handmade soap cropped and simplified.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Handmade_soap_cropped_and_simplified.jpg",
+  "artist": "Malene Thyssen, simplified by HLHJ",
+  "license": "CC BY 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+  "how": "위키 대표"
+ },
+ "train": {
+  "en": "train",
+  "ko": "기차",
+  "file": "File:Поезд на фоне горы Шатрище. Воронежская область.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4_%D0%BD%D0%B0_%D1%84%D0%BE%D0%BD%D0%B5_%D0%B3%D0%BE%D1%80%D1%8B_%D0%A8%D0%B0%D1%82%D1%80%D0%B8%D1%89%D0%B5._%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C.jpg",
+  "artist": "Алексей Задонский",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "paint": {
+  "en": "paint",
+  "ko": "물감",
+  "file": "File:Multicolored tempera paints.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Multicolored_tempera_paints.jpg",
+  "artist": "Joyful spherical creature",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "day": {
+  "en": "day",
+  "ko": "날",
+  "file": "File:Brisbane Water National Park sunrise.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Brisbane_Water_National_Park_sunrise.jpg",
+  "artist": "PRFenelon",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "play": {
+  "en": "play",
+  "ko": "놀다",
+  "file": "File:Playfulness by Paul Manship, 1912-1914 - DSC03107.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Playfulness_by_Paul_Manship,_1912-1914_-_DSC03107.JPG",
+  "artist": "Paul Manship, sculptor.",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "boat": {
+  "en": "boat",
+  "ko": "배",
+  "file": "File:Motorboat at Kankaria lake.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Motorboat_at_Kankaria_lake.JPG",
+  "artist": "Kondicherry",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "window": {
+  "en": "window",
+  "ko": "창문",
+  "file": "File:Atua Kosua shrine4.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Atua_Kosua_shrine4.jpg",
+  "artist": "Shahadusadik",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "brown": {
+  "en": "brown",
+  "ko": "갈색",
+  "file": "File:2010-kodiak-bear-1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:2010-kodiak-bear-1.jpg",
+  "artist": "Yathin S Krishnappa",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "pie": {
+  "en": "pie",
+  "ko": "파이",
+  "file": "File:Top down view of peach pie (722379748).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Top_down_view_of_peach_pie_(722379748).jpg",
+  "artist": "Heather from Maine, USA",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "night": {
+  "en": "night",
+  "ko": "밤",
+  "file": "File:Savault Chapel Under Milky Way BLS.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Savault_Chapel_Under_Milky_Way_BLS.jpg",
+  "artist": "Benh LIEU SONG",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "pear": {
+  "en": "pear",
+  "ko": "배(과일)",
+  "file": "File:Pears.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pears.jpg",
+  "artist": "Keith Weller",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "pea": {
+  "en": "pea",
+  "ko": "완두콩",
+  "file": "File:Peas in pods - Studio.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Peas_in_pods_-_Studio.jpg",
+  "artist": "Bill Ebbesen",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "jeans": {
+  "en": "jeans",
+  "ko": "청바지",
+  "file": "File:Jeans.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Jeans.jpg",
+  "artist": "uploaded by Juanmak",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "crayon": {
+  "en": "crayon",
+  "ko": "크레용",
+  "file": "File:Crayones cera.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Crayones_cera.jpg",
+  "artist": "Jorge Barrios",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "chair": {
+  "en": "chair",
+  "ko": "의자",
+  "file": "File:Set of fourteen side chairs MET DP110780.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Set_of_fourteen_side_chairs_MET_DP110780.jpg",
+  "artist": "Thomas Chippendale",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "car": {
+  "en": "car",
+  "ko": "자동차",
+  "file": "File:2005 Toyota Corolla 1.4 T3.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:2005_Toyota_Corolla_1.4_T3.jpg",
+  "artist": "Jayme Kimball",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "arm": {
+  "en": "arm",
+  "ko": "팔",
+  "file": "File:Extended arm.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Extended_arm.jpg",
+  "artist": "Genusfotografen (Tomas Gunnarsson) / Wikimedia Sverige",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "park": {
+  "en": "park",
+  "ko": "공원",
+  "file": "File:Halleyparknovember b (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Halleyparknovember_b_(cropped).jpg",
+  "artist": "File:Halleyparknovember.jpg: Celco85\nderivative work: Georgfotoart",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "garden": {
+  "en": "garden",
+  "ko": "정원",
+  "file": "File:Brooklyn Botanic Garden New York May 2015 010.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Brooklyn_Botanic_Garden_New_York_May_2015_010.jpg",
+  "artist": "King of Hearts",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "guitar": {
+  "en": "guitar",
+  "ko": "기타",
+  "file": "File:GuitareClassique5.png",
+  "page": "https://commons.wikimedia.org/wiki/File:GuitareClassique5.png",
+  "artist": "User:Martin Möller Talk",
+  "license": "CC BY-SA 2.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en",
+  "how": "위키 대표"
+ },
+ "dinner": {
+  "en": "dinner",
+  "ko": "저녁밥",
+  "file": "File:Filet de bœuf.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Filet_de_b%C5%93uf.jpg",
+  "artist": "Ɱ",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "shorts": {
+  "en": "shorts",
+  "ko": "반바지",
+  "file": "File:Modern bermuda shorts.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Modern_bermuda_shorts.jpg",
+  "artist": "Trijb007",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "horse": {
+  "en": "horse",
+  "ko": "말",
+  "file": "File:Horse December 2014-1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Horse_December_2014-1.jpg",
+  "artist": "Alvesgaspar",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "제목"
+ },
+ "morning": {
+  "en": "morning",
+  "ko": "아침",
+  "file": "File:Spring Lake, New Jersey Beach at Sunrise.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Spring_Lake,_New_Jersey_Beach_at_Sunrise.jpg",
+  "artist": "Nick Harris",
+  "license": "CC BY 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+  "how": "위키 대표"
+ },
+ "short": {
+  "en": "short",
+  "ko": "짧은",
+  "file": "File:Diverse·Maßstäbe,15.365.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Diverse%C2%B7Ma%C3%9Fst%C3%A4be,15.365.jpg",
+  "artist": "Geof",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "teacher": {
+  "en": "teacher",
+  "ko": "선생님",
+  "file": "File:A public high school teacher in a classroom in the United States 08.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:A_public_high_school_teacher_in_a_classroom_in_the_United_States_08.jpg",
+  "artist": "Harrison Keely",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "how": "위키 대표"
+ },
+ "burger": {
+  "en": "burger",
+  "ko": "햄버거",
+  "file": "File:RedDot Burger.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:RedDot_Burger.jpg",
+  "artist": "Hongreddotbrewhouse",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "flower": {
+  "en": "flower",
+  "ko": "꽃",
+  "file": "File:Magnolia grandiflora - flower 1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Magnolia_grandiflora_-_flower_1.jpg",
+  "artist": "Ianaré Sévi",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "spider": {
+  "en": "spider",
+  "ko": "거미",
+  "file": "File:Araneus diadematus (Clerck, 1757).JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Araneus_diadematus_(Clerck,_1757).JPG",
+  "artist": "Michael Gäbler",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "monster": {
+  "en": "monster",
+  "ko": "괴물",
+  "file": "File:Arminianism as five-headed monster.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Arminianism_as_five-headed_monster.JPG",
+  "artist": "UnknownUnknown  engraver",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "mirror": {
+  "en": "mirror",
+  "ko": "거울",
+  "file": "File:Mirror.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mirror.jpg",
+  "artist": "Cgs",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "paper": {
+  "en": "paper",
+  "ko": "종이",
+  "file": "File:Various products made from paper.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Various_products_made_from_paper.JPG",
+  "artist": "Meganbeckett27",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "ruler": {
+  "en": "ruler",
+  "ko": "자",
+  "file": "File:Diverse·Maßstäbe,15.365.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Diverse%C2%B7Ma%C3%9Fst%C3%A4be,15.365.jpg",
+  "artist": "Geof",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "camera": {
+  "en": "camera",
+  "ko": "카메라",
+  "file": "File:LEI0440 Leica IIIf chrom - Sn. 580566 1951-52-M39 Blitzsynchron front view-6531 hf-.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:LEI0440_Leica_IIIf_chrom_-_Sn._580566_1951-52-M39_Blitzsynchron_front_view-6531_hf-.jpg",
+  "artist": "Kameraprojekt Graz 2015",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "mother": {
+  "en": "mother",
+  "ko": "어머니",
+  "file": "File:Sauk Indian family by Frank Rinehart 1899.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sauk_Indian_family_by_Frank_Rinehart_1899.jpg",
+  "artist": "Frank Rinehart",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "father": {
+  "en": "father",
+  "ko": "아버지",
+  "file": "File:Father's love (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Father%27s_love_(cropped).jpg",
+  "artist": "Hripsime Poghosyan",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "sister": {
+  "en": "sister",
+  "ko": "누나·언니",
+  "file": "File:Me and my other brother.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Me_and_my_other_brother.jpg",
+  "artist": "Fidelis Manyange aka manfidza",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "brother": {
+  "en": "brother",
+  "ko": "형·오빠",
+  "file": "File:Me and my other brother.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Me_and_my_other_brother.jpg",
+  "artist": "Fidelis Manyange aka manfidza",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "bird": {
+  "en": "bird",
+  "ko": "새",
+  "file": "File:Kleiber Flug.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Kleiber_Flug.jpg",
+  "artist": "C. Robiller / naturlichter.de (Hyla meridionalis)",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "girl": {
+  "en": "girl",
+  "ko": "여자아이",
+  "file": "File:Young girl smiling in sunshine (2).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Young_girl_smiling_in_sunshine_(2).jpg",
+  "artist": "Basile Morin",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "shirt": {
+  "en": "shirt",
+  "ko": "셔츠",
+  "file": "File:Charvet shirt.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Charvet_shirt.jpg",
+  "artist": "Author of the photograph unknown.",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "purple": {
+  "en": "purple",
+  "ko": "보라",
+  "file": "File:Solanum melongena 24 08 2012 (1).JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Solanum_melongena_24_08_2012_(1).JPG",
+  "artist": "Joydeep",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "lizard": {
+  "en": "lizard",
+  "ko": "도마뱀",
+  "file": "File:Hemidactylus platyurus (Flat-tailed House Gecko) on white background, focus stacking.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Hemidactylus_platyurus_(Flat-tailed_House_Gecko)_on_white_background,_focus_stacking.jpg",
+  "artist": "Basile Morin",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "giraffe": {
+  "en": "giraffe",
+  "ko": "기린",
+  "file": "File:Giraffe Mikumi National Park.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Giraffe_Mikumi_National_Park.jpg",
+  "artist": "Muhammad Mahdi Karim Facebook\n\n\n\n\n\nThe making of this document was supported by Wikimedia CH. (Submit your project!)\nFor",
+  "license": "GFDL 1.2",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html",
+  "how": "위키 대표"
+ },
+ "carrot": {
+  "en": "carrot",
+  "ko": "당근",
+  "file": "File:Vegetable-Carrot-Bundle-wStalks.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Vegetable-Carrot-Bundle-wStalks.jpg",
+  "artist": "Evan-Amos",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "book": {
+  "en": "book",
+  "ko": "책",
+  "file": "File:Gutenberg Bible, Lenox Copy, New York Public Library, 2009. Pic 01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Gutenberg_Bible,_Lenox_Copy,_New_York_Public_Library,_2009._Pic_01.jpg",
+  "artist": "NYC Wanderer (Kevin Eng)",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "boots": {
+  "en": "boots",
+  "ko": "장화",
+  "file": "File:Sievi Boots (2).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sievi_Boots_(2).jpg",
+  "artist": "Abc10",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "food": {
+  "en": "food",
+  "ko": "음식",
+  "file": "File:Good Food Display - NCI Visuals Online.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Good_Food_Display_-_NCI_Visuals_Online.jpg",
+  "artist": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "school": {
+  "en": "school",
+  "ko": "학교",
+  "file": "File:First primary school building in Nigeria in Badagry, Nigeria.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:First_primary_school_building_in_Nigeria_in_Badagry,_Nigeria.jpg",
+  "artist": "Omoeko Media",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "door": {
+  "en": "door",
+  "ko": "문",
+  "file": "File:Vintage postcard of the front door of Cushing House, Newburyport, Massachusetts.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Vintage_postcard_of_the_front_door_of_Cushing_House,_Newburyport,_Massachusetts.jpg",
+  "artist": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "제목"
+ },
+ "room": {
+  "en": "room",
+  "ko": "방",
+  "file": "File:Sittingroom-edit1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sittingroom-edit1.jpg",
+  "artist": "The original uploader was Mruk20 at English Wikipedia.. Image rotated, cropped, and enhanced by DWaterson",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "foot": {
+  "en": "foot",
+  "ko": "발",
+  "file": "File:Foot on white background.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Foot_on_white_background.jpg",
+  "artist": "Genusfotografen (Tomas Gunnarsson) / Wikimedia",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "cool": {
+  "en": "cool",
+  "ko": "시원한",
+  "file": "File:Allef Vinicius 2016-10-20 (Unsplash) (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Allef_Vinicius_2016-10-20_(Unsplash)_(cropped).jpg",
+  "artist": "Allef Vinicius seteales",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "good": {
+  "en": "good",
+  "ko": "좋은",
+  "file": "File:Jempol Ngadep Atas (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Jempol_Ngadep_Atas_(cropped).jpg",
+  "artist": "Pinerineks",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "look": {
+  "en": "look",
+  "ko": "보다",
+  "file": "File:Human eye with blood vessels.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Human_eye_with_blood_vessels.jpg",
+  "artist": "ROTFLOLEB",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "house": {
+  "en": "house",
+  "ko": "집",
+  "file": "File:Nordisches Einfamilienhaus.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Nordisches_Einfamilienhaus.jpg",
+  "artist": "No machine-readable author provided. Boereck assumed (based on copyright claims).",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "mouse": {
+  "en": "mouse",
+  "ko": "쥐",
+  "file": "File:Мышь 2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:%D0%9C%D1%8B%D1%88%D1%8C_2.jpg",
+  "artist": "George Shuklin (talk)",
+  "license": "CC BY-SA 1.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/1.0",
+  "how": "위키 대표"
+ },
+ "mouth": {
+  "en": "mouth",
+  "ko": "입",
+  "file": "File:Detailed view of the inside of the human mouth.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Detailed_view_of_the_inside_of_the_human_mouth.jpg",
+  "artist": "JonaLane",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "cow": {
+  "en": "cow",
+  "ko": "소",
+  "file": "File:Cow (Fleckvieh breed) Oeschinensee Slaunger 2009-07-07.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Cow_(Fleckvieh_breed)_Oeschinensee_Slaunger_2009-07-07.jpg",
+  "artist": "Kim Hansen",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "count": {
+  "en": "count",
+  "ko": "세다",
+  "file": "File:Children's number blocks being used for learning to count - 51069936953.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Children%27s_number_blocks_being_used_for_learning_to_count_-_51069936953.jpg",
+  "artist": "perpetual.fostering",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "trousers": {
+  "en": "trousers",
+  "ko": "바지",
+  "file": "File:Cargo pants 001.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Cargo_pants_001.jpg",
+  "artist": "Ocdp",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "toy": {
+  "en": "toy",
+  "ko": "장난감",
+  "file": "File:Toy car (AM 1996.165.95).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Toy_car_(AM_1996.165.95).jpg",
+  "artist": "Fun Ho! Toy Company",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "how": "위키 대표"
+ },
+ "boy": {
+  "en": "boy",
+  "ko": "남자아이",
+  "file": "File:Smiling little boy of Laos.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Smiling_little_boy_of_Laos.jpg",
+  "artist": "Basile Morin",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "point": {
+  "en": "point",
+  "ko": "가리키다",
+  "file": "File:Joe Schmidt coaching Irish team (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Joe_Schmidt_coaching_Irish_team_(cropped).jpg",
+  "artist": "Stephen McCarthy",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "draw": {
+  "en": "draw",
+  "ko": "그리다",
+  "file": "File:Wikimania 2017 - Opening ceremony - the coloring book 7467.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimania_2017_-_Opening_ceremony_-_the_coloring_book_7467.jpg",
+  "artist": "Avery Jensen",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "제목"
+ },
+ "drawing": {
+  "en": "drawing",
+  "ko": "그림",
+  "file": "File:Konkurs Zycia Radomskiego dla dzieci.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Konkurs_Zycia_Radomskiego_dla_dzieci.jpg",
+  "artist": "Bronisław Duda",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "sausage": {
+  "en": "sausage",
+  "ko": "소시지",
+  "file": "File:Wurstplatte.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Wurstplatte.jpg",
+  "artist": "Alice Wiegand",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "new": {
+  "en": "new",
+  "ko": "새로운",
+  "file": "File:Prezenty EXP 096 (ubt).JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Prezenty_EXP_096_(ubt).JPG",
+  "artist": "Tomasz Sienicki [user: tsca, mail: tomasz.sienicki at gmail.com]",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "how": "위키 대표"
+ },
+ "balloon": {
+  "en": "balloon",
+  "ko": "풍선",
+  "file": "File:Congrats bqt.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Congrats_bqt.jpg",
+  "artist": "Photographer: Warren Denning. Creative Director: Stan Weir. Marketing Director: Tim Vlamis",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "goodbye": {
+  "en": "goodbye",
+  "ko": "안녕(작별)",
+  "file": "File:Waving RCMP (7612733982) (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Waving_RCMP_(7612733982)_(cropped).jpg",
+  "artist": "Kurt Bauschardt from Edmonton, Canada",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "playground": {
+  "en": "playground",
+  "ko": "놀이터",
+  "file": "File:Argos playground.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Argos_playground.jpg",
+  "artist": "NikosLikomitros",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "football": {
+  "en": "football",
+  "ko": "축구",
+  "file": "File:Stoppage in an AFL game.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Stoppage_in_an_AFL_game.jpg",
+  "artist": "Tom Reynolds from Melbourne, Australia",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "watermelon": {
+  "en": "watermelon",
+  "ko": "수박",
+  "file": "File:Taiwan 2009 Tainan City Organic Farm Watermelon FRD 7962.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Taiwan_2009_Tainan_City_Organic_Farm_Watermelon_FRD_7962.jpg",
+  "artist": "Fred Hsu (Wikipedia:User:Fred Hsu on en.wikipedia)",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "pineapple": {
+  "en": "pineapple",
+  "ko": "파인애플",
+  "file": "File:കൈതച്ചക്ക.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:%E0%B4%95%E0%B5%88%E0%B4%A4%E0%B4%9A%E0%B5%8D%E0%B4%9A%E0%B4%95%E0%B5%8D%E0%B4%95.jpg",
+  "artist": "Suniltg at Malayalam Wikipedia",
+  "license": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "how": "위키 대표"
+ },
+ "bedroom": {
+  "en": "bedroom",
+  "ko": "침실",
+  "file": "File:Berlin Villa Borsig Tegel asv2019-08 img09.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Berlin_Villa_Borsig_Tegel_asv2019-08_img09.jpg",
+  "artist": "A.Savin",
+  "license": "FAL",
+  "licenseUrl": "http://artlibre.org/licence/lal/en",
+  "how": "위키 대표"
+ },
+ "bathroom": {
+  "en": "bathroom",
+  "ko": "욕실",
+  "file": "File:IMG Duschender.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:IMG_Duschender.jpg",
+  "artist": "Mitumial",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "위키 대표"
+ },
+ "classroom": {
+  "en": "classroom",
+  "ko": "교실",
+  "file": "File:Elementary classroom in Alaska.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Elementary_classroom_in_Alaska.jpg",
+  "artist": "Liz",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "bookcase": {
+  "en": "bookcase",
+  "ko": "책장",
+  "file": "File:Interior of Bibliothèque Mazarine 003.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Interior_of_Biblioth%C3%A8que_Mazarine_003.JPG",
+  "artist": "Moonik",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "how": "위키 대표"
+ },
+ "bookshop": {
+  "en": "bookshop",
+  "ko": "서점",
+  "file": "File:Libraria Carturesti Carusel - Interior ziua.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Libraria_Carturesti_Carusel_-_Interior_ziua.jpg",
+  "artist": "Mihai Petre",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "armchair": {
+  "en": "armchair",
+  "ko": "안락의자",
+  "file": "File:Armchair MET DT340531.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Armchair_MET_DT340531.jpg",
+  "artist": "",
+  "license": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "how": "제목"
+ },
+ "keyboard": {
+  "en": "keyboard",
+  "ko": "건반",
+  "file": "File:YamahaKeyboard-2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:YamahaKeyboard-2.jpg",
+  "artist": "YamahaKeyboard.jpg: Moribunt\nderivative work: Atlantictire (talk)",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "how": "위키 대표"
+ },
+ "skateboard": {
+  "en": "skateboard",
+  "ko": "스케이트보드",
+  "file": "File:Hainerberg Skate Park Now Open (6317086).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Hainerberg_Skate_Park_Now_Open_(6317086).jpg",
+  "artist": "U.S. Army USAGW by Lisa Bishop",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "motorbike": {
+  "en": "motorbike",
+  "ko": "오토바이",
+  "file": "File:Istockphoto-114285168-612x612.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Istockphoto-114285168-612x612.jpg",
+  "artist": "Devanand.j",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "helicopter": {
+  "en": "helicopter",
+  "ko": "헬리콥터",
+  "file": "File:VH-SUF Taking Off.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:VH-SUF_Taking_Off.jpg",
+  "artist": "Fly45yt",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "how": "위키 대표"
+ },
+ "apartment": {
+  "en": "apartment",
+  "ko": "아파트",
+  "file": "File:Green Bay July 2024 018 (apartment building under construction).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Green_Bay_July_2024_018_(apartment_building_under_construction).jpg",
+  "artist": "Michael Barera",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "제목"
+ },
+ "birthday": {
+  "en": "birthday",
+  "ko": "생일",
+  "file": "File:Delicious Birthday Cake (14346969741).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Delicious_Birthday_Cake_(14346969741).jpg",
+  "artist": "Jonathan Rolande from Worthing, England",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "breakfast": {
+  "en": "breakfast",
+  "ko": "아침밥",
+  "file": "File:Breakfast at the Black Bear Diner.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Breakfast_at_the_Black_Bear_Diner.jpg",
+  "artist": "Kiddo27",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "afternoon": {
+  "en": "afternoon",
+  "ko": "오후",
+  "file": "File:Wien Türkenschanzpark (2376611600).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Wien_T%C3%BCrkenschanzpark_(2376611600).jpg",
+  "artist": "Cha già José from Vienna, Austria",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "meatballs": {
+  "en": "meatballs",
+  "ko": "미트볼",
+  "file": "File:Soup with meatballs-01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Soup_with_meatballs-01.jpg",
+  "artist": "ralphhogaboom",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "grandmother": {
+  "en": "grandmother",
+  "ko": "할머니",
+  "file": "File:The Favorite by Georgios Iakovidis.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Favorite_by_Georgios_Iakovidis.jpg",
+  "artist": "Georgios Jakobides",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "grandfather": {
+  "en": "grandfather",
+  "ko": "할아버지",
+  "file": "File:The Favorite by Georgios Iakovidis.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Favorite_by_Georgios_Iakovidis.jpg",
+  "artist": "Georgios Jakobides",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "cupboard": {
+  "en": "cupboard",
+  "ko": "찬장",
+  "file": "File:Serwantka.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Serwantka.JPG",
+  "artist": "No machine-readable author provided. Julo assumed (based on copyright claims).",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "skateboarding": {
+  "en": "skateboarding",
+  "ko": "스케이트보드 타기",
+  "file": "File:BackSmithGrind.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:BackSmithGrind.jpg",
+  "artist": "Vlwisconsin (talk)",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "people": {
+  "en": "people",
+  "ko": "사람들",
+  "file": "File:Crowd in street.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Crowd_in_street.jpg",
+  "artist": "",
+  "license": "CC BY 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+  "how": "위키 대표"
+ },
+ "friend": {
+  "en": "friend",
+  "ko": "친구",
+  "file": "File:Best friends (1934), by Romualdo Locatelli.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Best_friends_(1934),_by_Romualdo_Locatelli.jpg",
+  "artist": "Romualdo Locatelli",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "love": {
+  "en": "love",
+  "ko": "사랑",
+  "file": "File:Heart graffiti on a brick wall.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Heart_graffiti_on_a_brick_wall.jpg",
+  "artist": "Envagyokabela",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "제목"
+ },
+ "give": {
+  "en": "give",
+  "ko": "주다",
+  "file": "File:Prezenty EXP 096 (ubt).JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Prezenty_EXP_096_(ubt).JPG",
+  "artist": "Tomasz Sienicki [user: tsca, mail: tomasz.sienicki at gmail.com]",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "how": "위키 대표"
+ },
+ "walk": {
+  "en": "walk",
+  "ko": "걷다",
+  "file": "File:Women walking in Hyderabad street.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Women_walking_in_Hyderabad_street.jpg",
+  "artist": "IgorZed",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "talk": {
+  "en": "talk",
+  "ko": "말하다",
+  "file": "File:Arnold Lakhovsky Conversation.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Arnold_Lakhovsky_Conversation.png",
+  "artist": "Arnold Lakhovsky",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "listen": {
+  "en": "listen",
+  "ko": "듣다",
+  "file": "File:Shimer College Susan Henking listening 2013 cropped.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Shimer_College_Susan_Henking_listening_2013_cropped.jpg",
+  "artist": "Shimer College",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ },
+ "shoe": {
+  "en": "shoe",
+  "ko": "신발",
+  "file": "File:Skor från 1700- till 1960-talet - Nordiska Museet - NMA.0056302.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Skor_fr%C3%A5n_1700-_till_1960-talet_-_Nordiska_Museet_-_NMA.0056302.jpg",
+  "artist": "",
+  "license": "CC BY 3.0 no",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/no/deed.en",
+  "how": "위키 대표"
+ },
+ "again": {
+  "en": "again",
+  "ko": "다시",
+  "file": "File:DFRArrow.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:DFRArrow.jpg",
+  "artist": "Dfrg.msc",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "위키 대표"
+ },
+ "great": {
+  "en": "great",
+  "ko": "멋진",
+  "file": "File:Benin, Championnats nationaux de scrabble 2019, trophées.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Benin,_Championnats_nationaux_de_scrabble_2019,_troph%C3%A9es.jpg",
+  "artist": "Homo Anchorus",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "sorry": {
+  "en": "sorry",
+  "ko": "미안해",
+  "file": "File:Rosa Schweninger - The Apology.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Rosa_Schweninger_-_The_Apology.jpg",
+  "artist": "Rosa Schweninger",
+  "license": "Public domain",
+  "licenseUrl": "",
+  "how": "제목"
+ },
+ "today": {
+  "en": "today",
+  "ko": "오늘",
+  "file": "File:Kalender Indonesia.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Kalender_Indonesia.jpg",
+  "artist": "Rantemario",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "how": "위키 대표"
+ },
+ "colour": {
+  "en": "colour",
+  "ko": "색",
+  "file": "File:Double-alaskan-rainbow.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Double-alaskan-rainbow.jpg",
+  "artist": "Eric Rolph at English Wikipedia",
+  "license": "CC BY-SA 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+  "how": "위키 대표"
+ },
+ "beautiful": {
+  "en": "beautiful",
+  "ko": "아름다운",
+  "file": "File:Beautiful Demoiselle Calopteryx virgo.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Beautiful_Demoiselle_Calopteryx_virgo.jpg",
+  "artist": "Richard Bartz",
+  "license": "CC BY-SA 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+  "how": "제목"
+ },
+ "know": {
+  "en": "know",
+  "ko": "알다",
+  "file": "File:Gutenberg Bible, Lenox Copy, New York Public Library, 2009. Pic 01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Gutenberg_Bible,_Lenox_Copy,_New_York_Public_Library,_2009._Pic_01.jpg",
+  "artist": "NYC Wanderer (Kevin Eng)",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "how": "위키 대표"
+ },
+ "bat": {
+  "en": "bat",
+  "ko": "방망이",
+  "file": "File:Fourbats.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Fourbats.jpg",
+  "artist": "The original uploader was Anetode at English Wikipedia.",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "how": "위키 대표"
+ }
+}
