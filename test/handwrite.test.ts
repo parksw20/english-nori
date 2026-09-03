@@ -7,7 +7,7 @@
 
 export {}
 
-const { judgeStroke, resample, distToPath, pathLength } = await import('../src/handwrite')
+const { judgeStroke, judgeCovers, resample, distToPath, pathLength } = await import('../src/handwrite')
 
 let pass = 0
 const fails: string[] = []
@@ -84,6 +84,20 @@ check('붙어 있는 두 획을 이어 붙인 길도 한 획으로 통과한다 
   const joined = [...upper, ...lower]
   assert(judgeStroke(joined, joined).ok, '이어 붙인 길을 그대로 그었는데 떨어졌다')
   assert(!judgeStroke(upper, joined).ok, '반만 그었는데 이어 붙인 길에 통과했다')
+})
+
+check('h를 되짚어 올라가며 한 번에 써도 통과한다 (줄기 ↓ → 되짚어 ↑ → 어깨 → ↓)', () => {
+  const stem = line(30, 10, 30, 80, 10)
+  const arch = [...line(30, 50, 52, 40, 6), ...line(52, 40, 70, 58, 6), ...line(70, 58, 70, 80, 6)]
+  const union = [...stem, ...arch]
+  const oneStroke = [...stem, ...line(30, 80, 30, 50, 6), ...arch]
+  assert(judgeCovers(oneStroke, union, stem[0] as { x: number; y: number }).ok, '한 번에 쓴 h가 떨어졌다')
+  // 줄기만 긋고 말면 안 된다
+  const v1 = judgeCovers(stem, union, stem[0] as { x: number; y: number })
+  assert(!v1.ok && v1.reason === 'missed-path', `줄기만 그었는데 ${JSON.stringify(v1)}`)
+  // 아래에서 시작하면(거꾸로) 안 된다
+  const v2 = judgeCovers([...oneStroke].reverse(), union, stem[0] as { x: number; y: number })
+  assert(!v2.ok && v2.reason === 'wrong-start', `거꾸로 썼는데 ${JSON.stringify(v2)}`)
 })
 
 check('resample은 같은 간격으로 n점을 준다', () => {

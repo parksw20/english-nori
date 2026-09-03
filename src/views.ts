@@ -12,7 +12,7 @@ import * as cards from './cards'
 import * as progress from './progress'
 import * as srs from './srs'
 import * as tts from './tts'
-import { bigButton, dragScroll, el, render, top, topLink } from './ui'
+import { bigButton, el, render, top, topLink } from './ui'
 
 /** 어른이 가끔 여는 화면용 작은 버튼 — 색을 쓰지 않고 테두리만 둔다(아이 눈길을 끌 이유가 없다) */
 function miniButton(emoji: string, label: string, onClick: () => void): HTMLButtonElement {
@@ -96,14 +96,15 @@ function goalBar(stage: StageId): HTMLElement {
 }
 
 /**
- * 지도 — 마을이 **길을 따라 오른쪽으로** 늘어서고, 손가락으로 밀어서 본다.
+ * 지도 — 마을이 **길을 따라 오른쪽으로** 늘어서고, 한 줄에 다섯을 넘으면 **아랫줄 왼쪽부터** 이어진다.
  *
  * 세로 목록이던 것을 바꿨다. 마을이 둘일 때는 목록이어도 됐지만 다섯이 되면
  * 목록은 "할 일 목록"처럼 보이고, 어디까지 왔는지가 안 보인다.
  * 길을 따라 옆으로 가는 모양이면 **지나온 마을과 앞으로 갈 마을**이 한눈에 보이고,
- * 잠긴 마을이 오른쪽에 있다는 것 자체가 다음 목표가 된다.
+ * 잠긴 마을이 뒤에 있다는 것 자체가 다음 목표가 된다.
  *
- * 카드를 정사각형으로 두는 이유: 한 화면에 여러 마을이 들어오면서도 그림이 충분히 커야 한다.
+ * 처음엔 한 줄을 옆으로 밀어서 봤는데, 열 마을이 되니 뒤쪽 마을은 밀어야만 보였다(사용자 지적) →
+ * 다섯씩 줄바꿈해 열 마을이 한 화면에 다 보이게 한다. 카드는 정사각형이라 줄이 바뀌어도 크기가 같다.
  */
 export function showMap(a: MapActions): void {
   const villages: Node[] = []
@@ -113,12 +114,12 @@ export function showMap(a: MapActions): void {
     const words = wordsUpTo(s).length
     const learned = srs.summary(wordsUpTo(s).map((w) => w.en)).learned
     const here = unlocked && s === top_
-    // 마을 사이의 길 — 지나온 길은 진하고 앞으로 갈 길은 흐리다
-    if (s > 0) villages.push(el('span', { class: `en-road${unlocked ? ' en-is-open' : ''}`, 'aria-hidden': 'true' }))
+    // 다음 마을로 가는 길은 카드 오른쪽에 CSS로 그린다(::after). 다음 마을이 열렸으면 진한 길
+    const nextOpen = s < MAX_STAGE && progress.isUnlocked((s + 1) as StageId)
     const b = el(
       'button',
       {
-        class: `en-map-village${here ? ' en-is-here' : ''}${progress.hasCertificate(s) ? ' en-is-done' : ''}`,
+        class: `en-map-village${here ? ' en-is-here' : ''}${progress.hasCertificate(s) ? ' en-is-done' : ''}${nextOpen ? ' en-next-open' : ''}`,
         disabled: !unlocked,
         'data-stage': String(s),
       },
@@ -136,31 +137,8 @@ export function showMap(a: MapActions): void {
     if (unlocked) b.addEventListener('click', () => a.onVillage(s))
     villages.push(b)
   }
+  // 줄바꿈 격자라 밀 것이 없다 — 열 마을이 다 보이고 지금 마을은 테두리로 알린다
   const road = el('div', { class: 'en-map-road' }, villages)
-  // 손가락으로는 그냥 밀리지만 마우스는 스크롤 막대를 잡아야 한다 → 끌어서도 움직이게
-  dragScroll(road)
-  /**
-   * **지금 하고 있는 마을을 늘 가운데에 둔다.**
-   *
-   * 처음에는 microtask에서 scrollLeft를 한 번만 계산해 넣었는데, 그 시점에는 아직 배치가 안 끝나
-   * (이모지 글꼴이 늦게 오면 카드 크기가 바뀐다) 엉뚱한 자리에 멈추고 scroll-snap이 그 자리에서
-   * 가장 가까운 마을로 붙어 버렸다 — 마지막 마을이 잡히는 일이 생겼다.
-   *
-   * 그래서 **배치가 끝난 뒤에**(rAF 두 번) scrollIntoView로 옮기고, 글꼴이 늦게 와서 폭이 바뀌는
-   * 경우까지 대비해 한 번 더 맞춘다. scrollIntoView는 scroll-snap을 아는 브라우저 기능이라
-   * 우리가 계산한 값이 스냅에 밀리는 일도 없다.
-   */
-  const centerHere = (): void => {
-    const here = road.querySelector('.en-is-here') as HTMLElement | null
-    if (!here || !document.body.contains(road)) return
-    here.scrollIntoView({ inline: 'center', block: 'nearest' })
-  }
-  requestAnimationFrame(() => requestAnimationFrame(centerHere))
-  document.fonts?.ready.then(centerHere).catch(() => {
-    /* 글꼴 정보를 못 받아도 아래 타이머로 맞춰진다 */
-  })
-  // 첫 화면에서는 rAF 두 번으로도 이르다(검증에서 처음 열 때만 왼쪽 끝에 머물렀다) → 한 번 더
-  setTimeout(centerHere, 300)
 
   const p = progress.get()
   // 영어 음성이 없는 기기(음성 미설치 브라우저 등)에서는 소리 문제가 성립하지 않는다 →

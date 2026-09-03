@@ -10,8 +10,8 @@
  *   (한 번 보고 놓친 아이가 기다리면 다시 볼 수 있어야 한다)
  * - 아이가 그린 선은 진하게 남고, 「지우기」로 지운다
  */
-import { STROKES } from './data/strokes'
-import { hintFor, judgeStroke, type Pt } from './handwrite'
+import { ONE_STROKE_OK, STROKES } from './data/strokes'
+import { hintFor, judgeCovers, judgeStroke, type Pt } from './handwrite'
 import { el } from './ui'
 
 const NS = 'http://www.w3.org/2000/svg'
@@ -286,6 +286,13 @@ function glyphPad(letter: string, kind: 'upper' | 'lower', onEvent: (e: PadEvent
         break
       }
       if (k === 1) first = v
+    }
+    // h·m·n·k…: 되짚어 올라가며 한 번에 쓴 것 — 남은 획 전부의 길을 거의 다 지났으면 통과
+    if (passed === 0 && ONE_STROKE_OK.has(letter)) {
+      const remaining = guidePaths.length - expected
+      const union = Array.from({ length: remaining }, (_, j) => guidePoints(expected + j)).flat()
+      const start = guidePoints(expected)[0]
+      if (start && judgeCovers(pts, union, start).ok) passed = remaining
     }
     if (passed === 0) {
       stroke.classList.add('en-is-wrong')

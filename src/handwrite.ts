@@ -121,6 +121,24 @@ export function judgeStroke(drawn: Pt[], guide: Pt[], opts: JudgeOpts = DEFAULT_
   return { ok: true }
 }
 
+/**
+ * **한 번에 쓴 글자** 판정 — h·m·n·k처럼 획 사이를 되짚어 올라가며(줄기를 다시 타고) 손을 안 떼고 쓰는 글자용.
+ *
+ * 획 사이의 되짚기 길은 정해진 모양이 없어서 획 하나씩의 방향으로는 못 잰다. 대신 셋만 본다:
+ * 첫 획의 시작점에서 출발했나 · 선이 글자 근처에만 있나 · 글자의 길을 **거의 다**(8할) 지났나.
+ * 시작점을 보는 것으로 "위에서 아래로"는 지켜진다.
+ */
+export function judgeCovers(drawn: Pt[], guideUnion: Pt[], start: Pt, opts: JudgeOpts = DEFAULT_JUDGE): Verdict {
+  if (drawn.length < 2 || guideUnion.length < 2) return { ok: false, reason: 'too-short' }
+  const d = resample(drawn, 48)
+  if (dist(d[0] as Pt, start) > opts.endTol) return { ok: false, reason: 'wrong-start' }
+  const near = d.filter((p) => distToPath(p, guideUnion) <= opts.nearTol).length / d.length
+  if (near < opts.minCover) return { ok: false, reason: 'off-path' }
+  const covered = guideUnion.filter((p) => distToPath(p, drawn) <= opts.nearTol).length / guideUnion.length
+  if (covered < 0.8) return { ok: false, reason: 'missed-path' }
+  return { ok: true }
+}
+
 /** 아이에게 보여줄 말 — "틀렸다"가 아니라 무엇을 보면 되는지 */
 export function hintFor(v: Verdict): string {
   if (v.ok) return ''

@@ -276,39 +276,32 @@ body {
 }
 
 /* ── 지도(마을 목록) ────────────────────────────────────────────── */
-/* ── 지도: 길을 따라 오른쪽으로 늘어선 마을 ─────────────────────── */
+/* ── 지도: 길을 따라 늘어선 마을, 다섯씩 줄바꿈 ────────────────── */
 .en-map-road {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  /* 손가락으로 밀어서 본다. 한 마을씩 딱 멈추게(scroll-snap) 해야 반쯤 걸친 카드가 안 남는다 */
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch;
+  /* 한 줄에 다섯. 여섯째부터는 아랫줄 왼쪽부터(사용자 지정). 열 간격이 곧 길의 길이다 */
+  --en-map-cols: 5;
+  --en-map-gap: 26px;
+  display: grid;
+  grid-template-columns: repeat(var(--en-map-cols), minmax(0, 132px));
+  justify-content: center;
+  column-gap: var(--en-map-gap);
+  row-gap: 22px;
   padding: 10px 4px 14px;
   margin: 4px 0;
-  /* 마우스로 끌 수 있는 곳임을 손 모양으로 알린다 */
-  cursor: grab;
-  /* 끌 때 마을 이름이 파랗게 잡히면 미는 느낌이 깨진다 */
-  user-select: none;
-  -webkit-user-select: none;
 }
 
-.en-map-road.en-is-grabbing {
-  cursor: grabbing;
-  /* 끄는 동안에는 스냅이 손을 따라오지 못하게 (놓을 때만 맞춘다) */
-  scroll-snap-type: none;
-}
+/* 좁은 화면에서는 셋씩 — 다섯을 넣으면 카드가 60px이 되어 이름이 안 들어간다 */
+@media (max-width: 640px) {
+  .en-map-road {
+    --en-map-cols: 3;
+    --en-map-gap: 18px;
+  }
 
-/* 스크롤 막대는 아이 화면에서 눌리는 것이라 얇게 둔다 */
-.en-map-road::-webkit-scrollbar {
-  height: 6px;
-}
-
-.en-map-road::-webkit-scrollbar-thumb {
-  background: var(--en-line);
-  border-radius: 3px;
+  /* 카드가 100px쯤으로 줄어 "두글자소리 마을"이 두 줄로 접혔다 → 글씨를 조금 줄인다.
+     (뒤에 오는 .en-map-village { font-size: 15px }에 지지 않게 선택자를 하나 더 붙인다) */
+  .en-map-road .en-map-village {
+    font-size: 13px;
+  }
 }
 
 .en-map-village {
@@ -318,10 +311,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 2px;
-  /* 정사각형 — 한 화면에 여러 마을이 들어오면서도 그림이 크다 */
-  flex: 0 0 auto;
-  width: 132px;
-  height: 132px;
+  /* 정사각형 — 줄이 바뀌어도 크기가 같아야 한다 */
+  width: 100%;
+  aspect-ratio: 1;
   padding: 8px;
   position: relative;
   border: 3px solid var(--en-line);
@@ -330,7 +322,41 @@ body {
   font-size: 15px;
   text-align: center;
   cursor: pointer;
-  scroll-snap-align: center;
+}
+
+/* 다음 마을로 가는 길 — 카드 오른쪽, 열 간격을 꽉 채운다. 줄 끝 카드와 마지막 마을에는 없다 */
+.en-map-village::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: var(--en-map-gap);
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 3px;
+  background: var(--en-line);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.en-map-village.en-next-open::after {
+  background: var(--en-brand);
+  opacity: 1;
+}
+
+.en-map-village:nth-child(5n)::after,
+.en-map-village:last-child::after {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .en-map-village:nth-child(5n)::after {
+    display: block;
+  }
+  .en-map-village:nth-child(3n)::after,
+  .en-map-village:last-child::after {
+    display: none;
+  }
 }
 
 .en-map-village[disabled] {
@@ -342,21 +368,6 @@ body {
 .en-map-village.en-is-here {
   border-color: var(--en-brand);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--en-brand) 30%, transparent);
-}
-
-/* 마을 사이의 길. 지나온 길만 진하다 */
-.en-road {
-  flex: 0 0 auto;
-  width: 26px;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--en-line);
-  opacity: 0.5;
-}
-
-.en-road.en-is-open {
-  background: var(--en-brand);
-  opacity: 1;
 }
 
 .en-map-no {
