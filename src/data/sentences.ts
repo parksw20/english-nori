@@ -10,6 +10,8 @@
  *    통째로 듣고 따라 말하는 것이 목적이다. 그래서 어휘 정본(Starters) 검사도 걸지 않는다.
  *    대신 **읽기 문제에는 절대 쓰지 않는다**(테스트가 확인한다).
  */
+import type { StageId } from './types'
+
 
 /**
  * 읽는 문장 틀.
@@ -30,7 +32,7 @@ export interface SentenceTemplate {
    * 틀 안의 **고정 낱말**도 아이가 읽을 수 있어야 한다. `The %n is big.`의 big은 단모음 낱말(단계 1)이라
    * 알파벳 마을에서는 쓸 수 없다 — 테스트가 이걸 잡아 줘서 알게 됐다.
    */
-  minStage?: 0 | 1
+  minStage?: StageId
 }
 
 /**
@@ -46,6 +48,15 @@ export const TEMPLATES: SentenceTemplate[] = [
   { en: 'Can you see the %n?', ko: '%k{이/가} 보이나요?', slots: 1 },
   { en: 'I can see a %n and a %n.', ko: '%k{과/와} %k{이/가} 보여요.', slots: 2 },
   { en: 'A %n is not a %n.', ko: '%k{은/는} %k{이/가} 아니에요.', slots: 2 },
+  // 마을이 올라갈수록 틀도 는다 — 고정 낱말은 전부 sight word이거나 그 단계에서 읽히는 낱말이다
+  { en: 'Where is my %n?', ko: '내 %k{은/는} 어디 있어요?', slots: 1, minStage: 1 },
+  { en: 'Is it a %n?', ko: '그것은 %k{이에요/예요}?', slots: 1, minStage: 1 },
+  { en: 'I can see the big %n.', ko: '큰 %k{이/가} 보여요.', slots: 1, minStage: 1 },
+  { en: 'The %n can run.', ko: '%k{은/는} 달릴 수 있어요.', slots: 1, minStage: 1 },
+  { en: 'Can you find the %n?', ko: '%k{을/를} 찾을 수 있어요?', slots: 1, minStage: 2 },
+  { en: 'I like the %n and the %n.', ko: '나는 %k{과/와} %k{을/를} 좋아해요.', slots: 2, minStage: 2 },
+  { en: 'The %n is in the %n.', ko: '%k{은/는} %k{안에/안에} 있어요.', slots: 2, minStage: 3 },
+  { en: 'We go to the %n.', ko: '우리는 %k{으로/로} 가요.', slots: 1, minStage: 3 },
 ]
 
 /** 생활 표현 한 줄 */
@@ -56,16 +67,27 @@ export interface Phrase {
   scene: SceneId
 }
 
-export type SceneId = 'hello' | 'ask' | 'feel' | 'play' | 'class' | 'meal' | 'help'
+export type SceneId =
+  | 'hello' | 'ask' | 'feel' | 'play' | 'class' | 'meal' | 'help'
+  | 'morning' | 'weather' | 'birthday' | 'shop' | 'bed'
 
-export const SCENES: { id: SceneId; emoji: string; name: string; detail: string }[] = [
-  { id: 'hello', emoji: '👋', name: '인사', detail: '만나고 헤어질 때' },
-  { id: 'ask', emoji: '🙏', name: '부탁', detail: '해 달라고 말할 때' },
-  { id: 'feel', emoji: '😊', name: '기분', detail: '지금 어떤지 말할 때' },
-  { id: 'play', emoji: '🧸', name: '놀이', detail: '친구랑 놀 때' },
-  { id: 'class', emoji: '🎒', name: '교실', detail: '선생님과 있을 때' },
-  { id: 'meal', emoji: '🍚', name: '밥', detail: '먹을 때' },
-  { id: 'help', emoji: '🤕', name: '도움', detail: '아프거나 힘들 때' },
+/**
+ * 장면은 마을이 올라갈수록 늘어난다(minStage) — 생활 표현이 열리는 5번 마을에는 넷,
+ * 그다음 마을마다 둘씩. 한꺼번에 열둘을 주면 아이는 처음 것만 반복한다.
+ */
+export const SCENES: { id: SceneId; emoji: string; name: string; detail: string; minStage: StageId }[] = [
+  { id: 'hello', emoji: '👋', name: '인사', detail: '만나고 헤어질 때', minStage: 4 },
+  { id: 'ask', emoji: '🙏', name: '부탁', detail: '해 달라고 말할 때', minStage: 4 },
+  { id: 'feel', emoji: '😊', name: '기분', detail: '지금 어떤지 말할 때', minStage: 4 },
+  { id: 'meal', emoji: '🍚', name: '밥', detail: '먹을 때', minStage: 4 },
+  { id: 'play', emoji: '🧸', name: '놀이', detail: '친구랑 놀 때', minStage: 5 },
+  { id: 'class', emoji: '🎒', name: '교실', detail: '선생님과 있을 때', minStage: 5 },
+  { id: 'help', emoji: '🤕', name: '도움', detail: '아프거나 힘들 때', minStage: 6 },
+  { id: 'morning', emoji: '🌅', name: '아침', detail: '일어나서 나갈 때', minStage: 6 },
+  { id: 'weather', emoji: '🌦️', name: '날씨', detail: '오늘 날씨를 말할 때', minStage: 7 },
+  { id: 'birthday', emoji: '🎂', name: '생일', detail: '축하할 때', minStage: 7 },
+  { id: 'shop', emoji: '🛒', name: '가게', detail: '물건을 살 때', minStage: 8 },
+  { id: 'bed', emoji: '🌙', name: '잠', detail: '잘 때', minStage: 8 },
 ]
 
 /**
@@ -140,4 +162,41 @@ export const PHRASES: Phrase[] = [
   { en: "I'm okay.", ko: '괜찮아요.', scene: 'help' },
   { en: 'Where is my mum?', ko: '엄마 어디 있어요?', scene: 'help' },
   { en: 'I want to go home.', ko: '집에 가고 싶어요.', scene: 'help' },
+  // 🌅 아침 — 일어나서 나갈 때
+  { en: 'Wake up!', ko: '일어나!', scene: 'morning' },
+  { en: 'Brush your teeth.', ko: '이 닦자.', scene: 'morning' },
+  { en: 'Wash your hands.', ko: '손 씻자.', scene: 'morning' },
+  { en: 'Put on your shoes.', ko: '신발 신자.', scene: 'morning' },
+  { en: "Let's go!", ko: '가자!', scene: 'morning' },
+  { en: 'Hurry up!', ko: '서둘러!', scene: 'morning' },
+
+  // 🌦️ 날씨
+  { en: "It's sunny today.", ko: '오늘은 맑아요.', scene: 'weather' },
+  { en: "It's raining.", ko: '비가 와요.', scene: 'weather' },
+  { en: "It's cold.", ko: '추워요.', scene: 'weather' },
+  { en: "It's hot.", ko: '더워요.', scene: 'weather' },
+  { en: 'I have an umbrella.', ko: '나는 우산이 있어요.', scene: 'weather' },
+  { en: 'Look, it is snowing!', ko: '봐, 눈이 와!', scene: 'weather' },
+
+  // 🎂 생일
+  { en: 'Happy birthday!', ko: '생일 축하해!', scene: 'birthday' },
+  { en: 'This is for you.', ko: '이거 너 줄게.', scene: 'birthday' },
+  { en: 'Make a wish!', ko: '소원 빌어!', scene: 'birthday' },
+  { en: "Let's eat cake!", ko: '케이크 먹자!', scene: 'birthday' },
+  { en: 'How old are you?', ko: '몇 살이야?', scene: 'birthday' },
+  { en: 'I am seven.', ko: '나는 일곱 살이에요.', scene: 'birthday' },
+
+  // 🛒 가게
+  { en: 'How much is it?', ko: '얼마예요?', scene: 'shop' },
+  { en: 'I want this one.', ko: '이거 주세요.', scene: 'shop' },
+  { en: 'Here you are.', ko: '여기 있어요.', scene: 'shop' },
+  { en: 'Thank you!', ko: '고맙습니다!', scene: 'shop' },
+  { en: 'Can I have a bag?', ko: '봉지 하나 주실래요?', scene: 'shop' },
+
+  // 🌙 잠
+  { en: "I'm sleepy.", ko: '졸려요.', scene: 'bed' },
+  { en: 'Good night.', ko: '잘 자요.', scene: 'bed' },
+  { en: 'Sweet dreams.', ko: '좋은 꿈 꿔.', scene: 'bed' },
+  { en: 'Turn off the light, please.', ko: '불 꺼 주세요.', scene: 'bed' },
+  { en: 'Read me a story.', ko: '이야기 읽어 주세요.', scene: 'bed' },
 ]

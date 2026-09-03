@@ -213,7 +213,7 @@ function startGame(id: GameId): void {
     return
   }
   if (id === 'phrases') {
-    runPhrases(toVillage, (r) => {
+    runPhrases(current, toVillage, (r) => {
       showResult({
         emoji: '🗣️',
         title: '생활 표현 연습 끝!',

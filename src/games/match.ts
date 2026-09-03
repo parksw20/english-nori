@@ -8,7 +8,7 @@
  * 아이 눈에는 게임이 멈춘 것으로 보인다. 소리는 tts.speak가 알아서 이전 것을 끊으므로 겹치지 않는다.
  * 입력을 막는 것은 **짝이 아닐 때 두 장을 보여주는 0.9초뿐**이다(그건 봐야 하는 시간이라 막아야 한다).
  */
-import { picturableCvcUpTo, picturableUpTo } from '../phonics'
+import { gameWordsFor } from '../phonics'
 import type { StageId, Word } from '../data/types'
 import { shuffle } from '../rand'
 import * as sfx from '../sfx'
@@ -35,7 +35,7 @@ export interface MatchResult {
 export function runMatch(stage: StageId, onQuit: () => void, onDone: (r: MatchResult) => void): void {
   // 낱말↔그림 짝이 성립해야 하므로 **그림으로 알아볼 수 있는 낱말만** 쓴다(🐘=big은 짝을 찾을 수 없다).
   // 읽을 수 있는 낱말(CVC)이 충분하면 그것으로, 모자라면(단계 0) 그 단계 낱말 전체에서.
-  const pool = picturableCvcUpTo(stage).length >= PAIRS ? picturableCvcUpTo(stage) : picturableUpTo(stage)
+  const pool = gameWordsFor(stage, { picturable: true, maxLen: 8, count: PAIRS * 2 })
   const chosen = shuffle(pool).slice(0, PAIRS)
   const cards: Card[] = shuffle(
     chosen.flatMap((w, k) => [

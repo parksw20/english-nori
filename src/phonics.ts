@@ -8,6 +8,7 @@
 import { GRAPHEMES } from './data/phonics'
 import type { ShortVowel, StageId, Word } from './data/types'
 import { WORDS } from './data/words'
+import { shuffle } from './rand'
 
 const SHORT_VOWELS: readonly ShortVowel[] = ['a', 'e', 'i', 'o', 'u']
 
@@ -122,6 +123,74 @@ export function picturableUpTo(stage: StageId): Word[] {
 /** 그림으로 물어도 되는 CVC 낱말 (단계 1의 그림 문제·게임용) */
 export function picturableCvcUpTo(stage: StageId): Word[] {
   return cvcWordsUpTo(stage).filter((w) => !w.abstract)
+}
+
+/**
+ * **그 마을의 놀이에 쓸 낱말.**
+ *
+ * 사천성·짝맞추기·낱말 만들기·요격이 전부 CVC(단계 0·1 낱말)만 쓰고 있어서, 7번 마을에서도
+ * cat·dog만 나왔다(사용자 지적). 단계 0·1은 예전처럼 CVC — 그 마을이 가르치는 것이 곧 그것이다.
+ * 단계 2부터는 **그 마을에 적어 넣은 낱말**(그 단계에서 읽을 수 있는 것)이 먼저고,
+ * 판을 채우기에 모자라면 바로 앞 마을부터 거슬러 올라가며 채운다(복습이 조금 섞이는 것은 좋다).
+ *
+ * @param picturable 그림이 곧 문제인 놀이면 true (🐘=big 같은 것을 뺀다)
+ * @param maxLen 타일·글자칸에 들어갈 최대 글자 수
+ * @param min 이만큼은 있어야 판이 선다 — 모자라면 앞 마을에서 채운다
+ */
+export function gameWordsFor(
+  stage: StageId,
+  opts: { picturable?: boolean; maxLen?: number; count?: number; all?: boolean; rng?: () => number } = {}
+): Word[] {
+  const { picturable = false, maxLen = 99, count = 12, all = false, rng = Math.random } = opts
+  const fits = (w: Word): boolean =>
+    !w.en.includes(' ') && w.en.length <= maxLen && (!picturable || !w.abstract) && stageOf(w.en) <= stage
+  // 알파벳 마을은 낱말 놀이가 없다. 그래도 불리면 CVC 대표 낱말을 준다
+  if (stage <= 0) return (picturable ? picturableCvcUpTo(0) : cvcWordsUpTo(0)).filter(fits)
+
+  const at = (s: number): Word[] => WORDS.filter((w) => w.stage === s && fits(w))
+  // **섞는 비율**: 지금 마을 5 · 앞 마을 3 · 전전 마을 2 (사용자 지정). 없는 마을의 몫은 있는 쪽에 다시 나눈다
+  const buckets = [
+    [stage, 0.5],
+    [stage - 1, 0.3],
+    [stage - 2, 0.2],
+  ].filter(([s]) => (s as number) >= 0) as [number, number][]
+  if (all) return buckets.flatMap(([s]) => at(s))
+
+  const total = buckets.reduce((a, [, r]) => a + r, 0)
+  const out: Word[] = []
+  const used = new Set<Word>()
+  let remaining = count
+  buckets.forEach(([s, r], i) => {
+    const want = i === buckets.length - 1 ? remaining : Math.round((count * r) / total)
+    const take = shuffle(at(s), rng).filter((w) => !used.has(w)).slice(0, Math.max(0, want))
+    for (const w of take) {
+      out.push(w)
+      used.add(w)
+    }
+    remaining -= take.length
+  })
+  // 모자라면 더 앞 마을부터, 그래도 모자라면 세 마을의 남은 낱말로 채운다
+  for (let s = stage - 3; s >= 0 && remaining > 0; s--) {
+    for (const w of shuffle(at(s), rng)) {
+      if (remaining <= 0) break
+      if (!used.has(w)) {
+        out.push(w)
+        used.add(w)
+        remaining--
+      }
+    }
+  }
+  for (const [s] of buckets) {
+    for (const w of at(s)) {
+      if (remaining <= 0) break
+      if (!used.has(w)) {
+        out.push(w)
+        used.add(w)
+        remaining--
+      }
+    }
+  }
+  return out
 }
 
 /** 모음별로 묶은 CVC 낱말 — "a 마을 / e 마을"처럼 화면에 나눠 보여줄 때 쓴다 */

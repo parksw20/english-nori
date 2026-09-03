@@ -8,7 +8,7 @@
 import { PHRASES, SCENES, TEMPLATES, type Phrase, type SceneId, type SentenceTemplate } from './data/sentences'
 import type { StageId, Word } from './data/types'
 import { SIGHT_WORDS } from './data/words'
-import { cvcWordsUpTo, picturableCvcUpTo } from './phonics'
+import { cvcWordsUpTo, gameWordsFor, stageOf, wordsUpTo } from './phonics'
 import { shuffle } from './rand'
 
 export interface Sentence {
@@ -29,7 +29,8 @@ export interface Sentence {
  * 명사만, 복수형 제외(a ___ 자리), 그림으로 알아볼 수 있는 것만(듣고 그림 고르기를 하려면 필요하다).
  */
 export function fillableWords(stage: StageId): Word[] {
-  return picturableCvcUpTo(stage).filter((w) => w.pos === 'noun' && !w.plural)
+  // 그 마을의 낱말로 문장을 만든다 — 앞 마을 낱말만 돌려 쓰지 않게
+  return gameWordsFor(stage, { picturable: true, maxLen: 9, count: 16 }).filter((w) => w.pos === 'noun' && !w.plural)
 }
 
 /** 문장을 이루는 낱말로 쪼갠다 (문장부호는 낱말에 붙여 둔다 — 어순 맞추기에서 붙어 나와야 자연스럽다) */
@@ -124,6 +125,8 @@ export function readableWords(stage: StageId): Set<string> {
   // big은 CVC라 읽을 수 있지만 🐘로는 알아볼 수 없다(abstract) → 문장에는 써도 되고 그림 문제에는 못 쓴다.
   // 여기서는 읽기만 따지므로 abstract를 걸러내지 않는다(처음에 picturable을 써서 "The cat is big."이 실패했다).
   for (const w of cvcWordsUpTo(stage)) set.add(w.en)
+  // 단계 2부터는 그 마을까지 배운 소리로 읽히는 낱말 전부
+  for (const w of wordsUpTo(stage)) if (stageOf(w.en) <= stage) set.add(w.en)
   for (const s of SIGHT_WORDS) set.add(s.en)
   return set
 }

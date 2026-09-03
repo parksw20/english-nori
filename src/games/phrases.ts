@@ -10,6 +10,7 @@
  * 인식이 안 되는 기기에서는 조용히 녹음 비교만 한다.
  * 부모가 같은 상황에서 되받아 주는 것이 이 놀이의 진짜 절반이다(그 안내를 화면에 적어 둔다).
  */
+import type { StageId } from '../data/types'
 import { PHRASES, SCENES, pickPhrases, type Phrase, type SceneId } from '../sentence'
 import * as sfx from '../sfx'
 import { speakBox } from '../speakbox'
@@ -27,7 +28,7 @@ export interface PhraseResult {
 }
 
 /** 장면 고르기 화면 */
-export function runPhrases(onQuit: () => void, onDone: (r: PhraseResult) => void): void {
+export function runPhrases(stage: StageId, onQuit: () => void, onDone: (r: PhraseResult) => void): void {
   render(
     top('생활 표현 🗣️', onQuit),
     el('p', { class: 'en-q-ask', text: '어떤 때에 쓰는 말을 연습할까?' }),
@@ -37,7 +38,8 @@ export function runPhrases(onQuit: () => void, onDone: (r: PhraseResult) => void
     el(
       'div',
       { class: 'en-game-grid' },
-      SCENES.map((sc) => {
+      // 그 마을까지 열린 장면만 — 장면은 마을이 올라갈수록 늘어난다
+      SCENES.filter((sc) => sc.minStage <= stage).map((sc) => {
         const n = PHRASES.filter((p) => p.scene === sc.id).length
         const b = el('button', { class: 'en-game-card' }, [
           el('span', { class: 'en-game-emoji', text: sc.emoji }),

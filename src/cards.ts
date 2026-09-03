@@ -11,7 +11,7 @@
  *      (같은 글자 5장이든 서로 다른 5장이든 상관없다 — 아이가 "이건 못 쓰는 카드"에 막히지 않게)
  */
 import type { StageId, Word } from './data/types'
-import { cvcWordsUpTo } from './phonics'
+import { gameWordsFor } from './phonics'
 
 const KEY = 'yeongeo-nori.cards.v1'
 
@@ -137,7 +137,9 @@ export function exchange(give: string[], want: string): boolean {
  * 소리와 글자를 잇는 연습이 아니라 그림 맞추기가 된다.
  */
 export function buildableTargets(stage: StageId): Word[] {
-  return cvcWordsUpTo(stage)
+  // 그 마을의 낱말이 목표가 된다 — 보상 카드도 그 낱말들 주위로 뭉친다
+  // 단어장 목록이 열 때마다 바뀌면 안 되므로 섞지 않고 세 마을 낱말을 전부(all) 준다
+  return gameWordsFor(stage, { maxLen: 7, all: true })
 }
 
 /** 지금 만들 수 있는 낱말들 */

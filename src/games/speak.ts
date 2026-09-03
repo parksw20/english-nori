@@ -8,7 +8,7 @@
  * 채점은 관대하다(speech.ts): 세 번 시도하면 무조건 통과시킨다 —
  * 아이가 맞게 말했는데 인식기가 못 알아들어 막히면 그 자리에서 놀이가 끝난다.
  */
-import { wordsUpTo } from '../phonics'
+import { gameWordsFor } from '../phonics'
 import type { StageId, Word } from '../data/types'
 import { shuffle } from '../rand'
 import * as sfx from '../sfx'
@@ -28,7 +28,8 @@ export interface SpeakResult {
 }
 
 export function runSpeak(stage: StageId, onQuit: () => void, onDone: (r: SpeakResult) => void): void {
-  const words = shuffle(wordsUpTo(stage)).slice(0, ROUNDS)
+  // 그 마을의 낱말을 말해 본다 (앞 마을 것만 나오지 않게)
+  const words = shuffle(gameWordsFor(stage, { count: ROUNDS * 2 })).slice(0, ROUNDS)
   const scoring = speech.canScore()
   const result: SpeakResult = { said: 0, total: words.length, scored: new Map(), usedScoring: scoring }
   let i = 0

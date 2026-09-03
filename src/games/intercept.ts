@@ -11,7 +11,7 @@
  *    벽시계로는 낱말이 이미 바닥에 처박혀 즉사한다.
  */
 import { choices as makeChoices } from '../distract'
-import { picturableCvcUpTo, picturableUpTo } from '../phonics'
+import { gameWordsFor } from '../phonics'
 import type { StageId, Word } from '../data/types'
 import { shuffle } from '../rand'
 import * as prefs from '../prefs'
@@ -37,7 +37,7 @@ export interface InterceptResult {
 
 export function runIntercept(stage: StageId, onQuit: () => void, onDone: (r: InterceptResult) => void): void {
   // 보기가 그림이므로 그림으로 알아볼 수 있는 낱말만 쓴다
-  const pool = picturableCvcUpTo(stage).length >= 4 ? picturableCvcUpTo(stage) : picturableUpTo(stage)
+  const pool = gameWordsFor(stage, { picturable: true, maxLen: 8, count: 12 })
 
   let lives = LIVES
   let score = 0

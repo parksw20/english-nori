@@ -14,7 +14,7 @@
  *
  * 규칙 자체는 `src/shisen.ts`에 순수 함수로 있고, 판이 끝까지 풀리는지는 테스트가 200판으로 확인한다.
  */
-import { picturableCvcUpTo, picturableUpTo } from '../phonics'
+import { gameWordsFor } from '../phonics'
 import type { StageId, Word } from '../data/types'
 import { shuffle } from '../rand'
 import * as sfx from '../sfx'
@@ -114,9 +114,8 @@ export function runShisen(stage: StageId, onQuit: () => void, onDone: (r: Shisen
 
   // 낱말 타일과 그림 타일을 짝지어야 하므로 **그림으로 알아볼 수 있는 낱말만** 쓴다.
   // 타일에 들어갈 낱말은 짧아야 한다 — 작은 칸에 umbrella는 안 들어간다.
-  const pool = (picturableCvcUpTo(stage).length >= 4 ? picturableCvcUpTo(stage) : picturableUpTo(stage)).filter(
-    (w) => !w.en.includes(' ') && w.en.length <= 5
-  )
+  // 그 마을의 낱말로 판을 짠다. 타일에 들어가야 하니 6글자까지
+  const pool = gameWordsFor(stage, { picturable: true, maxLen: 6, count: 24 })
   const TILES = size.tiles
   const chosen = shuffle(pool).slice(0, wordCountFor(TILES / 2, pool.length))
   const emojiOf = new Map(chosen.map((w: Word) => [w.en, w.emoji]))

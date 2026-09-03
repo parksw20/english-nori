@@ -7,7 +7,7 @@
 import { LETTERS, STAGE_NAMES, SHORT_VOWELS } from './data/phonics'
 import { WORDS } from './data/words'
 import { MAX_STAGE, type StageId, type Word } from './data/types'
-import { cvcByVowel, cvcWordsUpTo, wordsUpTo } from './phonics'
+import { cvcByVowel, wordsUpTo } from './phonics'
 import * as cards from './cards'
 import * as progress from './progress'
 import * as srs from './srs'
@@ -208,8 +208,8 @@ const GAMES = [
       const b = progress.bestOf('soundhunt')
       return b > 0 ? `최고 ${b}개 맞힘` : null
     },
-    /** 읽을 수 있는 낱말(CVC)이 있어야 성립하는 게임인가 */
-    needsCvc: false,
+    /** 이 마을부터 열린다. 알파벳 마을(0)은 글자 소리만 — 낱말을 읽는 놀이는 다음 마을부터 */
+    minStage: 0 as StageId,
   },
   {
     id: 'wordbuild' as const,
@@ -220,7 +220,7 @@ const GAMES = [
       const b = progress.bestOf('wordbuild')
       return b > 0 ? `최고 ${b}개 한 번에 성공` : null
     },
-    needsCvc: true,
+    minStage: 1 as StageId,
   },
   {
     id: 'intercept' as const,
@@ -231,7 +231,7 @@ const GAMES = [
       const b = progress.bestOf('intercept')
       return b > 0 ? `최고 ${b}점` : null
     },
-    needsCvc: true,
+    minStage: 2 as StageId,
   },
   {
     id: 'crossword' as const,
@@ -246,8 +246,7 @@ const GAMES = [
       }
       return null
     },
-    needsCvc: false,
-    /** 이 마을부터 열린다 — 철자를 처음부터 만드는 놀이라 소리를 좀 배운 뒤에 온다 */
+    /** 철자를 처음부터 만드는 놀이라 소리를 좀 배운 뒤에 온다 */
     minStage: 2 as StageId,
   },
   {
@@ -259,7 +258,7 @@ const GAMES = [
       const b = progress.bestTimeOf('shisen')
       return b !== null ? `최고 ${b}초` : null
     },
-    needsCvc: true,
+    minStage: 2 as StageId,
   },
   {
     id: 'match' as const,
@@ -270,7 +269,7 @@ const GAMES = [
       const b = progress.bestTimeOf('match')
       return b !== null ? `최고 ${b}번 뒤집어 완성` : null
     },
-    needsCvc: true,
+    minStage: 1 as StageId,
   },
   {
     id: 'sentence' as const,
@@ -281,8 +280,8 @@ const GAMES = [
       const b = progress.bestOf('sentence')
       return b > 0 ? `최고 ${b}개 맞힘` : null
     },
-    // 문장을 만들려면 그림으로 알아볼 수 있는 단수 명사가 몇 개는 있어야 한다
-    needsCvc: true,
+    // 낱말을 여럿 읽을 수 있어야 문장이 된다 → 두글자소리 마을부터
+    minStage: 3 as StageId,
   },
   {
     id: 'phrases' as const,
@@ -290,7 +289,7 @@ const GAMES = [
     name: '생활 표현',
     sub: '유치원에서 쓰는 말을 따라 말해요',
     best: () => null,
-    needsCvc: false,
+    minStage: 4 as StageId,
   },
   {
     id: 'speak' as const,
@@ -298,7 +297,7 @@ const GAMES = [
     name: '말하기',
     sub: '내 소리와 원어민 소리를 비교해요',
     best: () => null,
-    needsCvc: false,
+    minStage: 1 as StageId,
   },
 ]
 
@@ -334,7 +333,6 @@ export function showVillage(stage: StageId, a: VillageActions): void {
   const cool = progress.examCooldownLeft(stage)
   const words = wordsUpTo(stage).map((w) => w.en)
   const sum = srs.summary(words)
-  const cvcCount = cvcWordsUpTo(stage).length
 
   const cards: Node[] = [
     gameCard(
@@ -348,10 +346,13 @@ export function showVillage(stage: StageId, a: VillageActions): void {
     ),
   ]
   for (const g of GAMES) {
-    // 낱말 만들기·사천성·짝맞추기는 읽을 수 있는 낱말(CVC)이 6개 이상 있어야 성립한다
-    if (g.needsCvc && cvcCount < 6) continue
-    // 가로세로는 3번 마을부터 — 앞 마을에서는 목록에 아예 넣지 않는다(잠긴 버튼을 늘리지 않는다)
-    if ('minStage' in g && stage < (g.minStage as number)) continue
+    /**
+     * **놀이 사다리** — 마을이 올라갈수록 카드가 늘어난다(잠긴 카드를 보여주지 않고 아예 뺀다).
+     * 1번 알파벳 마을: 오늘의 놀이·소리 사냥·시험(글자 소리만) → 2번: +낱말 만들기·짝맞추기·말하기 →
+     * 3번: +요격·사천성·가로세로 → 4번: +문장 놀이 → 5번: +생활 표현.
+     * 처음엔 열한 장이 첫 마을부터 다 있었고 전부 앞 마을 낱말로 돌았다(사용자 지적).
+     */
+    if (stage < g.minStage) continue
     const record = g.best()
     // 기록이 있으면 설명 대신 기록을 보여준다 — "최고 기록!"을 본 아이가
     // 다음에 열었을 때 그 기록을 찾을 곳이 있어야 한다

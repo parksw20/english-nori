@@ -5,7 +5,7 @@
  * 그래서 **틀린 자리를 알려 주지 않고**(그러면 찍기가 된다) 잘못 누른 타일만 되돌린다.
  * 타일은 정답 글자 + 방해 글자를 섞은 것이고, 방해 글자는 **같은 단계에서 배운 자음**에서 뽑는다.
  */
-import { cvcWordsUpTo } from '../phonics'
+import { gameWordsFor } from '../phonics'
 import type { StageId, Word } from '../data/types'
 import { shuffle } from '../rand'
 import * as sfx from '../sfx'
@@ -21,7 +21,7 @@ export interface BuildResult {
 }
 
 export function runWordBuild(stage: StageId, onQuit: () => void, onDone: (r: BuildResult) => void): void {
-  const pool = cvcWordsUpTo(stage)
+  const pool = gameWordsFor(stage, { maxLen: 7, count: 12 })
   const words = shuffle(pool).slice(0, ROUNDS)
   const result: BuildResult = { right: 0, total: words.length, perWord: new Map() }
   let i = 0
