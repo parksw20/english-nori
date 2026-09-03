@@ -42,6 +42,8 @@ function glyphPad(letter: string): {
   box: HTMLElement
   play: () => number
   duration: () => number
+  /** 번호를 놓는다 — 재생을 기다리지 않고 바로 보이게 */
+  prepare: () => void
   reset: () => void
   clear: () => void
 } {
@@ -64,16 +66,48 @@ function glyphPad(letter: string): {
   const ink = svgEl('g', { class: 'en-trace-ink' })
   svg.append(ghost, guide, ink)
 
-  // 획 순서 번호 — 시작점에 작은 숫자. 아이가 "어디서부터"를 보게 한다
+  // 획 순서 번호 — 시작점 곁에 작은 숫자. 아이가 "어디서부터"를 보게 한다
   const marks = svgEl('g', { class: 'en-trace-no' })
-  paths.forEach((d, i) => {
-    const m = /M\s*([\d.]+)\s+([\d.]+)/.exec(d)
-    if (!m) return
-    const t = svgEl('text', { x: String(Number(m[1]) - 9), y: String(Number(m[2]) - 4) })
-    t.textContent = String(i + 1)
-    marks.append(t)
-  })
   svg.append(marks)
+  let marksPlaced = false
+
+  /**
+   * 번호를 **획이 나아가는 방향의 반대쪽**에 놓는다.
+   *
+   * 시작점에 그냥 찍으면 B·D·P·R처럼 같은 점에서 시작하는 두 획의 번호가 겹쳐 하나만 보였다.
+   * 획 1은 아래로 가니 번호는 위에, 획 2는 오른쪽으로 가니 번호는 왼쪽에 — 자연히 갈라진다.
+   * 그래도 겹치면 이미 놓인 번호를 피해 밀어낸다. 길이·방향은 DOM에 붙은 뒤에만 잴 수 있어 재생 직전에 놓는다.
+   */
+  function placeMarks(): void {
+    if (marksPlaced) return
+    marksPlaced = true
+    const placed: { x: number; y: number }[] = []
+    guidePaths.forEach((p, i) => {
+      const total = p.getTotalLength?.() || 0
+      const s0 = p.getPointAtLength(0)
+      const s1 = p.getPointAtLength(Math.min(6, total))
+      let dx = s1.x - s0.x
+      let dy = s1.y - s0.y
+      const n = Math.hypot(dx, dy) || 1
+      dx /= n
+      dy /= n
+      // 획 반대쪽으로 9만큼 물러난 자리
+      let x = s0.x - dx * 9
+      let y = s0.y - dy * 9
+      // 상자 밖으로 나가지 않게
+      x = Math.max(5, Math.min(93, x))
+      y = Math.max(9, Math.min(106, y))
+      // 이미 놓인 번호와 겹치면 오른쪽·아래로 밀어낸다
+      for (let tries = 0; tries < 6 && placed.some((q) => Math.hypot(q.x - x, q.y - y) < 9); tries++) {
+        x += 7
+        y += 7
+      }
+      placed.push({ x, y })
+      const t = svgEl('text', { x: String(x.toFixed(1)), y: String((y + 3).toFixed(1)) })
+      t.textContent = String(i + 1)
+      marks.append(t)
+    })
+  }
 
   const box = el('div', { class: 'en-trace-pad' })
   box.append(svg)
@@ -111,6 +145,7 @@ function glyphPad(letter: string): {
   function play(): number {
     reset()
     measure()
+    placeMarks()
     let at = 60
     guidePaths.forEach((p, i) => {
       const len = lengths[i] || 100
@@ -162,7 +197,12 @@ function glyphPad(letter: string): {
     ink.replaceChildren()
   }
 
-  return { box, play, duration, reset, clear }
+  function prepare(): void {
+    measure()
+    placeMarks()
+  }
+
+  return { box, play, duration, prepare, reset, clear }
 }
 
 /**
@@ -199,6 +239,8 @@ export function makeTracer(initial: string, onSpeak?: (letter: string) => void):
       stopLoop()
       return
     }
+    // 소문자 번호는 소문자 재생(대문자 다음)을 기다리지 않고 지금 놓는다 — 아이는 두 판을 같이 본다
+    lower?.prepare()
     const up = upper?.play() ?? 0
     const low = lower?.duration() ?? 0
     timers.push(window.setTimeout(() => lower?.play(), up + BETWEEN_MS))
@@ -213,8 +255,9 @@ export function makeTracer(initial: string, onSpeak?: (letter: string) => void):
     lower = glyphPad(letter.toLowerCase())
     pads.replaceChildren(upper.box, lower.box)
     title.textContent = `${letter.toUpperCase()} ${letter} 따라 써 보세요 ✍️`
-    // 처음 한 번은 **바로**, 그다음부터는 다 그린 뒤 3초마다
-    requestAnimationFrame(playBoth)
+    // 처음 한 번은 **바로**, 그다음부터는 다 그린 뒤 3초마다.
+    // rAF가 아니라 타이머로 여는 이유: 화면이 가려져 있으면 rAF가 멈춰 첫 재생(과 번호 배치)이 밀린다
+    timers.push(window.setTimeout(playBoth, 0))
   }
 
   clearBtn.addEventListener('click', () => {

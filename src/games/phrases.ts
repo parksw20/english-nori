@@ -31,17 +31,18 @@ export function runPhrases(onQuit: () => void, onDone: (r: PhraseResult) => void
   render(
     top('생활 표현 🗣️', onQuit),
     el('p', { class: 'en-q-ask', text: '어떤 때에 쓰는 말을 연습할까?' }),
+    // 장면은 마을 화면의 놀이 카드와 같은 격자로 **가로로** 깐다.
+    // 지도의 마을 카드(.en-map-village)를 빌려 썼더니 그 카드가 옆으로 미는 길용으로 바뀌면서
+    // 세로로 좁게 쌓이고 이름과 설명이 붙어 버렸다(인사만나고 헤어질 때) — 빌려 쓰지 않는다
     el(
       'div',
-      {},
+      { class: 'en-game-grid' },
       SCENES.map((sc) => {
         const n = PHRASES.filter((p) => p.scene === sc.id).length
-        const b = el('button', { class: 'en-map-village' }, [
-          el('span', { class: 'en-map-icon', text: sc.emoji }),
-          el('span', { class: 'en-map-name' }, [
-            sc.name,
-            el('span', { class: 'en-map-meta', text: `${sc.detail} · ${n}문장` }),
-          ]),
+        const b = el('button', { class: 'en-game-card' }, [
+          el('span', { class: 'en-game-emoji', text: sc.emoji }),
+          el('span', { class: 'en-game-name', text: sc.name }),
+          el('span', { class: 'en-game-sub', text: `${sc.detail} · ${n}문장` }),
         ])
         b.addEventListener('click', () => runScene(sc.id, onQuit, onDone))
         return b

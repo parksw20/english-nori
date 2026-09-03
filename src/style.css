@@ -2230,5 +2230,11 @@ button.en-card:active {
 .en-trace-no text {
   font-size: 9px;
   font-weight: 800;
-  fill: var(--en-brand);
+  fill: var(--en-accent-text);
+  text-anchor: middle;
+  /* 번호가 실루엣 위에 놓여도 읽히게 뒤에 판 색을 깐다 */
+  paint-order: stroke;
+  stroke: var(--en-card);
+  stroke-width: 3;
+  stroke-linejoin: round;
 }
