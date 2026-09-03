@@ -83,10 +83,11 @@ function glyphPad(letter: string, kind: 'upper' | 'lower'): {
   const paths = (STROKES[letter] ?? []).map((d) => mapPathY(d, fy))
   const svg = svgEl('svg', { viewBox: `0 0 ${VB_W} ${VB_H}`, class: 'en-trace-svg' })
 
-  // ⓪ 공책 줄 — 윗줄·가운뎃줄·기준선·아랫줄. 가운뎃줄은 다른 무늬로(소문자 키를 재는 줄이다)
+  // ⓪ 공책 줄 — **가운데 두 줄만**(가운뎃줄·기준선) 판 테두리와 같은 점선으로.
+  // 윗줄·아랫줄은 판의 테두리가 대신한다 — 줄이 넷이면 글자보다 줄이 먼저 보였다(사용자 판단)
   const lines = svgEl('g', { class: 'en-trace-lines' })
-  for (const [name, y] of Object.entries(LINES)) {
-    lines.append(svgEl('line', { x1: '3', x2: String(VB_W - 3), y1: String(y), y2: String(y), class: `en-trace-line en-trace-line-${name}` }))
+  for (const y of [LINES.mid, LINES.base]) {
+    lines.append(svgEl('line', { x1: '0', x2: String(VB_W), y1: String(y), y2: String(y), class: 'en-trace-line' }))
   }
   svg.append(lines)
 
